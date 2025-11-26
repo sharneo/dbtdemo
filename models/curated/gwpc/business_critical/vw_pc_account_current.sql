@@ -18,4 +18,4 @@ SELECT
         from=ref('pc_account')
     ) }}
 FROM {{ ref('pc_account') }} AS gwpc
-QUALIFY ROW_NUMBER() OVER (PARTITION BY gwpc.ID ORDER BY gwpc.updatetime DESC) = 1 
+QUALIFY ROW_NUMBER() OVER (PARTITION BY gwpc.ID ORDER BY gwpc.file_ingestion_timestamp DESC) = 1 

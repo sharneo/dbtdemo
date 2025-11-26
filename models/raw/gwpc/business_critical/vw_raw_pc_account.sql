@@ -28,13 +28,9 @@ WITH source_data AS
                 data_payload:NEWACCOUNTREASON_ICARE::NUMBER AS NEWACCOUNTREASON,
                 data_payload:LINKCONTACTS::BOOLEAN AS LINKCONTACTS,
                 CAST(data_payload:ITCENTITLEMENT_ICARE::TEXT AS VARCHAR(60)) AS ITCENTITLEMENT,
-                CAST(data_payload:ID::NUMBER ) AS ID,
+                data_payload:ID::NUMBER  AS ID,
                 CAST(NULL AS VARCHAR(120)) as lsn,
                 CAST(NULL AS VARCHAR(2)) as row_operation,
-                CAST(NULL AS NUMBER) as txn_id,
-                CAST(NULL AS TIMESTAMP_LTZ) as cdc_txn_date,
-                CAST(NULL AS NUMBER) as seqval_hex,
-                CAST(NULL AS TIMESTAMP_LTZ) as update_timestamp,
                 metadata_file_name,
                 file_ingestion_timestamp
             FROM {{ source('gwpc', 'pc_account') }}
@@ -54,10 +50,6 @@ WITH source_data AS
                 $1:id::NUMBER AS id,
                 CAST($1:gwcbi___lsn::STRING AS VARCHAR(120)) as lsn,
                 CAST($1:gwcbi___operation::STRING AS VARCHAR(2)) as row_operation,
-                $1:gwcbi___cdc_tx_date::TIMESTAMP_LTZ as cdc_txn_date,
-                $1:gwcbi___tx_id::NUMBER  as txn_id,
-                CAST($1:gwcbi___seqval_hex::STRING AS VARCHAR(120))  as seqval_hex,
-                TO_TIMESTAMP($1:gwcbi___connector_ts_ms::NUMBER / 1000) as update_timestamp,
                 metadata_file_name,
                 file_ingestion_timestamp
             FROM {{ source('gwpc', 'pc_account') }}
@@ -69,8 +61,7 @@ WITH source_data AS
 -#}   
 transformed AS (
     SELECT
-        *,
-         CAST('{ source_family_code }' AS VARCHAR (10)) as source_family_code
+        *
     FROM source_data
 )
 SELECT * FROM transformed

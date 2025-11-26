@@ -10,7 +10,7 @@ Date            Version         Author          Description of Change
 
 {{ config(
     materialized='incremental',
-    unique_key='id_hash',  
+    unique_key='ID',  
     incremental_strategy='merge'  
 ) }}
 
