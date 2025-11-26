@@ -1,0 +1,13 @@
+bro:
+  outputs:
+    dev:
+      account: jvpnrxx-jrb43465
+      database: DEV_RAW_DB
+      password: Unilever69@1306
+      role: SFG_DEV_DATA_ENGINEER
+      schema: GWPC
+      threads: 1
+      type: snowflake
+      user: AFSHIN
+      warehouse: COMPUTE_WH
+  target: dev

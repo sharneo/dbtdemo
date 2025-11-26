@@ -1,0 +1,7 @@
+sources:
+  - name: gwpc
+    database: DEV_RAW_DB
+    schema: GWPC
+    tables:
+      - name: pc_policy
+      - name: pc_policyperiod
