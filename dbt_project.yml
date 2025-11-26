@@ -39,5 +39,7 @@ models:
         +transient: false
         +enabled: true
         +database: DEV_RAW_DB
-      business_access_layer:
+      curated:
         +schema : gwpc
+        +database: DEV_CURATED_DB
+        +transient: true

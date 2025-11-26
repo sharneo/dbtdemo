@@ -3,11 +3,11 @@ bro:
     dev:
       account: jvpnrxx-jrb43465
       database: DEV_RAW_DB
-      password: Unilever69@1306
+      password: "{{ env_var('SNOWFLAKE_KEY_PASS') }}"
       role: SFG_DEV_DATA_ENGINEER
       schema: GWPC
       threads: 1
       type: snowflake
-      user: AFSHIN
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
       warehouse: COMPUTE_WH
   target: dev
