@@ -39,6 +39,10 @@ models:
         +transient: false
         +enabled: true
         +database: DEV_RAW_DB
+        gwpc:
+         +schema: gwpc 
+        gwcc:
+         +schema: gwcc 
       curated:
         +schema : gwpc
         +database: DEV_CURATED_DB
