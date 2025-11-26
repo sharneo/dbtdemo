@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: vw_pc_policy_current
+    description: "Policy model"
+
+    columns:
+      - name: id
+        tests:
+          - not_null:
+              name: not_null_id
+              severity: warn
+              description: "Policy ID should never be null"
+
+          - unique:
+              name: unique_policy_id
+              severity: warn
+              description: "Duplicate policy_id values detected"
+              tags: ["critical", "quality"]

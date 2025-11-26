@@ -23,7 +23,7 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 vars:
-  # The `start_date` variable will be accessible in all resources
+  'dbt_date:time_zone': 'Australia/Sydney'
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -47,3 +47,24 @@ models:
         +schema : gwpc
         +database: DEV_CURATED_DB
         +transient: true
+        gwpc:
+         +schema: gwpc 
+        gwcc:
+         +schema: gwcc
+      reporting:
+        +schema : policy
+      data_products:
+        +schema : policy
+
+    dbt_artifacts:
+      +database: DEV_RAW_DB # optional, default is your target database
+      +schema: ELT_UTILS # optional, default is your target schema
+      staging:
+        +database: DEV_RAW_DB # optional, default is your target database
+        +schema: ELT_UTILS # optional, default is your target schema
+      sources:
+        +database: DEV_RAW_DB # optional, default is your target database
+        +schema: ELT_UTILS # optional, default is your target schema
+
+on-run-end:
+  - "{{ dbt_artifacts.upload_results(results) }}"
