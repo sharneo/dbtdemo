@@ -17,9 +17,9 @@ Date            Version         Author          Description of Change
 {# --- Select all columns except the snapshot fields and hash columns --- #}
 SELECT
     {{ dbt_utils.star(
-        from=ref('vw_raw_pc_policy')
+        from=ref('vw_raw_pc_policyperiod')
     ) }}
-FROM {{ ref('vw_raw_pc_policy') }} AS gwpc
+FROM {{ ref('vw_raw_pc_policyperiod') }} AS gwpc
 
 {% if is_incremental() %}
   -- Only load new or updated rows in incremental runs

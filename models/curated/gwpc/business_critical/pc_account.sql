@@ -10,16 +10,16 @@ Date            Version         Author          Description of Change
 
 {{ config(
     materialized='incremental',
-    unique_key='id_hash',  
+    unique_key='id',  
     incremental_strategy='merge'  
 ) }}
 
 {# --- Select all columns except the snapshot fields and hash columns --- #}
 SELECT
     {{ dbt_utils.star(
-        from=ref('vw_raw_pc_policy')
+        from=ref('vw_raw_pc_account')
     ) }}
-FROM {{ ref('vw_raw_pc_policy') }} AS gwpc
+FROM {{ ref('vw_raw_pc_account') }} AS gwpc
 
 {% if is_incremental() %}
   -- Only load new or updated rows in incremental runs

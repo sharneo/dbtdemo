@@ -5,3 +5,4 @@ sources:
     tables:
       - name: pc_policy
       - name: pc_policyperiod
+      - name: pc_account
