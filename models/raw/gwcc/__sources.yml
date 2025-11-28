@@ -4,3 +4,4 @@ sources:
     schema: GWCC
     tables:
       - name: cc_claim
+      - name: cc_activity

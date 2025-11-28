@@ -4,7 +4,7 @@ Project: Data Uplift Progran
 Project Description/Purpose: Data Uplift Program 
 
 Date            Version         Author          Description of Change           
-2025-11-18      0.0                             This Build the cc_claim in the curated layer
+2025-11-18      0.0                             This Build the pc_policy in the curated layer
 
 -#}   
 
@@ -15,6 +15,7 @@ Date            Version         Author          Description of Change
 {# --- Select all columns except the snapshot fields and hash columns --- #}
 SELECT
     {{ dbt_utils.star(
-        from=ref('cc_claim')
+        from=ref('cc_activity')
     ) }}
-FROM {{ ref('cc_claim') }} 
+FROM {{ ref('cc_activity') }}
+QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY updatetime DESC) = 1 
