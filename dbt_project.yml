@@ -2,11 +2,11 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'bro'
+name: 'icare_dbt_transformations_fndn'
 version: '1.0.0'
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'bro'
+profile: 'icare_dbt_transformations_fndn'
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -32,12 +32,13 @@ vars:
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-    bro:
+    icare_dbt_transformations_fndn:
       +transient: false
       +sql_header: "alter SESSION set QUOTED_IDENTIFIERS_IGNORE_CASE = TRUE;"
       raw:
         +transient: false
         +enabled: true
+        +materialized: view
         +database: DEV_RAW_DB
         gwpc:
          +schema: gwpc 
