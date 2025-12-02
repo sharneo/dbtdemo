@@ -44,6 +44,10 @@ models:
          +schema: gwpc 
         gwcc:
          +schema: gwcc 
+        salesforce:
+         +schema: salesforce 
+        genesys:
+         +schema: genesys 
       curated:
         +schema : gwpc
         +database: DEV_CURATED_DB

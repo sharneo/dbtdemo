@@ -1,0 +1,6 @@
+sources:
+  - name: salesforce
+    database: DEV_RAW_DB
+    schema: SALESFORCE
+    tables:
+      - name: case 
