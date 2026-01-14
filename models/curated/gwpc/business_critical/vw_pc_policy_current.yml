@@ -6,7 +6,7 @@ models:
 
     columns:
       - name: id
-        tests:
+        data_tests:
           - not_null:
               name: not_null_id
               severity: warn
