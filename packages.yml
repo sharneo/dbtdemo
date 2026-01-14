@@ -6,4 +6,4 @@ packages:
   - package: Snowflake-Labs/dbt_semantic_view
     version: 1.0.3
   - package: brooklyn-data/dbt_artifacts
-    version: 2.9.3    
+    version: 2.10.0    

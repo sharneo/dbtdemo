@@ -8,15 +8,17 @@ models:
     columns:
       - name: id
         description: "Internally managed primary key."
-        tests:
+        data_tests:
           - not_null:
               name: test_pc_policy_id_not_null
               config:
                severity: warn
       - name: accountid
         description: "The Account to which this policy belongs. Note that getting the value of this foreign key may result in the Account being re-retrieved if it is a non-SOR account.."
-      - name: email
-        description: "The customer's email address."
       - name: updatetime
-        description: "The timestamp when the customer record was last updated."
-
+        description: "The timestamp when the policy record was last updated."
+        data_tests:
+          - not_null:
+              name: test_pc_policy_id_not_null
+              config:
+               severity: warn
