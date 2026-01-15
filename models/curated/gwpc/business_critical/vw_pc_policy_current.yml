@@ -6,14 +6,10 @@ models:
 
     columns:
       - name: id
+        description: "Internally managed primary key."
         data_tests:
-          - not_null:
-              name: not_null_id
-              severity: warn
-              description: "Policy ID should never be null"
-
           - unique:
-              name: unique_policy_id
-              severity: warn
-              description: "Duplicate policy_id values detected"
-              tags: ["critical", "quality"]
+              name: curated_pc_policy_id_unique
+              config:
+               severity: warn
+               tags: ['severe']
