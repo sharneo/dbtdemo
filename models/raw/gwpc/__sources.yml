@@ -3,6 +3,6 @@ sources:
     database: DEV_RAW_DB
     schema: GWPC
     tables:
-      - name: pc_policy
       - name: pc_policyperiod
       - name: pc_account
+      - name: pc_policy

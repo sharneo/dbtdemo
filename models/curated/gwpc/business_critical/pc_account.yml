@@ -1,0 +1,54 @@
+version: 2
+
+models:
+- name: pc_account
+  columns:
+  - name: trustabnstatus
+    description: ''
+
+  - name: groupnumber
+    description: ''
+
+  - name: busopsdesc
+    description: ''
+
+  - name: publicid
+    description: ''
+
+  - name: groupname
+    description: ''
+
+  - name: acn
+    description: ''
+
+  - name: createtime
+    description: ''
+
+  - name: newaccountreason
+    description: ''
+
+  - name: linkcontacts
+    description: ''
+
+  - name: itcentitlement
+    description: ''
+
+  - name: id
+    description: ''
+    data_tests:
+          - not_null:
+              name: curated_pc_account_id_not_null
+              config:
+               severity: warn
+
+  - name: lsn
+    description: ''
+
+  - name: row_operation
+    description: ''
+
+  - name: metadata_file_name
+    description: ''
+
+  - name: file_ingestion_timestamp
+    description: ''

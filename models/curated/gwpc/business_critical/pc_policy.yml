@@ -10,13 +10,60 @@ models:
         description: "Internally managed primary key."
         data_tests:
           - not_null:
-              name: test_pc_policy_id_not_null
+              name: curated_pc_policy_id_not_null
               config:
                severity: warn
       - name: accountid
         description: "The Account to which this policy belongs. Note that getting the value of this foreign key may result in the Account being re-retrieved if it is a non-SOR account.."
+        data_tests:
+          - not_null:
+              name: curated_pc_policy_accountid_not_null
+              config:
+               severity: warn
+      - name: donotarchive
+        description: ""
+        data_tests:
+          - not_null:
+              name: curated_pc_policy_donotarchive_not_null
+              config:
+               severity: warn
+      - name: donotdestroy
+        description: ""
+        data_tests:
+          - not_null:
+              name: curated_pc_policy_donotdestroy_not_null
+              config:
+               severity: warn
+      - name: losshistorytype
+        description: ""
+        data_tests:
+          - not_null:
+              name: curated_pc_policy_losshistorytype_not_null
+              config:
+               severity: warn
+      - name: productcode
+        description: ""
+        data_tests:
+          - not_null:
+              name: curated_pc_policy_productcode_not_null
+              config:
+               severity: warn
+      - name: publicid
+        description: ""
+        data_tests:
+          - not_null:
+              name: curated_pc_policy_publicid_not_null
+              config:
+               severity: warn
+      - name: retired
+        description: ""
+        data_tests:
+          - not_null:
+              name: curated_pc_policy_retired_not_null
+              config:
+               severity: warn
       - name: updatetime
-        description: "The timestamp when the policy record was last updated."
+        description: ""
         data_tests:
           - not_null:
               name: curated_pc_policy_updatetime_not_null
