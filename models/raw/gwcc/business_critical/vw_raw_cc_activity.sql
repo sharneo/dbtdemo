@@ -206,7 +206,7 @@ cte_transformed AS (
         CASE
              WHEN file_type = 'AVRO' THEN
                 {{ dbt_utils.generate_surrogate_key([
-                                'loadcommandid',
+                        'loadcommandid',
                         'previousgroupid',
                         'enddate',
                         'assignedbyuserid',
