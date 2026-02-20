@@ -12,7 +12,7 @@ Date            Version         Author          Description of Change
 -#}   
 
 {{ config(
-    tags=["raw_gwcc","raw_layer"]
+    tags=["raw_gwpc","raw_layer"]
 ) }}
 
 
@@ -20,25 +20,29 @@ WITH cte_source_data AS
 (
 
             SELECT
-                data_payload:LoadCommandID::NUMBER AS loadcommandid,
                 data_payload:CreateUserID::NUMBER AS createuserid,
-                data_payload:MSPReferralID::NUMBER AS mspreferralid,
+                data_payload:PreviousGroupID::NUMBER AS previousgroupid,
                 CAST(data_payload:PublicID::TEXT AS VARCHAR(64)) AS publicid,
-                CAST(data_payload:MedTreatmentID::TEXT AS VARCHAR(25)) AS medtreatmentid,
+                data_payload:Active::BOOLEAN AS active,
+                TO_TIMESTAMP_TZ(data_payload:CloseDate::NUMBER/1000) AS closedate,
                 data_payload:BeanVersion::NUMBER AS beanversion,
-                data_payload:ArchivePartition::NUMBER AS archivepartition,
+                data_payload:AccountID::NUMBER AS accountid,
                 TO_TIMESTAMP_TZ(data_payload:CreateTime::NUMBER/1000) AS createtime,
                 data_payload:Retired::NUMBER AS retired,
-                TO_TIMESTAMP_TZ(data_payload:TreatmentDecisionDueDate::NUMBER/1000) AS treatmentdecisionduedate,
+                data_payload:AssignedByUserID::NUMBER AS assignedbyuserid,
+                data_payload:AssignedGroupID::NUMBER AS assignedgroupid,
                 data_payload:UpdateUserID::NUMBER AS updateuserid,
-                CAST(data_payload:TreatmentType::TEXT AS VARCHAR(255)) AS treatmenttype,
-                data_payload:ApprovalStatus::NUMBER AS approvalstatus,
+                CAST(data_payload:Comments::TEXT AS VARCHAR(255)) AS comments,
+                data_payload:AssignedUserID::NUMBER AS assigneduserid,
+                data_payload:PreviousQueueID::NUMBER AS previousqueueid,
                 TO_TIMESTAMP_TZ(data_payload:UpdateTime::NUMBER/1000) AS updatetime,
+                data_payload:Role::NUMBER AS role,
                 data_payload:ID::NUMBER AS id,
-                data_payload:ContactID::NUMBER AS contactid,
-                CAST(data_payload:Description::TEXT AS VARCHAR(255)) AS description,
-                TO_TIMESTAMP_TZ(data_payload:RequestDate::NUMBER/1000) AS requestdate,
-                data_payload:Category::NUMBER AS category,
+                TO_TIMESTAMP_TZ(data_payload:AssignmentDate::NUMBER/1000) AS assignmentdate,
+                data_payload:PreviousUserID::NUMBER AS previoususerid,
+                data_payload:AssignedQueueID::NUMBER AS assignedqueueid,
+                data_payload:AssignmentStatus::NUMBER AS assignmentstatus,
+                data_payload:ArchivePartition::NUMBER AS archivepartition,
                 CAST(NULL AS TIMESTAMP_LTZ) as gwcbi_connector_ts_ms,
                 CAST(NULL AS NUMBER) as gwcbi_lsn,
                 CAST(NULL AS NUMBER) as gwcbi_operation,
@@ -49,29 +53,33 @@ WITH cte_source_data AS
                 metadata_file_name,
                 file_ingestion_timestamp,
                 'AVRO' file_type
-            FROM {{ source('gwcc', 'ccx_mspmedicaltreatment_ext') }}
+            FROM {{ source('gwpc', 'pc_accountuserroleassign') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
             UNION ALL 
             SELECT
-                $1:loadcommandid::NUMBER AS loadcommandid,
                 $1:createuserid::NUMBER AS createuserid,
-                $1:mspreferralid::NUMBER AS mspreferralid,
+                $1:previousgroupid::NUMBER AS previousgroupid,
                 CAST($1:publicid::TEXT AS VARCHAR(64)) AS publicid,
-                CAST($1:medtreatmentid::TEXT AS VARCHAR(15)) AS medtreatmentid,
+                $1:active::BOOLEAN AS active,
+                $1:closedate::TIMESTAMP_TZ AS closedate,
                 $1:beanversion::NUMBER AS beanversion,
-                $1:archivepartition::NUMBER AS archivepartition,
+                $1:accountid::NUMBER AS accountid,
                 $1:createtime::TIMESTAMP_TZ AS createtime,
                 $1:retired::NUMBER AS retired,
-                $1:treatmentdecisionduedate::TIMESTAMP_TZ AS treatmentdecisionduedate,
+                $1:assignedbyuserid::NUMBER AS assignedbyuserid,
+                $1:assignedgroupid::NUMBER AS assignedgroupid,
                 $1:updateuserid::NUMBER AS updateuserid,
-                CAST($1:treatmenttype::TEXT AS VARCHAR(255)) AS treatmenttype,
-                $1:approvalstatus::NUMBER AS approvalstatus,
+                CAST($1:comments::TEXT AS VARCHAR(255)) AS comments,
+                $1:assigneduserid::NUMBER AS assigneduserid,
+                $1:previousqueueid::NUMBER AS previousqueueid,
                 $1:updatetime::TIMESTAMP_TZ AS updatetime,
+                $1:role::NUMBER AS role,
                 $1:id::NUMBER AS id,
-                $1:contactid::NUMBER AS contactid,
-                CAST($1:description::TEXT AS VARCHAR(255)) AS description,
-                $1:requestdate::TIMESTAMP_TZ AS requestdate,
-                $1:category::NUMBER AS category,
+                $1:assignmentdate::TIMESTAMP_TZ AS assignmentdate,
+                $1:previoususerid::NUMBER AS previoususerid,
+                $1:assignedqueueid::NUMBER AS assignedqueueid,
+                $1:assignmentstatus::NUMBER AS assignmentstatus,
+                $1:archivepartition::NUMBER AS archivepartition,
                 TO_TIMESTAMP($1:gwcbi___connector_ts_ms::NUMBER / 1000) as gwcbi_connector_ts_ms,
                 $1:gwcbi___lsn::NUMBER as gwcbi_lsn,
                 $1:gwcbi___operation::NUMBER as gwcbi_operation,
@@ -82,7 +90,7 @@ WITH cte_source_data AS
                 metadata_file_name,
                 file_ingestion_timestamp,
                 'PARQUET' file_type
-            FROM {{ source('gwcc', 'ccx_mspmedicaltreatment_ext') }}
+            FROM {{ source('gwpc', 'pc_accountuserroleassign') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
             
 ),
@@ -96,25 +104,29 @@ cte_transformed AS (
         CASE
              WHEN file_type = 'AVRO' THEN
                 {{ dbt_utils.generate_surrogate_key([
-                                'loadcommandid',
-                        'createuserid',
-                        'mspreferralid',
+                                'createuserid',
+                        'previousgroupid',
                         'publicid',
-                        'medtreatmentid',
+                        'active',
+                        'closedate',
                         'beanversion',
-                        'archivepartition',
+                        'accountid',
                         'createtime',
                         'retired',
-                        'treatmentdecisionduedate',
+                        'assignedbyuserid',
+                        'assignedgroupid',
                         'updateuserid',
-                        'treatmenttype',
-                        'approvalstatus',
+                        'comments',
+                        'assigneduserid',
+                        'previousqueueid',
                         'updatetime',
+                        'role',
                         'id',
-                        'contactid',
-                        'description',
-                        'requestdate',
-                        'category'
+                        'assignmentdate',
+                        'previoususerid',
+                        'assignedqueueid',
+                        'assignmentstatus',
+                        'archivepartition'
                         ]) }}
             WHEN file_type = 'PARQUET' THEN
                 {{ dbt_utils.generate_surrogate_key([

@@ -12,7 +12,7 @@ Date            Version         Author          Description of Change
 -#}   
 
 {{ config(
-    tags=["raw_gwcc","raw_layer"]
+    tags=["raw_gwpc","raw_layer"]
 ) }}
 
 
@@ -22,23 +22,18 @@ WITH cte_source_data AS
             SELECT
                 data_payload:LoadCommandID::NUMBER AS loadcommandid,
                 data_payload:CreateUserID::NUMBER AS createuserid,
-                data_payload:MSPReferralID::NUMBER AS mspreferralid,
                 CAST(data_payload:PublicID::TEXT AS VARCHAR(64)) AS publicid,
-                CAST(data_payload:MedTreatmentID::TEXT AS VARCHAR(25)) AS medtreatmentid,
                 data_payload:BeanVersion::NUMBER AS beanversion,
-                data_payload:ArchivePartition::NUMBER AS archivepartition,
-                TO_TIMESTAMP_TZ(data_payload:CreateTime::NUMBER/1000) AS createtime,
                 data_payload:Retired::NUMBER AS retired,
-                TO_TIMESTAMP_TZ(data_payload:TreatmentDecisionDueDate::NUMBER/1000) AS treatmentdecisionduedate,
+                TO_TIMESTAMP_TZ(data_payload:CreateTime::NUMBER/1000) AS createtime,
                 data_payload:UpdateUserID::NUMBER AS updateuserid,
-                CAST(data_payload:TreatmentType::TEXT AS VARCHAR(255)) AS treatmenttype,
-                data_payload:ApprovalStatus::NUMBER AS approvalstatus,
+                CAST(data_payload:AddressBookUID::TEXT AS VARCHAR(64)) AS addressbookuid,
                 TO_TIMESTAMP_TZ(data_payload:UpdateTime::NUMBER/1000) AS updatetime,
-                data_payload:ID::NUMBER AS id,
+                data_payload:Type::NUMBER AS type,
                 data_payload:ContactID::NUMBER AS contactid,
-                CAST(data_payload:Description::TEXT AS VARCHAR(255)) AS description,
-                TO_TIMESTAMP_TZ(data_payload:RequestDate::NUMBER/1000) AS requestdate,
-                data_payload:Category::NUMBER AS category,
+                data_payload:ID::NUMBER AS id,
+                data_payload:ObfuscatedInternal::BOOLEAN AS obfuscatedinternal,
+                data_payload:ArchivePartition::NUMBER AS archivepartition,
                 CAST(NULL AS TIMESTAMP_LTZ) as gwcbi_connector_ts_ms,
                 CAST(NULL AS NUMBER) as gwcbi_lsn,
                 CAST(NULL AS NUMBER) as gwcbi_operation,
@@ -49,29 +44,24 @@ WITH cte_source_data AS
                 metadata_file_name,
                 file_ingestion_timestamp,
                 'AVRO' file_type
-            FROM {{ source('gwcc', 'ccx_mspmedicaltreatment_ext') }}
+            FROM {{ source('gwpc', 'pc_contacttag') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
             UNION ALL 
             SELECT
                 $1:loadcommandid::NUMBER AS loadcommandid,
                 $1:createuserid::NUMBER AS createuserid,
-                $1:mspreferralid::NUMBER AS mspreferralid,
                 CAST($1:publicid::TEXT AS VARCHAR(64)) AS publicid,
-                CAST($1:medtreatmentid::TEXT AS VARCHAR(15)) AS medtreatmentid,
                 $1:beanversion::NUMBER AS beanversion,
-                $1:archivepartition::NUMBER AS archivepartition,
-                $1:createtime::TIMESTAMP_TZ AS createtime,
                 $1:retired::NUMBER AS retired,
-                $1:treatmentdecisionduedate::TIMESTAMP_TZ AS treatmentdecisionduedate,
+                $1:createtime::TIMESTAMP_TZ AS createtime,
                 $1:updateuserid::NUMBER AS updateuserid,
-                CAST($1:treatmenttype::TEXT AS VARCHAR(255)) AS treatmenttype,
-                $1:approvalstatus::NUMBER AS approvalstatus,
+                CAST($1:addressbookuid::TEXT AS VARCHAR(64)) AS addressbookuid,
                 $1:updatetime::TIMESTAMP_TZ AS updatetime,
-                $1:id::NUMBER AS id,
+                $1:type::NUMBER AS type,
                 $1:contactid::NUMBER AS contactid,
-                CAST($1:description::TEXT AS VARCHAR(255)) AS description,
-                $1:requestdate::TIMESTAMP_TZ AS requestdate,
-                $1:category::NUMBER AS category,
+                $1:id::NUMBER AS id,
+                $1:obfuscatedinternal::BOOLEAN AS obfuscatedinternal,
+                $1:archivepartition::NUMBER AS archivepartition,
                 TO_TIMESTAMP($1:gwcbi___connector_ts_ms::NUMBER / 1000) as gwcbi_connector_ts_ms,
                 $1:gwcbi___lsn::NUMBER as gwcbi_lsn,
                 $1:gwcbi___operation::NUMBER as gwcbi_operation,
@@ -82,7 +72,7 @@ WITH cte_source_data AS
                 metadata_file_name,
                 file_ingestion_timestamp,
                 'PARQUET' file_type
-            FROM {{ source('gwcc', 'ccx_mspmedicaltreatment_ext') }}
+            FROM {{ source('gwpc', 'pc_contacttag') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
             
 ),
@@ -98,23 +88,18 @@ cte_transformed AS (
                 {{ dbt_utils.generate_surrogate_key([
                                 'loadcommandid',
                         'createuserid',
-                        'mspreferralid',
                         'publicid',
-                        'medtreatmentid',
                         'beanversion',
-                        'archivepartition',
-                        'createtime',
                         'retired',
-                        'treatmentdecisionduedate',
+                        'createtime',
                         'updateuserid',
-                        'treatmenttype',
-                        'approvalstatus',
+                        'addressbookuid',
                         'updatetime',
-                        'id',
+                        'type',
                         'contactid',
-                        'description',
-                        'requestdate',
-                        'category'
+                        'id',
+                        'obfuscatedinternal',
+                        'archivepartition'
                         ]) }}
             WHEN file_type = 'PARQUET' THEN
                 {{ dbt_utils.generate_surrogate_key([
