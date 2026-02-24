@@ -4,13 +4,14 @@ Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
 2026.01.11      0.0                             This Creates a DBT Incremental Model for the Curated Layer
+                                                This Model is for the Curated table abtl_historytype in Schema gwab in the Curated Layer 
 -#}
 
 {{ config(
     materialized='incremental',
-    incremental_strategy='merge',
+    incremental_strategy='append',
     unique_key='HASH_KEY',
-    tags=['daily', 'curated', 'hourly', 'contact_manager']
+    tags=['daily', 'curated', 'hourly', 'curated_ab_incremental']
 ) }}
 
 SELECT
