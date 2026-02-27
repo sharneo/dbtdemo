@@ -53,9 +53,8 @@ models:
         genesys:
          +schema: genesys 
       curated:
-        +schema : gwpc
         +database: DEV_CURATED_DB
-        +transient: true
+        +transient: false
         gwpc:
          +schema: gwpc 
         gwcc:
