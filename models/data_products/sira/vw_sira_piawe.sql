@@ -1,6 +1,17 @@
+
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a Claimant View for SIRA Reporting  
+
+-#}
+
+
 {{ config(
     materialized='view',
-    schema='sira'
+    tags=["sira", "business_critical"]
 ) }}
 
 with cc_exposure as (
@@ -63,7 +74,7 @@ cc_claim as (
         id,
         claimnumber,
         lossdate
-    from {{ ref('vw_cc_claim_currrent') }}    
+    from {{ ref('vw_cc_claim_current') }}    
       where retired = 0
 ),
 {#-

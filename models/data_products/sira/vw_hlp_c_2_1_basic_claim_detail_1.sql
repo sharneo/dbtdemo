@@ -1,6 +1,16 @@
+
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates Helper View of the C2_1_BASIC_DETAIL
+
+-#}
+
 {{ config(
     materialized='view',
-    schema='sira'
+    tags=["sira", "business_critical"]
 ) }}
 
 with cc_claim as 
@@ -208,9 +218,7 @@ insurer_control as (
         'Y' as active_ind
 ),
 claim_rule as (
-    select claim_number, rule_id
-    from {{ ref('vw_claim_rule_current') }}
-    where rule_id = 1
+    select '1023290702' as claim_number, '1' as rule_id
 ),
 
 base as (
