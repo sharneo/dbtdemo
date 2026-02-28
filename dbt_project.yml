@@ -64,9 +64,15 @@ models:
         gwbc:
          +schema: gwbc
       reporting:
-        +schema : policy
+        +database: DEV_REPORTING_DB
+        +transient: false
+        sira:
+         +schema: sira 
       data_products:
-        +schema : policy
+        +database: DEV_REPORTING_DB
+        +transient: false
+        sira:
+         +schema: sira 
 
     dbt_artifacts:
       +database: DEV_RAW_DB # optional, default is your target database
