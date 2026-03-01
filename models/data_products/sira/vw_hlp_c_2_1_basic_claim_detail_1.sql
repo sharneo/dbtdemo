@@ -10,13 +10,12 @@ Date            Version         Author          Description of Change
 
 {{ config(
     materialized='view',
-    tags=["sira", "business_critical"]
+    tags=["sira", "business_critical","hlper_views"]
 ) }}
 
 with cc_claim as 
 (
 SELECT claimnumber,
-       claim_sk,
        id,
        reporteddate,
        createtime,
@@ -205,7 +204,7 @@ piawe as (
     select
         claimnumber, claimid, typecode, totalweekspaid, pre_injuiry_average_weekly,
         ordinary_earnings, shift_allowance, overtime, createtime, effectivedate_icare,
-        piawedelactivated_icare, rpstartdate, rpenddate, draft, exposureid
+        rpstartdate, rpenddate, draft, exposureid
     from {{ ref('vw_sira_piawe') }}
 ),
 managing_entity as (
@@ -223,9 +222,7 @@ claim_rule as (
 
 base as (
     select
-        c.claim_sk,
-        dte.submission_period::varchar || '^' || c.claimnumber as bcd1_key,
-        dte.submission_period,
+        '1223' as claim_sk,
         2 as c_2_1_1_record_type,
         c.claimnumber || coalesce(lag.typecode, '701') as c_2_1_2_claim_number,
         1 as c_2_1_3_record_identifier,
@@ -301,54 +298,15 @@ base as (
             when case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end < '19910701' then '000'
             else coalesce(tbc.injurycode, '900')
         end as c_2_1_46_bodily_location_of_injury_disease_code,
-        case
-            when case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end < '19910701' then '00'
-            else coalesce(i.mechanismofinjurycode_icare, '99')
-        end as c_2_1_47_toocs_mechanism,
-        case
-            when case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end < '19910701'
-                or case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end > '20110630'
-            then '000'
-            else lpad(coalesce(i.breakdownagencycode_icare, '999')::varchar, 3, '0')
-        end as c_2_1_48_breakdown_agency,
         coalesce(st.typecode, '0') as c_2_1_49_result_of_injury_code,
         coalesce(to_char(i.deceaseddate_icare, 'YYYYMMDD'), '00000000') as c_2_1_50_date_deceased,
         coalesce(wic.code::varchar, '000000') as c_2_1_52_workers_compensation_industry_classification_wic_rate_number,
-        case
-            when case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end < '19910701'
-                or case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end > '20110630'
-            then '000'
-            else lpad(coalesce(i.agencyofinjurycode_icare, '999')::varchar, 3, '0')
-        end as c_2_1_54_agency_of_injury_disease,
-        case
-            when i.significantinjurydate_icare > dte.submission_period_end_dt then '00000000'
-            else coalesce(to_char(i.significantinjurydate_icare, 'YYYYMMDD'), '00000000')
-        end as c_2_1_55_significant_injury_date,
-        coalesce(to_char(i.contactcompletedate_icare, 'YYYYMMDD'), '00000000') as c_2_1_56_contact_complete_date,
-        coalesce(claimant.homephone, 'NA') as c_2_1_58_worker_home_telephone_number,
-        case
-            when case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end < '20110701' then '0000'
-            else lpad(coalesce(i.breakdownagencycode_icare, '9999')::varchar, 4, '0')
-        end as c_2_1_59_toocs_breakdown_agency,
-        case
-            when case when cr.claim_number is not null then to_char(c.reporteddate, 'YYYYMMDD') else to_char(c.createtime, 'YYYYMMDD') end < '20110701' then '0000'
-            else lpad(coalesce(i.agencyofinjurycode_icare, '9999')::varchar, 4, '0')
-        end as c_2_1_60_toocs_agency_of_injury_disease,
         cctl_poltype.typecode as policy_type,
         iff(c.retired = 0, 'N', 'Y') as claim_retired,
         coalesce(mag.typecode, lag.typecode)::varchar(5) as insurer_number,
-        c.omd_insert_module_instance_id,
-        c.omd_insert_dttm,
-        c.omd_record_src,
-        c.omd_src_row_id,
-        c.omd_cdc_operation,
-        '' as omd_hash_full_record,
-        c.omd_error_level,
-        'Y' as omd_curr_record_ind,
-        'N' as omd_del_record_ind,
         'N' as sira_processing_ind
     from cc_claim c
-    left join claim_wic_icare cw on c.id = cw.ownerid and cw.row_num = 1 and cw.omd_cdc_operation <> 'D'
+    left join claim_wic_icare cw on c.id = cw.ownerid 
     left join ccx_wic_icare wic on wic.id = cw.foreignentityid
     left join shared_claim sc on sc.id = c.sharedclaim_icare
     left join insurer_branch ib on ib.id = c.branchinsurer_icare
@@ -372,10 +330,9 @@ base as (
     left join severity_type st on i.severity = st.id
     left join lodging_agent lag on c.lodgingagent_icare = lag.id
     left join managing_agent mag on c.claimsagent_icare = mag.id
-    cross join submission_period dte
     left join claimant on claimant.claimid = c.id
     left join dependents on dependents.claimid = c.id
-    left join piawe dolls on dolls.claimid = c.id and dolls.row_num = 1
+    left join piawe dolls on dolls.claimid = c.id 
     left join managing_entity ma_ccx on ma_ccx.id = c.managingentity_icare and ma_ccx.retired = 0 and ma_ccx.role in ('10001', '10002', '10004')
     inner join insurer_control ic on ic.insurer_number = mag.typecode
     left join claim_rule cr on cr.claim_number = c.claimnumber || lag.typecode

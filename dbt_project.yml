@@ -66,8 +66,6 @@ models:
       reporting:
         +database: DEV_REPORTING_DB
         +transient: false
-        sira:
-         +schema: sira 
       data_products:
         +database: DEV_REPORTING_DB
         +transient: false
@@ -85,4 +83,4 @@ models:
         +schema: ELT_UTILS # optional, default is your target schema
 
 on-run-end:
-  - "{{ dbt_artifacts.upload_results(results) }}"
+  - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"

@@ -21,8 +21,7 @@ with cc_exposure as (
         exposuretype,
         retired
         from {{ ref('vw_cc_exposure_current') }}
-    )
-      and retired = 0
+        where retired = 0
 ),
 
 ccx_piawe_icare as (
@@ -94,7 +93,7 @@ base as (
                 case 
                     when t.name in ('Calculated PIAWE', 'Manual PIAWE', 'Migrated PIAWE') then coalesce(p.ordinaryearnings_icare, 0) + coalesce(p.totalshiftweek, 0) + coalesce(p.totalovertimeweek, 0)
                     when t.name in ('Interim PIAWE', 'Transitional Rate') then p.piawefirst52_icare
-                    when t.name = 'Indexed PIAWE' then case when ba.totalweekspaid <= 52 then p.piawefirst52_icare else p.piawelater52_icare end
+             --       when t.name = 'Indexed PIAWE' then case when ba.totalweekspaid <= 52 then p.piawefirst52_icare else p.piawelater52_icare end
                     when t.name in ('WCC PIAWE', 'Agreement PIAWE') then 0
                 end
             when cast(c.lossdate as date) between '2018-10-26' and '2019-10-20' then
@@ -110,7 +109,7 @@ base as (
                 case 
                     when t.name in ('Calculated PIAWE', 'Manual PIAWE', 'Migrated PIAWE') then p.ordinaryearnings_icare
                     when t.name in ('Interim PIAWE', 'Transitional Rate') then p.piawefirst52_icare
-                    when t.name = 'Indexed PIAWE' then case when ba.totalweekspaid <= 52 then p.piawefirst52_icare else p.piawelater52_icare end
+            --        when t.name = 'Indexed PIAWE' then case when ba.totalweekspaid <= 52 then p.piawefirst52_icare else p.piawelater52_icare end
                     when t.name in ('WCC PIAWE', 'Agreement PIAWE') then 0
                 end
             when cast(c.lossdate as date) between '2018-10-26' and '2019-10-20' then
@@ -151,7 +150,7 @@ base as (
     left join cctl_exposuretype et on et.id = e.exposuretype
 --    left join ccx_benefitsaccrual_icare ba on ba.exposureid = e.id
     left join cc_claim c on c.id = e.claimid
-    cross join submission_period sp
+--    cross join submission_period sp
     where e.retired = 0
       and et.typecode = 'LostWages'
       and p.draft = 0
@@ -163,7 +162,7 @@ select
     claimnumber,
     claimid,
     typecode,
-    totalweekspaid,
+    0 as totalweekspaid,
     pre_injuiry_average_weekly,
     ordinary_earnings,
     shift_allowance,
