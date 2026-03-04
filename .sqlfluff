@@ -2,27 +2,28 @@
 dialect = snowflake
 templater = dbt
 runaway_limit = 10
-max_line_length = 80
+max_line_length = 120
 indent_unit = space
 
 [sqlfluff:indentation]
 tab_space_size = 4
+indented_joins = false
+indented_ctes = false
+indented_using_on = true
+template_blocks_indent = false
+
+[sqlfluff:templater:dbt]
+project_dir = ./
+profiles_dir = ~/.dbt
+profile = default
+target = dev
 
 [sqlfluff:layout:type:comma]
 spacing_before = touch
 line_position = trailing
 
-[sqlfluff:rules:capitalisation.keywords] 
+[sqlfluff:rules:capitalisation.keywords]
 capitalisation_policy = lower
-
-[sqlfluff:rules:aliasing.table]
-aliasing = explicit
-
-[sqlfluff:rules:aliasing.column]
-aliasing = explicit
-
-[sqlfluff:rules:aliasing.expression]
-allow_scalar = False
 
 [sqlfluff:rules:capitalisation.identifiers]
 extended_capitalisation_policy = lower
@@ -33,5 +34,27 @@ capitalisation_policy = lower
 [sqlfluff:rules:capitalisation.literals]
 capitalisation_policy = lower
 
-[sqlfluff:rules:ambiguous.column_references]  # Number in group by
+[sqlfluff:rules:capitalisation.types]
+extended_capitalisation_policy = lower
+
+[sqlfluff:rules:aliasing.table]
+aliasing = explicit
+
+[sqlfluff:rules:aliasing.column]
+aliasing = explicit
+
+[sqlfluff:rules:aliasing.expression]
+allow_scalar = false
+
+[sqlfluff:rules:aliasing.length]
+min_alias_length = 3
+
+[sqlfluff:rules:convention.select_trailing_comma]
+select_clause_trailing_comma = forbid
+
+[sqlfluff:rules:convention.count_rows]
+prefer_count_1 = false
+prefer_count_0 = false
+
+[sqlfluff:rules:ambiguous.column_references]
 group_by_and_order_by_style = implicit
