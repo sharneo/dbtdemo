@@ -14,8 +14,9 @@ cte_incident as (
         subtype,
         mechanismofinjurydesc_icare
     from {{ ref('vw_cc_incident') }}
-    where claimincident = 1
-      and retired = 0
+    where
+        claimincident = 1
+        and retired = 0
 ),
 
 cte_incident_type as (
@@ -63,17 +64,17 @@ cte_accident_loc_type as (
 ),
 
 cte_subrogation as (
-    select distinct
-        subrosumm.claimid
-    from {{ ref('vw_cc_subrogationsummary') }} subrosumm
-    inner join {{ ref('vw_cc_subrogation') }} subro
-        on subro.subrogationsummaryid = subrosumm.id
-        and subro.retired = 0
+    select distinct subrosumm.claimid
+    from {{ ref('vw_cc_subrogationsummary') }} as subrosumm
+    inner join {{ ref('vw_cc_subrogation') }} as subro
+        on
+            subrosumm.id = subro.subrogationsummaryid
+            and subro.retired = 0
     where subrosumm.retired = 0
 )
 
 select distinct
-    {{ dbt_utils.generate_surrogate_key(['\'GWCC\'', 'clm.claimnumber']) }} as claim_sk,
+    {{ dbt_utils.generate_surrogate_key(['GWCC', 'clm.claimnumber']) }} as claim_sk,
     'GWCC' as src_system_cd,
     clm.id as src_claim_id,
     clm.claimnumber as claim_nbr,
@@ -85,11 +86,11 @@ select distinct
     inc.mechanismofinjurydesc_icare as toocs_mechanism_if_injury_desc,
     dimacc.typecode as accident_location_type_cd,
     dimacc.name as accident_location_type_desc
-from cte_claim clm
-join cte_incident inc on clm.id = inc.claimid
-join cte_incident_type cctl_incident on cctl_incident.id = inc.subtype
-left join cte_policy_location polloc on clm.locationcodeid = polloc.id
-join cte_address pollocaddr on polloc.addressid = pollocaddr.id
-left join cte_workcomp wrkcomp on clm.claimworkcompid = wrkcomp.id
-join cte_accident_loc_type dimacc on wrkcomp.accidentlocationtype_icare = dimacc.id
-left join cte_subrogation subro on subro.claimid = clm.id
+from cte_claim as clm
+inner join cte_incident as inc on clm.id = inc.claimid
+inner join cte_incident_type as cctl_incident on inc.subtype = cctl_incident.id
+left join cte_policy_location as polloc on clm.locationcodeid = polloc.id
+inner join cte_address as pollocaddr on polloc.addressid = pollocaddr.id
+left join cte_workcomp as wrkcomp on clm.claimworkcompid = wrkcomp.id
+inner join cte_accident_loc_type as dimacc on wrkcomp.accidentlocationtype_icare = dimacc.id
+left join cte_subrogation as subro on clm.id = subro.claimid
