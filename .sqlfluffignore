@@ -1,4 +1,14 @@
-reports
-target
-dbt_packages
-macros
+# dbt artifacts and compiled output
+target/
+
+# External dbt packages
+dbt_packages/
+
+# Macros (Jinja-heavy, not standard SQL)
+macros/
+
+# Seed files (raw CSVs loaded as-is)
+seeds/
+
+# Snapshot files (often have complex Jinja)
+snapshots/
