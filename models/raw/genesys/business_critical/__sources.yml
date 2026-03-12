@@ -1,6 +1,0 @@
-sources:
-  - name: genesys
-    database: DEV_RAW_DB
-    schema: GENESYS
-    tables:
-      - name: transcript
