@@ -1,7 +1,0 @@
-sources:
-  - name: gwcc
-    database: DEV_RAW_DB
-    schema: GWCC
-    tables:
-      - name: cc_claim
-      - name: cc_activity

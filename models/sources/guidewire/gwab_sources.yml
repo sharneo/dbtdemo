@@ -1,0 +1,33 @@
+version: 2
+sources:
+- name: gwab
+  description: 'Data Lake Curated Data'
+  database: DEV_RAW_DB
+  schema: gwab
+  tables:
+    - name: ab_abcontact
+    - name: ab_history
+    - name: ab_abcontacttag
+    - name: ab_address
+    - name: ab_abcontactaddress
+    - name: ab_eftdata
+    - name: abx_accreditation
+    - name: ab_user
+    - name: abtl_country
+    - name: abtl_specialtytype
+    - name: abtl_state
+    - name: abtl_stateabbreviation
+    - name: abtl_accountorgtype_icare
+    - name: abtl_customhistorytype
+    - name: abtl_abcontact
+    - name: abtl_accreditationtype_icare
+    - name: abtl_nameprefix
+    - name: abtl_contacttagtype
+    - name: abtl_commmethod_icare
+    - name: abtl_dpplatformtype_ext
+    - name: abtl_history
+    - name: abtl_historytype
+    - name: abtl_primaryphonetype
+    - name: abtl_contactstatus_ext
+    - name: abtl_banktype_icare
+    - name: abtl_paymentmethod_icare

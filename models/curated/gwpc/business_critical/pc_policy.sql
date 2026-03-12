@@ -1,27 +1,26 @@
 {#-
-
-Project: Data Uplift Progran 
-Project Description/Purpose: Data Uplift Program 
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
-2025-11-18      0.0                             This Build the pc_policy in the curated layers 
-
--#}   
+2026.01.11      0.0                             This Creates a DBT Incremental Model for the Curated Layer
+                                                This Model is for the Curated table pc_policy in Schema gwpc in the Curated Layer 
+-#}
 
 {{ config(
     materialized='incremental',
-    unique_key='id_hash',  
-    incremental_strategy='merge'  
+    incremental_strategy='append',
+    unique_key='HASH_KEY',
+    tags=['daily', 'curated', 'hourly', 'curated_pc_incremental']
 ) }}
 
-{# --- Select all columns except the snapshot fields and hash columns --- #}
 SELECT
-    {{ dbt_utils.star(
-        from=ref('vw_raw_pc_policy')
-    ) }}
-FROM {{ ref('vw_raw_pc_policy') }} AS gwpc
+    {{ dbt_utils.star(from=ref('vw_raw_pc_policy')) }}
+FROM {{ ref('vw_raw_pc_policy') }} AS src
 
 {% if is_incremental() %}
-  -- Only load new or updated rows in incremental runs
-  WHERE gwpc.file_ingestion_timestamp > (SELECT MAX(file_ingestion_timestamp) FROM {{ this }})
+WHERE src.file_ingestion_timestamp >= (
+    SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01')
+    FROM {{ this }}
+)
 {% endif %}

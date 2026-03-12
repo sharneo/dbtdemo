@@ -44,22 +44,33 @@ models:
          +schema: gwpc 
         gwcc:
          +schema: gwcc 
+        gwab:
+         +schema: gwab 
+        gwbc:
+         +schema: gwbc 
         salesforce:
          +schema: salesforce 
         genesys:
          +schema: genesys 
       curated:
-        +schema : gwpc
         +database: DEV_CURATED_DB
-        +transient: true
+        +transient: false
         gwpc:
          +schema: gwpc 
         gwcc:
          +schema: gwcc
+        gwab:
+         +schema: gwab
+        gwbc:
+         +schema: gwbc
       reporting:
-        +schema : policy
+        +database: DEV_REPORTING_DB
+        +transient: false
       data_products:
-        +schema : policy
+        +database: DEV_REPORTING_DB
+        +transient: false
+        sira:
+         +schema: sira 
 
     dbt_artifacts:
       +database: DEV_RAW_DB # optional, default is your target database
@@ -72,4 +83,4 @@ models:
         +schema: ELT_UTILS # optional, default is your target schema
 
 on-run-end:
-  - "{{ dbt_artifacts.upload_results(results) }}"
+  - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
