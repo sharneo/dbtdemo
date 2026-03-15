@@ -67,6 +67,7 @@ models:
       reporting:
         +database: DEV_REPORTING_DB
         +transient: false
+        +schema: sira
       data_products:
         +database: DEV_REPORTING_DB
         +transient: false
