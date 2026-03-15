@@ -73,7 +73,8 @@ models:
         +transient: false
         sira:
          +schema: sira 
-
+        aspire:
+         +schema: sira 
     dbt_artifacts:
       +database: DEV_RAW_DB # optional, default is your target database
       +schema: ELT_UTILS # optional, default is your target schema
