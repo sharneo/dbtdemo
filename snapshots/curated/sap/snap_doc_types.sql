@@ -16,7 +16,7 @@ WITH source_data AS (
     ]) }} AS doc_types_sk,
         *
     FROM {{ source('sap', 'doc_types') }}
-    WHERE RECORD_TYPE='D'
+    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data

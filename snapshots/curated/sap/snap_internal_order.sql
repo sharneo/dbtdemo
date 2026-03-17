@@ -16,7 +16,7 @@ WITH source_data AS (
     ]) }} AS internal_order_sk,
         *
     FROM {{ source('sap', 'internal_order') }}
-    WHERE RECORD_TYPE='D'
+    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data

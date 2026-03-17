@@ -19,7 +19,7 @@ WITH source_data AS (
     ]) }} AS fsv_sk,
         *
     FROM {{ source('sap', 'fsv') }}
-    WHERE RECORD_TYPE='D'
+    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data

@@ -17,7 +17,7 @@ WITH source_data AS (
     ]) }} AS chart_of_acc_sk,
         *
     FROM {{ source('sap', 'chart_of_acc') }}
-    WHERE RECORD_TYPE='D'
+    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data

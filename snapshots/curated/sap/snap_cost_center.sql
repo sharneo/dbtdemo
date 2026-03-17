@@ -18,7 +18,7 @@ WITH source_data AS (
     ]) }} AS cost_center_sk,
         *
     FROM {{ source('sap', 'cost_center') }}
-    WHERE RECORD_TYPE='D'
+    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data

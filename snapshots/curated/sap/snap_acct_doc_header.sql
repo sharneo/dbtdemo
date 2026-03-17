@@ -17,7 +17,7 @@ WITH source_data AS (
     ]) }} AS acct_doc_header_sk,
         *
     FROM {{ source('sap', 'acct_doc_header') }}
-    WHERE RECORD_TYPE='D'
+    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data
