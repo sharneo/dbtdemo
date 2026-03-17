@@ -20,7 +20,7 @@ WITH source_data AS (
     ]) }} AS acdoca_sk,
         *
     FROM {{ source('sap', 'acdoca') }}
-    WHERE RECORD_TYPE='D'
+    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data
