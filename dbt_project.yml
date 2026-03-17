@@ -101,4 +101,4 @@ snapshots:
         TMF:
           +target_schema: INTEGRATED_TMF
 on-run-end:
-  - "{{ dbt_artifacts.upload_results(results) }}"
+  - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
