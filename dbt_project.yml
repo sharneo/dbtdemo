@@ -83,22 +83,15 @@ models:
       sources:
         +database: DEV_RAW_DB # optional, default is your target database
         +schema: ELT_UTILS # optional, default is your target schema
+
 snapshots:
-  icare_dbt_transformations_fndn:
+  icare_dbt_transformations_fndn:   # folder where all your snapshots live
     +column_map:
       dbt_valid_from: valid_from
       dbt_valid_to: valid_to
       dbt_current: current_record_flag
     +target_database: DEV_CURATED_DB
+    +tags: ['snapshot','type2']  
 
-    sap:
-      +target_schema: SAP
-
-    integrated:
-      policy:
-        NI:
-          +target_schema: INTEGRATED_NI
-        TMF:
-          +target_schema: INTEGRATED_TMF
 on-run-end:
   - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
