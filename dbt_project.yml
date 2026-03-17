@@ -39,6 +39,9 @@ models:
       raw:
         +transient: false
         +enabled: true
+        +persist_docs:
+          relation: true
+          columns: true
         +materialized: view
         +database: DEV_RAW_DB
         gwpc:
@@ -56,6 +59,9 @@ models:
       curated:
         +database: DEV_CURATED_DB
         +transient: false
+        +persist_docs:
+          relation: true
+          columns: true
         gwpc:
          +schema: gwpc 
         gwcc:
@@ -67,6 +73,9 @@ models:
       reporting:
         +database: DEV_REPORTING_DB
         +transient: false
+        +persist_docs:
+          relation: true
+          columns: true
       data_products:
         +database: DEV_REPORTING_DB
         +transient: false
