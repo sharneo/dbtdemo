@@ -67,7 +67,6 @@ models:
       reporting:
         +database: DEV_REPORTING_DB
         +transient: false
-        +schema: sira
       data_products:
         +database: DEV_REPORTING_DB
         +transient: false
@@ -84,6 +83,17 @@ models:
       sources:
         +database: DEV_RAW_DB # optional, default is your target database
         +schema: ELT_UTILS # optional, default is your target schema
+snapshots:
+  icare_dbt_transformations_fndn:
+    +target_database: DEV_CURATED_DB
+    sap:
+      +target_schema: SAP
+    integrated:
+      policy:
+        NI:
+         +target_schema: INTEGRATED_NI
+        TMF:
+         +target_schema: INTEGRATED_TMF
 
 on-run-end:
   - "{{ dbt_artifacts.upload_results(results) }}"
