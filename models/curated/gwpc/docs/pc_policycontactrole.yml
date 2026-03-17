@@ -1,236 +1,171 @@
 version: 2
 models:
-- name: pc_policycontactrole
-  columns:
-  - name: licensenumberinternal
-    description: ""
-
-  - name: excludedinternal
-    description: ""
-
-  - name: companynamekanjiinternaldenorm
-    description: ""
-
-  - name: fixedid
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policycontactrole_fixedid_not_null
-        config:
-          severity: warn
-
-  - name: state
-    description: ""
-
-  - name: ownershippct
-    description: ""
-
-  - name: commercialpropertyline
-    description: ""
-
-  - name: updatetime
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policycontactrole_updatetime_not_null
-        config:
-          severity: warn
-
-  - name: dateofbirthinternal
-    description: ""
-
-  - name: generalliabilityline
-    description: ""
-
-  - name: lastnameinternaldenorm
-    description: ""
-
-  - name: id
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policycontactrole_id_not_null
-        config:
-          severity: warn
-
-  - name: createuserid
-    description: ""
-
-  - name: maritalstatusinternal
-    description: ""
-
-  - name: policyline
-    description: ""
-
-  - name: beanversion
-    description: ""
-
-  - name: licensestateinternal
-    description: ""
-
-  - name: updateuserid
-    description: ""
-
-  - name: firstnameinternaldenorm
-    description: ""
-
-  - name: quickquotenumber
-    description: ""
-
-  - name: workerscompline
-    description: ""
-
-  - name: relationship
-    description: ""
-
-  - name: included
-    description: ""
-
-  - name: branchid
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policycontactrole_branchid_not_null
-        config:
-          severity: warn
-
-  - name: classcodeid
-    description: ""
-
-  - name: companynameinternaldenorm
-    description: ""
-
-  - name: donotordermvr
-    description: ""
-
-  - name: particleinternal
-    description: ""
-
-  - name: publicid
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policycontactrole_publicid_not_null
-        config:
-          severity: warn
-
-  - name: companynameinternal
-    description: ""
-
-  - name: applicablegooddriverdiscount
-    description: ""
-
-  - name: inlandmarineline
-    description: ""
-
-  - name: accountcontactrole
-    description: ""
-
-  - name: createtime
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policycontactrole_createtime_not_null
-        config:
-          severity: warn
-
-  - name: companynamekanjiinternal
-    description: ""
-
-  - name: numberofviolations
-    description: ""
-
-  - name: lastnamekanjiinternaldenorm
-    description: ""
-
-  - name: lastnamekanjiinternal
-    description: ""
-
-  - name: businessownersline
-    description: ""
-
-  - name: effectivedate
-    description: ""
-
-  - name: expirationdate
-    description: ""
-
-  - name: contactdenorm
-    description: ""
-
-  - name: relationshiptitleinternal
-    description: ""
-
-  - name: lastnameinternal
-    description: ""
-
-  - name: businessautoline
-    description: ""
-
-  - name: personalautoline
-    description: ""
-
-  - name: numberofaccidents
-    description: ""
-
-  - name: seqnumber
-    description: ""
-
-  - name: archivepartition
-    description: ""
-
-  - name: changetype
-    description: ""
-
-  - name: basedonid
-    description: ""
-
-  - name: firstnamekanjiinternaldenorm
-    description: ""
-
-  - name: firstnameinternal
-    description: ""
-
-  - name: firstnamekanjiinternal
-    description: ""
-
-  - name: subtype
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policycontactrole_subtype_not_null
-        config:
-          severity: warn
-
-  - name: gwcbi_connector_ts_ms
-    description: ""
-
-  - name: gwcbi_lsn
-    description: ""
-
-  - name: gwcbi_operation
-    description: ""
-
-  - name: gwcbi_payload_ts_ms
-    description: ""
-
-  - name: gwcbi_seqval
-    description: ""
-
-  - name: gwcbi_seqval_hex
-    description: ""
-
-  - name: gwcbi_tx_id
-    description: ""
-
-  - name: metadata_file_name
-    description: ""
-
-  - name: file_ingestion_timestamp
-    description: ""
-
-  - name: file_type
-    description: ""
-
-  - name: hash_key
-    description: ""
+-  name: pc_policycontactrole
+   columns:
+   -  name: licensenumberinternal
+      description: ""
+   -  name: excludedinternal
+      description: ""
+   -  name: companynamekanjiinternaldenorm
+      description: ""
+   -  name: fixedid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policycontactrole_fixedid_not_null
+            config:
+               severity: warn
+   -  name: state
+      description: ""
+   -  name: ownershippct
+      description: ""
+   -  name: commercialpropertyline
+      description: ""
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policycontactrole_updatetime_not_null
+            config:
+               severity: warn
+   -  name: dateofbirthinternal
+      description: ""
+   -  name: generalliabilityline
+      description: ""
+   -  name: lastnameinternaldenorm
+      description: ""
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policycontactrole_id_not_null
+            config:
+               severity: warn
+   -  name: createuserid
+      description: ""
+   -  name: maritalstatusinternal
+      description: ""
+   -  name: policyline
+      description: ""
+   -  name: beanversion
+      description: ""
+   -  name: licensestateinternal
+      description: ""
+   -  name: updateuserid
+      description: ""
+   -  name: firstnameinternaldenorm
+      description: ""
+   -  name: quickquotenumber
+      description: ""
+   -  name: workerscompline
+      description: ""
+   -  name: relationship
+      description: ""
+   -  name: included
+      description: ""
+   -  name: branchid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policycontactrole_branchid_not_null
+            config:
+               severity: warn
+   -  name: classcodeid
+      description: ""
+   -  name: companynameinternaldenorm
+      description: ""
+   -  name: donotordermvr
+      description: ""
+   -  name: particleinternal
+      description: ""
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policycontactrole_publicid_not_null
+            config:
+               severity: warn
+   -  name: companynameinternal
+      description: ""
+   -  name: applicablegooddriverdiscount
+      description: ""
+   -  name: inlandmarineline
+      description: ""
+   -  name: accountcontactrole
+      description: ""
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policycontactrole_createtime_not_null
+            config:
+               severity: warn
+   -  name: companynamekanjiinternal
+      description: ""
+   -  name: numberofviolations
+      description: ""
+   -  name: lastnamekanjiinternaldenorm
+      description: ""
+   -  name: lastnamekanjiinternal
+      description: ""
+   -  name: businessownersline
+      description: ""
+   -  name: effectivedate
+      description: ""
+   -  name: expirationdate
+      description: ""
+   -  name: contactdenorm
+      description: ""
+   -  name: relationshiptitleinternal
+      description: ""
+   -  name: lastnameinternal
+      description: ""
+   -  name: businessautoline
+      description: ""
+   -  name: personalautoline
+      description: ""
+   -  name: numberofaccidents
+      description: ""
+   -  name: seqnumber
+      description: ""
+   -  name: archivepartition
+      description: ""
+   -  name: changetype
+      description: ""
+   -  name: basedonid
+      description: ""
+   -  name: firstnamekanjiinternaldenorm
+      description: ""
+   -  name: firstnameinternal
+      description: ""
+   -  name: firstnamekanjiinternal
+      description: ""
+   -  name: subtype
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policycontactrole_subtype_not_null
+            config:
+               severity: warn
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

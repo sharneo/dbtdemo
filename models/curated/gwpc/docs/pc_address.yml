@@ -1,228 +1,169 @@
 version: 2
 models:
-- name: pc_address
-  columns:
-  - name: locationname
-    description: ""
-
-  - name: loadcommandid
-    description: ""
-
-  - name: publicid
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_publicid_not_null
-        config:
-          severity: warn
-
-  - name: batchgeocode
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_batchgeocode_not_null
-        config:
-          severity: warn
-
-  - name: active
-    description: ""
-
-  - name: createtime
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_createtime_not_null
-        config:
-          severity: warn
-
-  - name: addressline1
-    description: ""
-
-  - name: addressline2
-    description: ""
-
-  - name: county
-    description: ""
-
-  - name: addressline3
-    description: ""
-
-  - name: citykanji
-    description: ""
-
-  - name: spatialpoint
-    description: ""
-
-  - name: addressline2kanji
-    description: ""
-
-  - name: phoneextension
-    description: ""
-
-  - name: state
-    description: ""
-
-  - name: addressbookuid
-    description: ""
-
-  - name: updatetime
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_updatetime_not_null
-        config:
-          severity: warn
-
-  - name: country
-    description: ""
-
-  - name: id
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_id_not_null
-        config:
-          severity: warn
-
-  - name: isvalidated_icare
-    description: ""
-
-  - name: employeecount
-    description: ""
-
-  - name: locationcode
-    description: ""
-
-  - name: createuserid
-    description: ""
-
-  - name: validuntil
-    description: ""
-
-  - name: phonecountry
-    description: ""
-
-  - name: beanversion
-    description: ""
-
-  - name: citydenorm
-    description: ""
-
-  - name: retired
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_retired_not_null
-        config:
-          severity: warn
-
-  - name: city
-    description: ""
-
-  - name: lastupdatetime
-    description: ""
-
-  - name: account
-    description: ""
-
-  - name: phone
-    description: ""
-
-  - name: addresstype
-    description: ""
-
-  - name: addressline1kanji
-    description: ""
-
-  - name: updateuserid
-    description: ""
-
-  - name: cedexbureau
-    description: ""
-
-  - name: geocodestatus
-    description: ""
-
-  - name: locationnum
-    description: ""
-
-  - name: cedex
-    description: ""
-
-  - name: postalcodedenorm
-    description: ""
-
-  - name: postalcode
-    description: ""
-
-  - name: referenced
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_referenced_not_null
-        config:
-          severity: warn
-
-  - name: subtype
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_subtype_not_null
-        config:
-          severity: warn
-
-  - name: linkedaddress
-    description: ""
-
-  - name: description
-    description: ""
-
-  - name: temporarylastupdatetime
-    description: ""
-
-  - name: nonspecific
-    description: ""
-
-  - name: obfuscatedinternal
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_address_obfuscatedinternal_not_null
-        config:
-          severity: warn
-
-  - name: archivepartition
-    description: ""
-
-  - name: gwcbi_connector_ts_ms
-    description: ""
-
-  - name: gwcbi_lsn
-    description: ""
-
-  - name: gwcbi_operation
-    description: ""
-
-  - name: gwcbi_payload_ts_ms
-    description: ""
-
-  - name: gwcbi_seqval
-    description: ""
-
-  - name: gwcbi_seqval_hex
-    description: ""
-
-  - name: gwcbi_tx_id
-    description: ""
-
-  - name: metadata_file_name
-    description: ""
-
-  - name: file_ingestion_timestamp
-    description: ""
-
-  - name: file_type
-    description: ""
-
-  - name: hash_key
-    description: ""
+-  name: pc_address
+   columns:
+   -  name: locationname
+      description: ""
+   -  name: loadcommandid
+      description: ""
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_publicid_not_null
+            config:
+               severity: warn
+   -  name: batchgeocode
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_batchgeocode_not_null
+            config:
+               severity: warn
+   -  name: active
+      description: ""
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_createtime_not_null
+            config:
+               severity: warn
+   -  name: addressline1
+      description: ""
+   -  name: addressline2
+      description: ""
+   -  name: county
+      description: ""
+   -  name: addressline3
+      description: ""
+   -  name: citykanji
+      description: ""
+   -  name: spatialpoint
+      description: ""
+   -  name: addressline2kanji
+      description: ""
+   -  name: phoneextension
+      description: ""
+   -  name: state
+      description: ""
+   -  name: addressbookuid
+      description: ""
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_updatetime_not_null
+            config:
+               severity: warn
+   -  name: country
+      description: ""
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_id_not_null
+            config:
+               severity: warn
+   -  name: isvalidated_icare
+      description: ""
+   -  name: employeecount
+      description: ""
+   -  name: locationcode
+      description: ""
+   -  name: createuserid
+      description: ""
+   -  name: validuntil
+      description: ""
+   -  name: phonecountry
+      description: ""
+   -  name: beanversion
+      description: ""
+   -  name: citydenorm
+      description: ""
+   -  name: retired
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_retired_not_null
+            config:
+               severity: warn
+   -  name: city
+      description: ""
+   -  name: lastupdatetime
+      description: ""
+   -  name: account
+      description: ""
+   -  name: phone
+      description: ""
+   -  name: addresstype
+      description: ""
+   -  name: addressline1kanji
+      description: ""
+   -  name: updateuserid
+      description: ""
+   -  name: cedexbureau
+      description: ""
+   -  name: geocodestatus
+      description: ""
+   -  name: locationnum
+      description: ""
+   -  name: cedex
+      description: ""
+   -  name: postalcodedenorm
+      description: ""
+   -  name: postalcode
+      description: ""
+   -  name: referenced
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_referenced_not_null
+            config:
+               severity: warn
+   -  name: subtype
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_subtype_not_null
+            config:
+               severity: warn
+   -  name: linkedaddress
+      description: ""
+   -  name: description
+      description: ""
+   -  name: temporarylastupdatetime
+      description: ""
+   -  name: nonspecific
+      description: ""
+   -  name: obfuscatedinternal
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_obfuscatedinternal_not_null
+            config:
+               severity: warn
+   -  name: archivepartition
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

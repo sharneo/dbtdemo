@@ -1,237 +1,167 @@
 version: 2
 models:
-- name: pc_policy
-  columns:
-  - name: donotdestroy
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_donotdestroy_not_null
-        config:
-          severity: warn
-
-  - name: isportalpolicy_icare
-    description: ""
-
-  - name: publicid
-    description: "ID or primary key of the row in the external system to which this\
-      \ row is mapped. Is a unique key like ID, however, is the ID that is used for\
-      \ external interfaces that do not change with a system refresh. It is also the\
-      \ ID that is referenced within the GW Suite i.e. Billing Center and possibly\
-      \ Claims Center (tbc in R2.1B)"
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_publicid_not_null
-        config:
-          severity: warn
-
-  - name: priorpremiums
-    description: "Premium for terms prior to conversion. GW Out-of-the-box functionality\
-      \ for prior losses and not used by icare as at Nov-17."
-  - name: issuedate
-    description: "The date on which this policy was first issued in GW via the issuing\
-      \ job. This does not necessarily mean this is the very first effective term\
-      \ of the policy (see OriginalEffectiveDate for that). It is a technical GW field\
-      \ that can be derived by looking at the timestamp of the SUBMISSION or ISSUANCE\
-      \ job on the policy."
-  - name: priorpremiums_cur
-    description: "Currency for Prior Premiums. GW has been configured for a single\
-      \ AUD currency, therefore, this field is not used. "
-  - name: movedpolicysourceaccountid
-    description: "Foreign key to PC_ACCOUNT.ID. This account id refers to the old\
-      \ Account ID if the policy was moved from an account. This functionality is\
-      \ not used by icare as at Nov-17."
-  - name: accountid
-    description: "Foreign key to PC_ACCOUNT.ID"
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_accountid_not_null
-        config:
-          severity: warn
-
-  - name: createtime
-    description: "Timestamp when the record was created in the GW table"
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_createtime_not_null
-        config:
-          severity: warn
-
-  - name: losshistorytype
-    description: "How the loss history is described for this policy. GW Out-of-the-box\
-      \ functionality for prior losses and not used by icare as at Nov-17."
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_losshistorytype_not_null
-        config:
-          severity: warn
-
-  - name: excludedfromarchive
-    description: "Internal technical GW field to manage archiving."
-
-  - name: archivestate
-    description: "Internal technical GW field to manage archiving."
-
-  - name: archiveschemainfo
-    description: "Internal technical GW field to manage archiving."
-
-  - name: archivefailuredetailsid
-    description: "Internal technical GW field to manage archiving."
-
-  - name: packagerisk
-    description: "Package Risk Type. GW Out-of-the-box functionality not used by icare\
-      \ as at Nov-17."
-  - name: numpriorlosses
-    description: "The number of losses. Only applicable for a loss history type of\
-      \ attached. GW Out-of-the-box functionality for prior losses and not used by\
-      \ icare as at Nov-17."
-  - name: updatetime
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_updatetime_not_null
-        config:
-          severity: warn
-
-  - name: primarylanguage
-    description: "The policys preferred language used as an internal technical GW\
-      \ field to manage display."
-  - name: donotarchive
-    description: "Internal technical GW field to manage archiving."
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_donotarchive_not_null
-        config:
-          severity: warn
-
-  - name: id
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_id_not_null
-        config:
-          severity: warn
-
-  - name: primarylocale
-    description: "The policys preferred locale used as an internal technical GW field\
-      \ to manage display."
-  - name: productcode
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_productcode_not_null
-        config:
-          severity: warn
-
-  - name: excludereason
-    description: "Internal technical GW field to manage archiving."
-
-  - name: groupnumberfromportal
-    description: "Group number from Portal. This is a free text field that is entered\
-      \ by the employer/broker via Portal specifying what Employer Group they belong\
-      \ to. This is validated by an Underwriter in GW PC. This is not to be used as\
-      \ the source of truth for the Employer Group Number"
-  - name: createuserid
-    description: "User ID of the user that created this record. Foreign key to PC_USER."
-
-  - name: archivefailureid
-    description: "Internal technical GW field to manage archiving."
-
-  - name: crnnumber_icare
-    description: "Policy Customer Reference Number for BPAY"
-
-  - name: originaleffectivedate
-    description: "The date on which this policy was originally issued or bound."
-
-  - name: beanversion
-    description: "Internal technical GW field to manage object versions."
-
-  - name: archivepartition
-    description: "Internal technical GW field to manage archiving."
-
-  - name: retired
-    description: "Indicator in GW signifying the record has been soft deleted."
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_retired_not_null
-        config:
-          severity: warn
-
-  - name: updateuserid
-    description: "User ID of the user that updated this record. Foreign key to PC_USER."
-
-  - name: priortotalincurred
-    description: "Related to loss history. GW Out-of-the-box functionality for prior\
-      \ losses and not used by icare as at Nov-17."
-  - name: archivedate
-    description: "Internal technical GW field to manage archiving."
-
-  - name: priortotalincurred_cur
-    description: "Currency for Prior Total Incurred. GW has been configured for a\
-      \ single AUD currency, therefore, this field is not used. "
-  - name: producercodeofserviceid
-    description: "FK to the PC_PRODUCERCODE table which stores who the Intermediary\
-      \ of Service for this policy is i.e. icare (employer direct) or via broker.\
-      \ This is the same as the PC_EFFECTIVEDATEDFIELDS.ProducerCodeID"
-    data_tests:
-    - not_null:
-        name: gwpc_pc_policy_producercodeofserviceid_not_null
-        config:
-          severity: warn
-
-  - name: newproducercode_ext
-    description: "Interal technical GW field used to enact bulk changes of changing\
-      \ the Producer of the policies e.g. moving all Policy administration from icare\
-      \ to EML. The master data for the Producer of the policy will be sourced from\
-      \ persistent GW tables like pc_producercode once the change takes effect."
-  - name: newclaimschemeagent_icare
-    description: "The Claims Scheme agent allocated to manage Claims lodged against\
-      \ the policy. This is replaced with PC_POLICYPERIOD.ClaimsMgr_SchemeAgent_icare.\
-      \ No longer used at the PC_POLICY level"
-  - name: movedpolsrcacctpubid
-    description: ""
-
-  - name: agencycontactdetails_ext
-    description: ""
-
-  - name: agencycontactemail_ext
-    description: ""
-
-  - name: agencycontactnumber_ext
-    description: ""
-
-  - name: insurancebook_extid
-    description: ""
-
-  - name: gwcbi_connector_ts_ms
-    description: ""
-
-  - name: gwcbi_lsn
-    description: ""
-
-  - name: gwcbi_operation
-    description: ""
-
-  - name: gwcbi_payload_ts_ms
-    description: ""
-
-  - name: gwcbi_seqval
-    description: ""
-
-  - name: gwcbi_seqval_hex
-    description: ""
-
-  - name: gwcbi_tx_id
-    description: ""
-
-  - name: metadata_file_name
-    description: ""
-
-  - name: file_ingestion_timestamp
-    description: ""
-
-  - name: file_type
-    description: ""
-
-  - name: hash_key
-    description: ""
+-  name: pc_policy
+   columns:
+   -  name: donotdestroy
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_donotdestroy_not_null
+            config:
+               severity: warn
+   -  name: isportalpolicy_icare
+      description: ""
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped. Is a unique key like ID, however, is the ID that is used for external interfaces that do not change with a system refresh. It is also the ID that is referenced within the GW Suite i.e. Billing Center and possibly Claims Center (tbc in R2.1B)"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_publicid_not_null
+            config:
+               severity: warn
+   -  name: priorpremiums
+      description: "Premium for terms prior to conversion. GW Out-of-the-box functionality for prior losses and not used by icare as at Nov-17."
+   -  name: issuedate
+      description: "The date on which this policy was first issued in GW via the issuing job. This does not necessarily mean this is the very first effective term of the policy (see OriginalEffectiveDate for that). It is a technical GW field that can be derived by looking at the timestamp of the SUBMISSION or ISSUANCE job on the policy."
+   -  name: priorpremiums_cur
+      description: "Currency for Prior Premiums. GW has been configured for a single AUD currency, therefore, this field is not used. "
+   -  name: movedpolicysourceaccountid
+      description: "Foreign key to PC_ACCOUNT.ID. This account id refers to the old Account ID if the policy was moved from an account. This functionality is not used by icare as at Nov-17."
+   -  name: accountid
+      description: "Foreign key to PC_ACCOUNT.ID"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_accountid_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the record was created in the GW table"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_createtime_not_null
+            config:
+               severity: warn
+   -  name: losshistorytype
+      description: "How the loss history is described for this policy. GW Out-of-the-box functionality for prior losses and not used by icare as at Nov-17."
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_losshistorytype_not_null
+            config:
+               severity: warn
+   -  name: excludedfromarchive
+      description: "Internal technical GW field to manage archiving."
+   -  name: archivestate
+      description: "Internal technical GW field to manage archiving."
+   -  name: archiveschemainfo
+      description: "Internal technical GW field to manage archiving."
+   -  name: archivefailuredetailsid
+      description: "Internal technical GW field to manage archiving."
+   -  name: packagerisk
+      description: "Package Risk Type. GW Out-of-the-box functionality not used by icare as at Nov-17."
+   -  name: numpriorlosses
+      description: "The number of losses. Only applicable for a loss history type of attached. GW Out-of-the-box functionality for prior losses and not used by icare as at Nov-17."
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_updatetime_not_null
+            config:
+               severity: warn
+   -  name: primarylanguage
+      description: "The policys preferred language used as an internal technical GW field to manage display."
+   -  name: donotarchive
+      description: "Internal technical GW field to manage archiving."
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_donotarchive_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_id_not_null
+            config:
+               severity: warn
+   -  name: primarylocale
+      description: "The policys preferred locale used as an internal technical GW field to manage display."
+   -  name: productcode
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_productcode_not_null
+            config:
+               severity: warn
+   -  name: excludereason
+      description: "Internal technical GW field to manage archiving."
+   -  name: groupnumberfromportal
+      description: "Group number from Portal. This is a free text field that is entered by the employer/broker via Portal specifying what Employer Group they belong to. This is validated by an Underwriter in GW PC. This is not to be used as the source of truth for the Employer Group Number"
+   -  name: createuserid
+      description: "User ID of the user that created this record. Foreign key to PC_USER."
+   -  name: archivefailureid
+      description: "Internal technical GW field to manage archiving."
+   -  name: crnnumber_icare
+      description: "Policy Customer Reference Number for BPAY"
+   -  name: originaleffectivedate
+      description: "The date on which this policy was originally issued or bound."
+   -  name: beanversion
+      description: "Internal technical GW field to manage object versions."
+   -  name: archivepartition
+      description: "Internal technical GW field to manage archiving."
+   -  name: retired
+      description: "Indicator in GW signifying the record has been soft deleted."
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_retired_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User ID of the user that updated this record. Foreign key to PC_USER."
+   -  name: priortotalincurred
+      description: "Related to loss history. GW Out-of-the-box functionality for prior losses and not used by icare as at Nov-17."
+   -  name: archivedate
+      description: "Internal technical GW field to manage archiving."
+   -  name: priortotalincurred_cur
+      description: "Currency for Prior Total Incurred. GW has been configured for a single AUD currency, therefore, this field is not used. "
+   -  name: producercodeofserviceid
+      description: "FK to the PC_PRODUCERCODE table which stores who the Intermediary of Service for this policy is i.e. icare (employer direct) or via broker. This is the same as the PC_EFFECTIVEDATEDFIELDS.ProducerCodeID"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_producercodeofserviceid_not_null
+            config:
+               severity: warn
+   -  name: newproducercode_ext
+      description: "Interal technical GW field used to enact bulk changes of changing the Producer of the policies e.g. moving all Policy administration from icare to EML. The master data for the Producer of the policy will be sourced from persistent GW tables like pc_producercode once the change takes effect."
+   -  name: newclaimschemeagent_icare
+      description: "The Claims Scheme agent allocated to manage Claims lodged against the policy. This is replaced with PC_POLICYPERIOD.ClaimsMgr_SchemeAgent_icare. No longer used at the PC_POLICY level"
+   -  name: movedpolsrcacctpubid
+      description: ""
+   -  name: agencycontactdetails_ext
+      description: ""
+   -  name: agencycontactemail_ext
+      description: ""
+   -  name: agencycontactnumber_ext
+      description: ""
+   -  name: insurancebook_extid
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

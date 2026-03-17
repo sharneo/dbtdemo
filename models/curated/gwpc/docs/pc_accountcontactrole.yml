@@ -1,145 +1,112 @@
 version: 2
 models:
-- name: pc_accountcontactrole
-  columns:
-  - name: relationshiptitle
-    description: "Title for OwnerOfficer relationships."
-
-  - name: yearlicensed
-    description: ""
-
-  - name: datecompletedtrainingclass
-    description: ""
-
-  - name: createuserid
-    description: "User ID of the user that created this record. Foreign key to PC_USER."
-
-  - name: numberofaccidents
-    description: ""
-
-  - name: publicid
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_publicid_not_null
-        config:
-          severity: warn
-
-  - name: industrycodeid
-    description: "Refer to PC_ACCOUNT for this data"
-
-  - name: gooddriverdiscount
-    description: ""
-
-  - name: beanversion
-    description: ""
-
-  - name: retired
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_retired_not_null
-        config:
-          severity: warn
-
-  - name: createtime
-    description: "Timestamp when the record was created in the GW table"
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_createtime_not_null
-        config:
-          severity: warn
-
-  - name: busopsdescription
-    description: "Business operation description. This value is duplicated at the\
-      \ PC_ACCOUNT level and this is what icare is using, not this one. "
-  - name: numberofviolations
-    description: ""
-
-  - name: updateuserid
-    description: "User ID of the user that updated this record. Foreign key to PC_USER."
-
-  - name: accountcontact
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_accountcontact_not_null
-        config:
-          severity: warn
-
-  - name: updatetime
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_updatetime_not_null
-        config:
-          severity: warn
-
-  - name: trainingclasstype
-    description: ""
-
-  - name: referenced
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_referenced_not_null
-        config:
-          severity: warn
-
-  - name: subtype
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_subtype_not_null
-        config:
-          severity: warn
-
-  - name: student
-    description: ""
-
-  - name: id
-    description: ""
-    data_tests:
-    - not_null:
-        name: gwpc_pc_accountcontactrole_id_not_null
-        config:
-          severity: warn
-
-  - name: orgtype
-    description: "Organization type. Use the PC_ACCOUNT type instead. This value is\
-      \ not used by icare as at Nov-17"
-  - name: archivepartition
-    description: ""
-
-  - name: gwcbi_connector_ts_ms
-    description: ""
-
-  - name: gwcbi_lsn
-    description: ""
-
-  - name: gwcbi_operation
-    description: ""
-
-  - name: gwcbi_payload_ts_ms
-    description: ""
-
-  - name: gwcbi_seqval
-    description: ""
-
-  - name: gwcbi_seqval_hex
-    description: ""
-
-  - name: gwcbi_tx_id
-    description: ""
-
-  - name: metadata_file_name
-    description: ""
-
-  - name: file_ingestion_timestamp
-    description: ""
-
-  - name: file_type
-    description: ""
-
-  - name: hash_key
-    description: ""
+-  name: pc_accountcontactrole
+   columns:
+   -  name: relationshiptitle
+      description: "Title for OwnerOfficer relationships."
+   -  name: yearlicensed
+      description: ""
+   -  name: datecompletedtrainingclass
+      description: ""
+   -  name: createuserid
+      description: "User ID of the user that created this record. Foreign key to PC_USER."
+   -  name: numberofaccidents
+      description: ""
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_publicid_not_null
+            config:
+               severity: warn
+   -  name: industrycodeid
+      description: "Refer to PC_ACCOUNT for this data"
+   -  name: gooddriverdiscount
+      description: ""
+   -  name: beanversion
+      description: ""
+   -  name: retired
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the record was created in the GW table"
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_createtime_not_null
+            config:
+               severity: warn
+   -  name: busopsdescription
+      description: "Business operation description. This value is duplicated at the PC_ACCOUNT level and this is what icare is using, not this one. "
+   -  name: numberofviolations
+      description: ""
+   -  name: updateuserid
+      description: "User ID of the user that updated this record. Foreign key to PC_USER."
+   -  name: accountcontact
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_accountcontact_not_null
+            config:
+               severity: warn
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_updatetime_not_null
+            config:
+               severity: warn
+   -  name: trainingclasstype
+      description: ""
+   -  name: referenced
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_referenced_not_null
+            config:
+               severity: warn
+   -  name: subtype
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_subtype_not_null
+            config:
+               severity: warn
+   -  name: student
+      description: ""
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_id_not_null
+            config:
+               severity: warn
+   -  name: orgtype
+      description: "Organization type. Use the PC_ACCOUNT type instead. This value is not used by icare as at Nov-17"
+   -  name: archivepartition
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""
