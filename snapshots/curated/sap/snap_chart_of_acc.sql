@@ -1,13 +1,25 @@
 {% snapshot snap_chart_of_acc %}
 
+{#-
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             This creates a SCD Type 2 Record for the Data in the RAW Table . This will run for CHART_OF_ACC
+ 
+ #}   
+
 {{ config(
     target_schema='sap',
     unique_key='chart_of_acc_sk',
     alias ='chart_of_acc',
     strategy='check',
     check_cols=['xbilk', 'sakan', 'bilkt', 'erdat', 'ernam', 'gvtyp', 'ktoks', 'xspea', 'xspeb', 'xspep', 'glaccount_type', 'txt20', 'txt50'],
-    tags=['sap','snapshot','curated']
+    tags=['sap','snapshot','snp_chart_of_acc']
 ) }}
+
+
 
 WITH source_data AS (
     SELECT

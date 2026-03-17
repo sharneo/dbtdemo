@@ -1,13 +1,25 @@
 {% snapshot snap_doc_types %}
 
+{#-
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             This creates a SCD Type 2 Record for the Data in the RAW Table . This will run for DOC_TYPES
+ 
+ #}   
+
 {{ config(
     target_schema='sap',
     unique_key='doc_types_sk',
     alias ='doc_types',
     strategy='check',
     check_cols=['spras', 'ltext'],
-    tags=['sap','snapshot','curated']
+    tags=['sap','snapshot','snp_doc_types']
 ) }}
+
+
 
 WITH source_data AS (
     SELECT

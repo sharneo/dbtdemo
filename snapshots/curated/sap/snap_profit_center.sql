@@ -1,13 +1,25 @@
 {% snapshot snap_profit_center %}
 
+{#-
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             This creates a SCD Type 2 Record for the Data in the RAW Table . This will run for PROFIT_CENTER
+ 
+ #}   
+
 {{ config(
     target_schema='sap',
     unique_key='profit_center_sk',
     alias ='profit_center',
     strategy='check',
     check_cols=['datbi', 'kokrs', 'datab', 'ersda', 'usnam', 'verak', 'khinr', 'ktext', 'ltext'],
-    tags=['sap','snapshot','curated']
+    tags=['sap','snapshot','snp_profit_center']
 ) }}
+
+
 
 WITH source_data AS (
     SELECT
