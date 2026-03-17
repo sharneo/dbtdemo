@@ -37,7 +37,6 @@ WITH source_data AS (
     ]) }} AS costcenter_manual_budget_sk,
         *
     FROM {{ source('sap', 'costcenter_manual_budget') }}
-    WHERE RECORDTYPE='D'
 )
 
 SELECT * FROM source_data
