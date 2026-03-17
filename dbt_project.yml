@@ -85,15 +85,20 @@ models:
         +schema: ELT_UTILS # optional, default is your target schema
 snapshots:
   icare_dbt_transformations_fndn:
+    +column_map:
+      dbt_valid_from: valid_from
+      dbt_valid_to: valid_to
+      dbt_current: current_record_flag
     +target_database: DEV_CURATED_DB
+
     sap:
       +target_schema: SAP
+
     integrated:
       policy:
         NI:
-         +target_schema: INTEGRATED_NI
+          +target_schema: INTEGRATED_NI
         TMF:
-         +target_schema: INTEGRATED_TMF
-
+          +target_schema: INTEGRATED_TMF
 on-run-end:
   - "{{ dbt_artifacts.upload_results(results) }}"

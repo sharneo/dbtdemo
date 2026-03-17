@@ -1,0 +1,67 @@
+version: 2
+models:
+- name: pcx_policytradingname_icare
+  columns:
+  - name: loadcommandid
+    description: ""
+
+  - name: period
+    description: ""
+
+  - name: publicid
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_policytradingname_icare_publicid_not_null
+        config:
+          severity: warn
+
+  - name: beanversion
+    description: ""
+
+  - name: archivepartition
+    description: ""
+
+  - name: id
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_policytradingname_icare_id_not_null
+        config:
+          severity: warn
+
+  - name: tradingname
+    description: ""
+
+  - name: gwcbi_connector_ts_ms
+    description: ""
+
+  - name: gwcbi_lsn
+    description: ""
+
+  - name: gwcbi_operation
+    description: ""
+
+  - name: gwcbi_payload_ts_ms
+    description: ""
+
+  - name: gwcbi_seqval
+    description: ""
+
+  - name: gwcbi_seqval_hex
+    description: ""
+
+  - name: gwcbi_tx_id
+    description: ""
+
+  - name: metadata_file_name
+    description: ""
+
+  - name: file_ingestion_timestamp
+    description: ""
+
+  - name: file_type
+    description: ""
+
+  - name: hash_key
+    description: ""

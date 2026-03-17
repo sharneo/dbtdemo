@@ -1,0 +1,205 @@
+version: 2
+models:
+- name: pc_policylocation
+  columns:
+  - name: publicid
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_publicid_not_null
+        config:
+          severity: warn
+
+  - name: citykanjiinternaldenorm
+    description: ""
+
+  - name: addressline1internal
+    description: ""
+
+  - name: countyinternal
+    description: ""
+
+  - name: addressline2internal
+    description: ""
+
+  - name: addressline3internal
+    description: ""
+
+  - name: createtime
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_createtime_not_null
+        config:
+          severity: warn
+
+  - name: citykanjiinternal
+    description: ""
+
+  - name: isratedlocation_icare
+    description: ""
+
+  - name: addressline2kanjiinternal
+    description: ""
+
+  - name: stateinternal
+    description: ""
+
+  - name: fixedid
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_fixedid_not_null
+        config:
+          severity: warn
+
+  - name: countryinternal
+    description: ""
+
+  - name: effectivedate
+    description: ""
+
+  - name: updatetime
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_updatetime_not_null
+        config:
+          severity: warn
+
+  - name: id
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_id_not_null
+        config:
+          severity: warn
+
+  - name: expirationdate
+    description: ""
+
+  - name: employeecountinternal
+    description: ""
+
+  - name: isvalidated_icare
+    description: ""
+
+  - name: validuntilinternal
+    description: ""
+
+  - name: taxlocation
+    description: ""
+
+  - name: locationcontactid_icare
+    description: ""
+
+  - name: createuserid
+    description: ""
+
+  - name: accountlocation
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_accountlocation_not_null
+        config:
+          severity: warn
+
+  - name: cityinternaldenorm
+    description: ""
+
+  - name: industrycodeid
+    description: ""
+
+  - name: archivepartition
+    description: ""
+
+  - name: beanversion
+    description: ""
+
+  - name: cityinternal
+    description: ""
+
+  - name: changetype
+    description: ""
+
+  - name: addresstypeinternal
+    description: ""
+
+  - name: addressline1kanjiinternal
+    description: ""
+
+  - name: cedexbureauinternal
+    description: ""
+
+  - name: basedonid
+    description: ""
+
+  - name: updateuserid
+    description: ""
+
+  - name: locationnum
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_locationnum_not_null
+        config:
+          severity: warn
+
+  - name: postalcodeinternaldenorm
+    description: ""
+
+  - name: cedexinternal
+    description: ""
+
+  - name: buildingautonumberseq
+    description: ""
+
+  - name: postalcodeinternal
+    description: ""
+
+  - name: descriptioninternal
+    description: ""
+
+  - name: branchid
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pc_policylocation_branchid_not_null
+        config:
+          severity: warn
+
+  - name: fireprotectclass
+    description: ""
+
+  - name: gwcbi_connector_ts_ms
+    description: ""
+
+  - name: gwcbi_lsn
+    description: ""
+
+  - name: gwcbi_operation
+    description: ""
+
+  - name: gwcbi_payload_ts_ms
+    description: ""
+
+  - name: gwcbi_seqval
+    description: ""
+
+  - name: gwcbi_seqval_hex
+    description: ""
+
+  - name: gwcbi_tx_id
+    description: ""
+
+  - name: metadata_file_name
+    description: ""
+
+  - name: file_ingestion_timestamp
+    description: ""
+
+  - name: file_type
+    description: ""
+
+  - name: hash_key
+    description: ""

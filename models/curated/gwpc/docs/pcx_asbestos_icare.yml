@@ -1,0 +1,133 @@
+version: 2
+models:
+- name: pcx_asbestos_icare
+  columns:
+  - name: loadcommandid
+    description: "LoadCommand for load where row was created. If not null this object\
+      \ was loaded via the loader"
+  - name: grosswagesforasbestoshandling
+    description: ""
+
+  - name: createuserid
+    description: "User ID of the user that created this record. Foreign key to PC_USER"
+
+  - name: noofworkersexposed
+    description: ""
+
+  - name: publicid
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_asbestos_icare_publicid_not_null
+        config:
+          severity: warn
+
+  - name: descriptionofwork
+    description: ""
+
+  - name: archivepartition
+    description: "Internal technical GW field to manage archiving"
+
+  - name: beanversion
+    description: "Internal technical GW field to manage object versions."
+
+  - name: createtime
+    description: "Timestamp indicating when the record was created in the GW table"
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_asbestos_icare_createtime_not_null
+        config:
+          severity: warn
+
+  - name: changetype
+    description: "Type of change made to this row"
+
+  - name: directwage_icare
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_asbestos_icare_directwage_icare_not_null
+        config:
+          severity: warn
+
+  - name: basedonid
+    description: "Link to the row on which this row is based; or null if new to branch"
+
+  - name: updateuserid
+    description: "User ID of the user that updated this record. Foreign key to PC_USER."
+
+  - name: fixedid
+    description: "Unique ID for the object across all branches and periods"
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_asbestos_icare_fixedid_not_null
+        config:
+          severity: warn
+
+  - name: wic
+    description: ""
+
+  - name: effectivedate
+    description: ""
+
+  - name: updatetime
+    description: ""
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_asbestos_icare_updatetime_not_null
+        config:
+          severity: warn
+
+  - name: id
+    description: "Internally managed primary key,  Provides traceability back to PCX_ASBESTOS_ICARE\
+      \ when Wage Type = Asbestos"
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_asbestos_icare_id_not_null
+        config:
+          severity: warn
+
+  - name: branchid
+    description: "Link to root of effdated tree.  Foreign key to PC_POLICYPERIOD in\
+      \ GW (Policy Period = EDW Policy Term)"
+    data_tests:
+    - not_null:
+        name: gwpc_pcx_asbestos_icare_branchid_not_null
+        config:
+          severity: warn
+
+  - name: expirationdate
+    description: ""
+
+  - name: gwcbi_connector_ts_ms
+    description: ""
+
+  - name: gwcbi_lsn
+    description: ""
+
+  - name: gwcbi_operation
+    description: ""
+
+  - name: gwcbi_payload_ts_ms
+    description: ""
+
+  - name: gwcbi_seqval
+    description: ""
+
+  - name: gwcbi_seqval_hex
+    description: ""
+
+  - name: gwcbi_tx_id
+    description: ""
+
+  - name: metadata_file_name
+    description: ""
+
+  - name: file_ingestion_timestamp
+    description: ""
+
+  - name: file_type
+    description: ""
+
+  - name: hash_key
+    description: ""
