@@ -1,8 +1,6 @@
-version: 2
 models:
   - name: pc_account
     columns:
-      - name: publicid
-        data_tests:
-          - unique
+      - name: id
+        tests:
           - not_null
