@@ -1,0 +1,87 @@
+version: 2
+models:
+-  name: ccx_wpidoctorassessment_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpidoctorassessment_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpidoctorassessment_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpidoctorassessment_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: assessmentdate_icare
+      description: "Assessment date"
+   -  name: assessmentreport_icareid
+      description: "Assessment report made by assessing doctor"
+   -  name: wpiinitiatedby_icare
+      description: "Party who initiated the report"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: reportcorrect_icare
+      description: ""
+   -  name: assessingdoctor_icareid
+      description: "Doctor who performed the assessment"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpidoctorassessment_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpidoctorassessment_icare_id_not_null
+            config:
+               severity: warn
+   -  name: reviewer_icareid
+      description: "Case manager who reviewed and validated the report"
+   -  name: wpiassessrecord_icareid
+      description: ""
+   -  name: reportreceiveddate_icare
+      description: "Report received date"
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

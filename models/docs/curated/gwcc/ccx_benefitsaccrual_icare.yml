@@ -1,0 +1,136 @@
+version: 2
+models:
+-  name: ccx_benefitsaccrual_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: noncomplianceamount
+      description: "Weekly benefits paid for Non Compliant Weeks"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: exposureid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_benefitsaccrual_icare_exposureid_not_null
+            config:
+               severity: warn
+   -  name: firstentitlementweeks
+      description: "Weekly benefits paid for First Entitlement"
+   -  name: section38amount
+      description: "Weekly benefits paid for Section 38 Entitlement"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_benefitsaccrual_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: secondentitlementweeks
+      description: "Weekly benefits paid for Second Entitlement"
+   -  name: totalweekspaid
+      description: "Total Weekly Benefits Paid"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: totalamountpaid
+      description: "Total amount paid for Weekly Benefits"
+   -  name: postsecondweek
+      description: "Weekly benefits paid for Post Second Entitlement"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_benefitsaccrual_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_benefitsaccrual_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: postsecondamount
+      description: "Weekly benefits paid for Post Second Entitlement"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: secondentitlementamount
+      description: "Weekly benefits amount paid for Second Entitlement"
+   -  name: firstentitlementamount
+      description: "Weekly Benefits amount for First Entitlement"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_benefitsaccrual_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_benefitsaccrual_icare_id_not_null
+            config:
+               severity: warn
+   -  name: noncomplianceweek
+      description: "Weekly benefits paid for Non Compliant Weeks"
+   -  name: section38week
+      description: "Weekly benefits paid for Section 38 Entitlement"
+   -  name: section41week
+      description: ""
+   -  name: section41amount
+      description: ""
+   -  name: ewsec40weeks
+      description: ""
+   -  name: ewsec36days
+      description: ""
+   -  name: ewsec37days
+      description: ""
+   -  name: ewsec36amount
+      description: ""
+   -  name: ewsec37amount
+      description: ""
+   -  name: ewsec38days
+      description: ""
+   -  name: ewsec38amount
+      description: ""
+   -  name: ewsec37weeks
+      description: ""
+   -  name: ewtotaldays
+      description: ""
+   -  name: ewtotalamount
+      description: ""
+   -  name: ewtotalweeks
+      description: ""
+   -  name: ewsec40days
+      description: ""
+   -  name: ewsec40amount
+      description: ""
+   -  name: ewsec38weeks
+      description: ""
+   -  name: ewsec36weeks
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

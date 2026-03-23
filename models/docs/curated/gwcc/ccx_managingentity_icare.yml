@@ -1,0 +1,136 @@
+version: 2
+models:
+-  name: ccx_managingentity_icare
+   columns:
+   -  name: loadcommandid
+      description: ""
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: postaladdress
+      description: ""
+   -  name: addressline1
+      description: ""
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: addressline2
+      description: ""
+   -  name: name
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_name_not_null
+            config:
+               severity: warn
+   -  name: contactphone
+      description: ""
+   -  name: state
+      description: ""
+   -  name: country
+      description: ""
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: managingentityorgid
+      description: ""
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_id_not_null
+            config:
+               severity: warn
+   -  name: footer
+      description: ""
+   -  name: website
+      description: ""
+   -  name: websitewithoutprefix
+      description: ""
+   -  name: portaldisplayname
+      description: ""
+   -  name: createuserid
+      description: ""
+   -  name: beanversion
+      description: ""
+   -  name: retired
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: city
+      description: ""
+   -  name: policytype
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_policytype_not_null
+            config:
+               severity: warn
+   -  name: code
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_code_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: ""
+   -  name: role
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_role_not_null
+            config:
+               severity: warn
+   -  name: postalcode
+      description: ""
+   -  name: branding
+      description: ""
+   -  name: contactemail
+      description: ""
+   -  name: cspvisibilitystatus
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_managingentity_icare_cspvisibilitystatus_not_null
+            config:
+               severity: warn
+   -  name: availablecsp
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

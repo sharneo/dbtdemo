@@ -1,0 +1,143 @@
+version: 2
+models:
+-  name: cc_subroadverseparty
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: maincontacttype
+      description: "Relationship of the main contact to the Adverse Party"
+   -  name: maincontact_icare
+      description: "Icare have added this to have a text filed for simply holding main contacts name"
+   -  name: activityworflowdate_icare
+      description: "Value used by Activity Workflow ot identify if subro party needs to be used"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subroadverseparty_publicid_not_null
+            config:
+               severity: warn
+   -  name: claimnumber
+      description: "Claim number at insurer."
+   -  name: closingcomment_icare
+      description: "Closing Comment"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subroadverseparty_createtime_not_null
+            config:
+               severity: warn
+   -  name: documentlinkableid
+      description: "This entity fk is designed to make other claim center entities linkable to documents."
+   -  name: notesent
+      description: "Date the prommisory note was sent"
+   -  name: recoverytype_icare
+      description: ""
+   -  name: expectedrecovery
+      description: "Expected recovery percentage from this Contact."
+   -  name: outcome_icare
+      description: ""
+   -  name: adversepartyid
+      description: "The Adverse Party related to the Subrogation"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subroadverseparty_adversepartyid_not_null
+            config:
+               severity: warn
+   -  name: maincontactsnumber_icare
+      description: "Icare have added this to have a text filed for simply holding main contacts number"
+   -  name: notereceived
+      description: "Date the prommisory note was received"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subroadverseparty_updatetime_not_null
+            config:
+               severity: warn
+   -  name: subrogationstatus_icare
+      description: ""
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subroadverseparty_id_not_null
+            config:
+               severity: warn
+   -  name: duedate_icare
+      description: "Date the invoice for the Subro Adverse party is due"
+   -  name: expectedrecoveryamount_icare
+      description: ""
+   -  name: recoverycommenceddate_icare
+      description: "Recovery Commencement Date"
+   -  name: closedate_icare
+      description: "Close Date"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: fault
+      description: "Contacts probable percentage of fault."
+   -  name: waiver
+      description: "Acts as a placeholder to determine if an Invoice for the RecCollections is a Credit being waived"
+   -  name: schedulerecoverytype
+      description: "Type of scheduled recovery such as Promissory Note"
+   -  name: classification
+      description: "Classification of the Adverse Party"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: payeeinstructions_icare
+      description: "Holder for the Instructions to be entered for each invoice or credit transaction."
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_subroadverseparty_retired_not_null
+            config:
+               severity: warn
+   -  name: schedulerecovery
+      description: "If the adverse party has agreed to make payments aka Subro Recovery"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: strategy
+      description: "Strategy for the Adverse Party"
+   -  name: subrogovernmentinvolved
+      description: "For Subrogation - Government entity involved as an Adverse Party"
+   -  name: subrogationsummaryid
+      description: "Related Subrogation Summary"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subroadverseparty_subrogationsummaryid_not_null
+            config:
+               severity: warn
+   -  name: courtawardedinterest_icare
+      description: "Court Awarded Interest"
+   -  name: nextcollectiondate_icare
+      description: "Next Collection Date "
+   -  name: policynumber
+      description: "Policy number at insurer."
+   -  name: servicedate_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

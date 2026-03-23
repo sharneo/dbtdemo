@@ -1,0 +1,183 @@
+version: 2
+models:
+-  name: ccx_ocrinvoice_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: invoiceaddressedto
+      description: ""
+   -  name: payeemobilenumbercountry
+      description: ""
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: documentidentifier
+      description: "Document Identifier"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_documentidentifier_not_null
+            config:
+               severity: warn
+   -  name: claimnumber
+      description: "The Number of the claim that this invoice relates to"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_claimnumber_not_null
+            config:
+               severity: warn
+   -  name: invoicetotalnet
+      description: "Invoice Total (Net)"
+   -  name: payeephonenumbercountry
+      description: ""
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: postcode
+      description: "Postcode"
+   -  name: payeeaddressline1
+      description: "Payee Address Line 1"
+   -  name: state
+      description: ""
+   -  name: payeename
+      description: "Payee Name"
+   -  name: servicerequestid
+      description: "Service Request ID"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: claimid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_claimid_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_id_not_null
+            config:
+               severity: warn
+   -  name: invoicedate
+      description: "The Date on the Invoice"
+   -  name: dateinvoicereceived
+      description: "The Date this invoice was received "
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: payeetradingname
+      description: "Payee Trading Name"
+   -  name: payeeabn
+      description: "Payee ABN"
+   -  name: invoiceoutstandingamount
+      description: "Invoice Outstanding Amount"
+   -  name: suburb
+      description: "Suburb"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: city
+      description: "City"
+   -  name: payeemobilenumberextension
+      description: ""
+   -  name: commmethod
+      description: "Payee preferred communication Method"
+   -  name: invoicetotalgross
+      description: "Invoice Total Gross"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: payeephonenumber
+      description: "Payee Phone Number"
+   -  name: payeephonenumberextension
+      description: ""
+   -  name: invoicetotalgst
+      description: "Invoice Total (GST)"
+   -  name: status
+      description: "Invoice processig status"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_ocrinvoice_icare_status_not_null
+            config:
+               severity: warn
+   -  name: payeemobilenumber
+      description: "Payee Mobile Number"
+   -  name: invoicenumber
+      description: "Invoice Number"
+   -  name: accountnumber
+      description: "Account Number"
+   -  name: accountname
+      description: "Account Name"
+   -  name: bsbnumber
+      description: "BSB Number"
+   -  name: schemeid
+      description: ""
+   -  name: invoicesource
+      description: ""
+   -  name: transactiontype
+      description: ""
+   -  name: provideruniqueid
+      description: ""
+   -  name: servicenotes
+      description: ""
+   -  name: payeecrmid
+      description: ""
+   -  name: cancellationdate
+      description: ""
+   -  name: cancelreason
+      description: ""
+   -  name: bankname
+      description: ""
+   -  name: iwdob
+      description: ""
+   -  name: iwfirstname
+      description: ""
+   -  name: iwlastname
+      description: ""
+   -  name: invoicerejectreason
+      description: ""
+   -  name: invoicerejectmessage
+      description: ""
+   -  name: invoiceapprovereason
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

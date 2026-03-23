@@ -1,0 +1,167 @@
+version: 2
+models:
+-  name: ccx_wcdinternalreview_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: reviewdetailsid
+      description: "Review Details related to this entity"
+   -  name: assessedasindefinitelyunable
+      description: "Assessed as indefinitely unable to undertake further work to increase earnings?"
+   -  name: outcomereasoning
+      description: "Additional notes"
+   -  name: solicitorid
+      description: "Solicitor contact details"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wcdinternalreview_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: newwcdrequired
+      description: ""
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wcdinternalreview_icare_id_not_null
+            config:
+               severity: warn
+   -  name: fairnoticerequired
+      description: "Indicates if fair notice is required for the decision"
+   -  name: reasoning
+      description: "Additional notes on further information received"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: working15hourperweektext
+      description: ""
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wcdinternalreview_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: decisionissuedate
+      description: "Date work capacity decision was issued to the worker"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: furtherinfoimpactsdecision
+      description: "Indicates if the further information received will impact the work capacity decision"
+   -  name: stayapplicable
+      description: "Indicates if a stay on the decision is applicable during the review period"
+   -  name: dateapplicationreceived
+      description: "Date internal review application was received by the Insurer"
+   -  name: section38eligibility
+      description: "Indicates if section 38 eligibility needs to be assessed"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wcdinternalreview_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: internalreviewcompleteddate
+      description: "The date internal review was completed"
+   -  name: earningperweek
+      description: "Earning at least $x per week"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wcdinternalreview_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: reviewduedate
+      description: "Date internal review is due"
+   -  name: wpipercentage
+      description: "Most recent Deemed or actual WPI %"
+   -  name: applicationlodgedby
+      description: ""
+   -  name: acknowledgementletterdate
+      description: "Date of the acknowledgement letter"
+   -  name: assessedasunabletext
+      description: ""
+   -  name: earningse
+      description: "Type of assessed weekly earnings"
+   -  name: reviewerid
+      description: "Reviewer"
+   -  name: medentitlement
+      description: "The effective medical entitlement period for the decision"
+   -  name: section38eligible
+      description: "Indicates if the injured worker is eligible for section 38 benefits"
+   -  name: earningscapacity
+      description: "Assessed weekly earnings"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: eligibilityeffectivedate
+      description: "Date section 38 is eligible or not eligible"
+   -  name: furtherinfosubmitted
+      description: "Indicates if further information has been submitted by the worker"
+   -  name: section54stillactive
+      description: "Indicates if a section 54 notice is still active"
+   -  name: weeklypaymentimpact
+      description: "Impact of the decision on weekly payments"
+   -  name: assessedhours
+      description: "Assessed potential hours"
+   -  name: draftdecisioncompleted
+      description: "Date work capacity decision was issued to the worker"
+   -  name: responsedate
+      description: ""
+   -  name: earningperweektext
+      description: ""
+   -  name: reviewrequestedwithin30days
+      description: "Indicates if the review was requested within the prescribed timeframes"
+   -  name: followupflag
+      description: ""
+   -  name: working15hourperweek
+      description: "Working 15hrs per week or more?"
+   -  name: casenumber
+      description: ""
+   -  name: decisioneffectivedate
+      description: "The effective date of the work capacity decision"
+   -  name: reviewoutcome
+      description: "Outcome of the internal review"
+   -  name: stayexpirydate
+      description: "Date internal review is due"
+   -  name: sections80stillactive
+      description: ""
+   -  name: piawe
+      description: ""
+   -  name: withins80noticeperiod
+      description: ""
+   -  name: internalreviewstatus
+      description: ""
+   -  name: decisionenddate_ext
+      description: ""
+   -  name: cwwrsuitableemployment
+      description: ""
+   -  name: discretionaryentitlement
+      description: ""
+   -  name: abilitytoearn
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""
