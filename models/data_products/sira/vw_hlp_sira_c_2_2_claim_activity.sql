@@ -29,7 +29,7 @@ with cc_claim as (
         losstype,
         lodgingagent_icare,
         claimsagent_icare
-    from {{ ref('vw_cc_claim_current') }}
+    from {{ ref('vw_cc_claim') }}
 ),
 
 submission_period as (
@@ -41,21 +41,21 @@ submission_period as (
 
 cctl_claimstate as (
     select id
-    from {{ ref('vw_cctl_claimstate_current') }}
+    from {{ ref('vw_cctl_claimstate') }}
 ),
 
 cctl_claimreopenedreason as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_claimreopenedreason_current') }}
+    from {{ ref('vw_cctl_claimreopenedreason') }}
 ),
 
 cc_claimempdata as (
     select
         ownerid,
         foreignentityid
-    from {{ ref('vw_cc_claimempdata_current') }}
+    from {{ ref('vw_cc_claimempdata') }}
 ),
 
 cc_incident as (
@@ -64,7 +64,7 @@ cc_incident as (
         retired,
         claimincident,
         description
-    from {{ ref('vw_cc_incident_current') }}
+    from {{ ref('vw_cc_incident') }}
     where
         retired = 0
         and claimincident = 1
@@ -75,7 +75,7 @@ cc_workcomp as (
         id,
         retired,
         reasonableexcuse_icare
-    from {{ ref('vw_cc_workcomp_current') }}
+    from {{ ref('vw_cc_workcomp') }}
     where retired = 0
 ),
 
@@ -83,7 +83,7 @@ cctl_reasonableexcuse_icare as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_reasonableexcuse_icare_current') }}
+    from {{ ref('vw_cctl_reasonableexcuse_icare') }}
 ),
 
 cctl_personrelationtype as (
@@ -91,27 +91,27 @@ cctl_personrelationtype as (
         id,
         typecode,
         retired
-    from {{ ref('vw_cctl_personrelationtype_current') }}
+    from {{ ref('vw_cctl_personrelationtype') }}
 ),
 
 cc_employmentdata as (
     select
         id,
         retired
-    from {{ ref('vw_cc_employmentdata_current') }}
+    from {{ ref('vw_cc_employmentdata') }}
     where retired = 0
 ),
 
 cctl_losstype as (
     select id
-    from {{ ref('vw_cctl_losstype_current') }}
+    from {{ ref('vw_cctl_losstype') }}
 ),
 
 cctl_claimagent_icare as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_claimagent_icare_current') }}
+    from {{ ref('vw_cctl_claimagent_icare') }}
 ),
 
 insurer_control as (
