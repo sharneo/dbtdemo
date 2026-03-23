@@ -10,16 +10,31 @@ models:
       description: "Business and operations description."
    -  name: publicid
       description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_publicid_not_null
+            config:
+               severity: warn
    -  name: groupname_icare
       description: "Group Name"
    -  name: acn_icare
       description: "icare specific field to hold ACN numbers"
    -  name: createtime
       description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_createtime_not_null
+            config:
+               severity: warn
    -  name: newaccountreason_icare
       description: "icare specific field to hold reason for new account details"
    -  name: linkcontacts
       description: "Indicates that this Account will sync Contacts with an external Contact Management System."
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_linkcontacts_not_null
+            config:
+               severity: warn
    -  name: itcentitlement_icare
       description: "icare specific field to capture ITC entitlement details"
    -  name: trustabn_icare
@@ -32,6 +47,11 @@ models:
       description: "Flag when true indicate that this account is a parent account in Account Group"
    -  name: updatetime
       description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_updatetime_not_null
+            config:
+               severity: warn
    -  name: abrvalidationstatus_icare
       description: "icare specific field to hold both abn and acn validation status"
    -  name: servicetier
@@ -42,6 +62,11 @@ models:
       description: "The accounts preferred language"
    -  name: id
       description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_id_not_null
+            config:
+               severity: warn
    -  name: statebureaunum
       description: "State Bureau number of this account."
    -  name: primarylocale
@@ -54,8 +79,18 @@ models:
       description: "icare specific field to hold Trust Name shared from veda services"
    -  name: accountstatus
       description: "The status of this account"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_accountstatus_not_null
+            config:
+               severity: warn
    -  name: frozen
       description: "If true then no Policy may be created or retrieved on this Account"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_frozen_not_null
+            config:
+               severity: warn
    -  name: createuserid
       description: "User ID of the user that created this record. Foreign key to PC_USER."
    -  name: yearbusinessstarted
@@ -68,6 +103,11 @@ models:
       description: "icare specific field to hold ABN numbers"
    -  name: retired
       description: "Flag indicating if the reference data is no longer used"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_retired_not_null
+            config:
+               severity: warn
    -  name: trusteetype_icare
       description: "icare specific field to hold Trust Type status shared from veda services"
    -  name: lockingcolumn
@@ -88,8 +128,18 @@ models:
       description: "icare specific field to hold ACN status shared from veda services"
    -  name: preferredcoveragecurrency
       description: "Preferred Coverage Currency"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_preferredcoveragecurrency_not_null
+            config:
+               severity: warn
    -  name: preferredsettlementcurrency
       description: "Preferred Settlement Currency"
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_preferredsettlementcurrency_not_null
+            config:
+               severity: warn
    -  name: gstregistration_icare
       description: "icare specific field to capture account or policy GST registration details"
    -  name: originationdate
@@ -110,14 +160,29 @@ models:
       description: ""
    -  name: crmversion_icare
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_crmversion_icare_not_null
+            config:
+               severity: warn
    -  name: accountstatusupdatetime
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_accountstatusupdatetime_not_null
+            config:
+               severity: warn
    -  name: archivestate
       description: ""
    -  name: archiveschemainfo
       description: ""
    -  name: donotdestroy
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_account_donotdestroy_not_null
+            config:
+               severity: warn
    -  name: excludereason
       description: ""
    -  name: archivefailureid
