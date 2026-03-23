@@ -1,271 +1,271 @@
 version: 2
 models:
--  name: pc_account
-   columns:
-   -  name: trustabnstatus_icare
-      description: "icare specific field to hold Trust ABN status shared from veda services"
-   -  name: groupnumber_icare
-      description: "Group number"
-   -  name: busopsdesc
-      description: "Business and operations description."
-   -  name: publicid
-      description: "ID or primary key of the row in the external system to which this row is mapped"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_publicid_not_null
-            config:
-               severity: warn
-   -  name: groupname_icare
-      description: "Group Name"
-   -  name: acn_icare
-      description: "icare specific field to hold ACN numbers"
-   -  name: createtime
-      description: "Timestamp when the object was created"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_createtime_not_null
-            config:
-               severity: warn
-   -  name: newaccountreason_icare
-      description: "icare specific field to hold reason for new account details"
-   -  name: linkcontacts
-      description: "Indicates that this Account will sync Contacts with an external Contact Management System."
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_linkcontacts_not_null
-            config:
-               severity: warn
-   -  name: itcentitlement_icare
-      description: "icare specific field to capture ITC entitlement details"
-   -  name: trustabn_icare
-      description: "icare specific field to hold Trust ABN number shared from veda services"
-   -  name: accountorgtype
-      description: "Organization type of this account"
-   -  name: locationautonumberseq
-      description: "Sequence to autonumber account locations"
-   -  name: isparent
-      description: "Flag when true indicate that this account is a parent account in Account Group"
-   -  name: updatetime
-      description: "Timestamp when the object was last updated"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_updatetime_not_null
-            config:
-               severity: warn
-   -  name: abrvalidationstatus_icare
-      description: "icare specific field to hold both abn and acn validation status"
-   -  name: servicetier
-      description: "Customer Service Tier"
-   -  name: abnstatus_icare
-      description: "icare specific field to hold ABN status shared from veda services"
-   -  name: primarylanguage
-      description: "The accounts preferred language"
-   -  name: id
-      description: "Internally managed primary key"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_id_not_null
-            config:
-               severity: warn
-   -  name: statebureaunum
-      description: "State Bureau number of this account."
-   -  name: primarylocale
-      description: "The accounts preferred locale"
-   -  name: groupcommencementdate_icare
-      description: "Group first start date"
-   -  name: commencementdate_icare
-      description: "icare specific field to capture account or policy start date details"
-   -  name: trustname_icare
-      description: "icare specific field to hold Trust Name shared from veda services"
-   -  name: accountstatus
-      description: "The status of this account"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_accountstatus_not_null
-            config:
-               severity: warn
-   -  name: frozen
-      description: "If true then no Policy may be created or retrieved on this Account"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_frozen_not_null
-            config:
-               severity: warn
-   -  name: createuserid
-      description: "User ID of the user that created this record. Foreign key to PC_USER."
-   -  name: yearbusinessstarted
-      description: "What year was the business started?"
-   -  name: industrycodeid
-      description: "Industry code. Theres 2 types of industry codes mastered in GW as at Nov-17 - NAISC: North American Industry; SIC: Standard Industrial Classification also for the United States. This is not currently being used, so only the SRC_ID will be mapped to EDW, until new reference data is populated into PC_INDUSTRYCODE and is used. ICARE will be analysing industries off the WIC on the PolicyPeriod, not the account"
-   -  name: beanversion
-      description: "To manage versions in GW"
-   -  name: abn_icare
-      description: "icare specific field to hold ABN numbers"
-   -  name: retired
-      description: "Flag indicating if the reference data is no longer used"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_retired_not_null
-            config:
-               severity: warn
-   -  name: trusteetype_icare
-      description: "icare specific field to hold Trust Type status shared from veda services"
-   -  name: lockingcolumn
-      description: "Meaningless column for locking"
-   -  name: otherorgtypedescription
-      description: "If AccountOrgType is other, this value must be filled in"
-   -  name: updateuserid
-      description: "User ID of the user that updated this record. Foreign key to PC_USER."
-   -  name: accountnumberdenorm
-      description: "denorm field for The account number of this account."
-   -  name: cluster_icare
-      description: "icare specific field to hold Cluster details"
-   -  name: accountnumber
-      description: "The account number of this account."
-   -  name: isvedavalidated
-      description: "Flag when true indicate that this account is a parent account in Account Group"
-   -  name: acnstatus_icare
-      description: "icare specific field to hold ACN status shared from veda services"
-   -  name: preferredcoveragecurrency
-      description: "Preferred Coverage Currency"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_preferredcoveragecurrency_not_null
-            config:
-               severity: warn
-   -  name: preferredsettlementcurrency
-      description: "Preferred Settlement Currency"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_preferredsettlementcurrency_not_null
-            config:
-               severity: warn
-   -  name: gstregistration_icare
-      description: "icare specific field to capture account or policy GST registration details"
-   -  name: originationdate
-      description: "The date the account became a client of the carrier."
-   -  name: trusteename_icare
-      description: "This is Icare field to hold Trustee Name"
-   -  name: anonymous
-      description: ""
-   -  name: groupnumberdenorm_icare
-      description: "Group Number from PC_JOBGROUP. "
-   -  name: acndenorm_icare
-      description: "Equivalent to ACN_icare field in PC_ACCOUNT, but with spaces stripped"
-   -  name: abndenorm_icare
-      description: ""
-   -  name: crmuniqueid_icare
-      description: ""
-   -  name: sourcesystem_icare
-      description: ""
-   -  name: crmversion_icare
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_crmversion_icare_not_null
-            config:
-               severity: warn
-   -  name: accountstatusupdatetime
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_accountstatusupdatetime_not_null
-            config:
-               severity: warn
-   -  name: archivestate
-      description: ""
-   -  name: archiveschemainfo
-      description: ""
-   -  name: donotdestroy
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_donotdestroy_not_null
-            config:
-               severity: warn
-   -  name: excludereason
-      description: ""
-   -  name: archivefailureid
-      description: ""
-   -  name: excludedfromarchive
-      description: ""
-   -  name: archivefailuredetailsid
-      description: ""
-   -  name: archivepartition
-      description: ""
-   -  name: archivedate
-      description: ""
-   -  name: insolvency_ext
-      description: ""
-   -  name: referredtornsw_ext
-      description: ""
-   -  name: customerrefcode_ext
-      description: ""
-   -  name: gststatus_ext
-      description: ""
-   -  name: gststatusfromdate_ext
-      description: ""
-   -  name: hasuserexercisedchoice_ext
-      description: ""
-   -  name: policyspecialistcspname_ext
-      description: ""
-   -  name: exercisecspchoice_ext
-      description: ""
-   -  name: policygeneralcspname_ext
-      description: ""
-   -  name: eligibilitytoselectcsp_ext
-      description: ""
-   -  name: iseligibleforcspconfirmdoc_ext
-      description: ""
-   -  name: ispolicyinsyncwithgroup_ext
-      description: ""
-   -  name: creationsource_ext
-      description: ""
-   -  name: activefrom_ext
-      description: ""
-   -  name: portfoliocode_ext
-      description: ""
-   -  name: agencytype_ext
-      description: ""
-   -  name: tmfcostcentrerequiredflag_ext
-      description: ""
-   -  name: agencycode_ext
-      description: ""
-   -  name: activeto_ext
-      description: ""
-   -  name: ishealthportfolio_ext
-      description: ""
-   -  name: tmfcostcentrelevelind_ext
-      description: ""
-   -  name: icp_ext
-      description: ""
-   -  name: pool_ext
-      description: ""
-   -  name: isgrouptermrenamed_ext
-      description: ""
-   -  name: ismigrated_ext
-      description: ""
-   -  name: sapcustomernumber_ext
-      description: ""
-   -  name: gwcbi_connector_ts_ms
-      description: ""
-   -  name: gwcbi_lsn
-      description: ""
-   -  name: gwcbi_operation
-      description: ""
-   -  name: gwcbi_payload_ts_ms
-      description: ""
-   -  name: gwcbi_seqval
-      description: ""
-   -  name: gwcbi_seqval_hex
-      description: ""
-   -  name: gwcbi_tx_id
-      description: ""
-   -  name: metadata_file_name
-      description: ""
-   -  name: file_ingestion_timestamp
-      description: ""
-   -  name: file_type
-      description: ""
-   -  name: hash_key
-      description: ""
+  - name: pc_account
+    columns:
+      - name: trustabnstatus_icare
+        description: "icare specific field to hold Trust ABN status shared from veda services"
+      - name: groupnumber_icare
+        description: "Group number"
+      - name: busopsdesc
+        description: "Business and operations description."
+      - name: publicid
+        description: "ID or primary key of the row in the external system to which this row is mapped"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_publicid_not_null
+              config:
+                severity: warn
+      - name: groupname_icare
+        description: "Group Name"
+      - name: acn_icare
+        description: "icare specific field to hold ACN numbers"
+      - name: createtime
+        description: "Timestamp when the object was created"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_createtime_not_null
+              config:
+                severity: warn
+      - name: newaccountreason_icare
+        description: "icare specific field to hold reason for new account details"
+      - name: linkcontacts
+        description: "Indicates that this Account will sync Contacts with an external Contact Management System."
+        tests:
+          - not_null:
+              name: gwpc_pc_account_linkcontacts_not_null
+              config:
+                severity: warn
+      - name: itcentitlement_icare
+        description: "icare specific field to capture ITC entitlement details"
+      - name: trustabn_icare
+        description: "icare specific field to hold Trust ABN number shared from veda services"
+      - name: accountorgtype
+        description: "Organization type of this account"
+      - name: locationautonumberseq
+        description: "Sequence to autonumber account locations"
+      - name: isparent
+        description: "Flag when true indicate that this account is a parent account in Account Group"
+      - name: updatetime
+        description: "Timestamp when the object was last updated"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_updatetime_not_null
+              config:
+                severity: warn
+      - name: abrvalidationstatus_icare
+        description: "icare specific field to hold both abn and acn validation status"
+      - name: servicetier
+        description: "Customer Service Tier"
+      - name: abnstatus_icare
+        description: "icare specific field to hold ABN status shared from veda services"
+      - name: primarylanguage
+        description: "The accounts preferred language"
+      - name: id
+        description: "Internally managed primary key"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_id_not_null
+              config:
+                severity: warn
+      - name: statebureaunum
+        description: "State Bureau number of this account."
+      - name: primarylocale
+        description: "The accounts preferred locale"
+      - name: groupcommencementdate_icare
+        description: "Group first start date"
+      - name: commencementdate_icare
+        description: "icare specific field to capture account or policy start date details"
+      - name: trustname_icare
+        description: "icare specific field to hold Trust Name shared from veda services"
+      - name: accountstatus
+        description: "The status of this account"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_accountstatus_not_null
+              config:
+                severity: warn
+      - name: frozen
+        description: "If true then no Policy may be created or retrieved on this Account"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_frozen_not_null
+              config:
+                severity: warn
+      - name: createuserid
+        description: "User ID of the user that created this record. Foreign key to PC_USER."
+      - name: yearbusinessstarted
+        description: "What year was the business started?"
+      - name: industrycodeid
+        description: "Industry code. Theres 2 types of industry codes mastered in GW as at Nov-17 - NAISC: North American Industry; SIC: Standard Industrial Classification also for the United States. This is not currently being used, so only the SRC_ID will be mapped to EDW, until new reference data is populated into PC_INDUSTRYCODE and is used. ICARE will be analysing industries off the WIC on the PolicyPeriod, not the account"
+      - name: beanversion
+        description: "To manage versions in GW"
+      - name: abn_icare
+        description: "icare specific field to hold ABN numbers"
+      - name: retired
+        description: "Flag indicating if the reference data is no longer used"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_retired_not_null
+              config:
+                severity: warn
+      - name: trusteetype_icare
+        description: "icare specific field to hold Trust Type status shared from veda services"
+      - name: lockingcolumn
+        description: "Meaningless column for locking"
+      - name: otherorgtypedescription
+        description: "If AccountOrgType is other, this value must be filled in"
+      - name: updateuserid
+        description: "User ID of the user that updated this record. Foreign key to PC_USER."
+      - name: accountnumberdenorm
+        description: "denorm field for The account number of this account."
+      - name: cluster_icare
+        description: "icare specific field to hold Cluster details"
+      - name: accountnumber
+        description: "The account number of this account."
+      - name: isvedavalidated
+        description: "Flag when true indicate that this account is a parent account in Account Group"
+      - name: acnstatus_icare
+        description: "icare specific field to hold ACN status shared from veda services"
+      - name: preferredcoveragecurrency
+        description: "Preferred Coverage Currency"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_preferredcoveragecurrency_not_null
+              config:
+                severity: warn
+      - name: preferredsettlementcurrency
+        description: "Preferred Settlement Currency"
+        tests:
+          - not_null:
+              name: gwpc_pc_account_preferredsettlementcurrency_not_null
+              config:
+                severity: warn
+      - name: gstregistration_icare
+        description: "icare specific field to capture account or policy GST registration details"
+      - name: originationdate
+        description: "The date the account became a client of the carrier."
+      - name: trusteename_icare
+        description: "This is Icare field to hold Trustee Name"
+      - name: anonymous
+        description: ""
+      - name: groupnumberdenorm_icare
+        description: "Group Number from PC_JOBGROUP. "
+      - name: acndenorm_icare
+        description: "Equivalent to ACN_icare field in PC_ACCOUNT, but with spaces stripped"
+      - name: abndenorm_icare
+        description: ""
+      - name: crmuniqueid_icare
+        description: ""
+      - name: sourcesystem_icare
+        description: ""
+      - name: crmversion_icare
+        description: ""
+        tests:
+          - not_null:
+              name: gwpc_pc_account_crmversion_icare_not_null
+              config:
+                severity: warn
+      - name: accountstatusupdatetime
+        description: ""
+        tests:
+          - not_null:
+              name: gwpc_pc_account_accountstatusupdatetime_not_null
+              config:
+                severity: warn
+      - name: archivestate
+        description: ""
+      - name: archiveschemainfo
+        description: ""
+      - name: donotdestroy
+        description: ""
+        tests:
+          - not_null:
+              name: gwpc_pc_account_donotdestroy_not_null
+              config:
+                severity: warn
+      - name: excludereason
+        description: ""
+      - name: archivefailureid
+        description: ""
+      - name: excludedfromarchive
+        description: ""
+      - name: archivefailuredetailsid
+        description: ""
+      - name: archivepartition
+        description: ""
+      - name: archivedate
+        description: ""
+      - name: insolvency_ext
+        description: ""
+      - name: referredtornsw_ext
+        description: ""
+      - name: customerrefcode_ext
+        description: ""
+      - name: gststatus_ext
+        description: ""
+      - name: gststatusfromdate_ext
+        description: ""
+      - name: hasuserexercisedchoice_ext
+        description: ""
+      - name: policyspecialistcspname_ext
+        description: ""
+      - name: exercisecspchoice_ext
+        description: ""
+      - name: policygeneralcspname_ext
+        description: ""
+      - name: eligibilitytoselectcsp_ext
+        description: ""
+      - name: iseligibleforcspconfirmdoc_ext
+        description: ""
+      - name: ispolicyinsyncwithgroup_ext
+        description: ""
+      - name: creationsource_ext
+        description: ""
+      - name: activefrom_ext
+        description: ""
+      - name: portfoliocode_ext
+        description: ""
+      - name: agencytype_ext
+        description: ""
+      - name: tmfcostcentrerequiredflag_ext
+        description: ""
+      - name: agencycode_ext
+        description: ""
+      - name: activeto_ext
+        description: ""
+      - name: ishealthportfolio_ext
+        description: ""
+      - name: tmfcostcentrelevelind_ext
+        description: ""
+      - name: icp_ext
+        description: ""
+      - name: pool_ext
+        description: ""
+      - name: isgrouptermrenamed_ext
+        description: ""
+      - name: ismigrated_ext
+        description: ""
+      - name: sapcustomernumber_ext
+        description: ""
+      - name: gwcbi_connector_ts_ms
+        description: ""
+      - name: gwcbi_lsn
+        description: ""
+      - name: gwcbi_operation
+        description: ""
+      - name: gwcbi_payload_ts_ms
+        description: ""
+      - name: gwcbi_seqval
+        description: ""
+      - name: gwcbi_seqval_hex
+        description: ""
+      - name: gwcbi_tx_id
+        description: ""
+      - name: metadata_file_name
+        description: ""
+      - name: file_ingestion_timestamp
+        description: ""
+      - name: file_type
+        description: ""
+      - name: hash_key
+        description: ""
