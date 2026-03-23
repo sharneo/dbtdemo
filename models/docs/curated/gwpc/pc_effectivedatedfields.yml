@@ -10,16 +10,36 @@ models:
       description: "icare specific field to hold ESR details"
    -  name: fixedid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_fixedid_not_null
+            config:
+               severity: warn
    -  name: primarynamedinsured
       description: "The primary named insured on the policy."
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_primarynamedinsured_not_null
+            config:
+               severity: warn
    -  name: exppremium_icare_cur
       description: "Currency for Experience Premium"
    -  name: updatetime
       description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_updatetime_not_null
+            config:
+               severity: warn
    -  name: wcsiddlevy_icare
       description: "WC Self Insurer Dust disease levy"
    -  name: id
       description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_id_not_null
+            config:
+               severity: warn
    -  name: exppremium_icare_amt
       description: "Experience Premium"
    -  name: createuserid
@@ -38,6 +58,11 @@ models:
       description: "The primary Location for this Policy."
    -  name: branchid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_branchid_not_null
+            config:
+               severity: warn
    -  name: wclegacytotalprem_icare_amt
       description: "Total Premium. Applies only for Legacy policies"
    -  name: wcsiexcontlevy_icare
@@ -46,10 +71,20 @@ models:
       description: "Experience Adjustment Factor (S)"
    -  name: publicid
       description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_publicid_not_null
+            config:
+               severity: warn
    -  name: billingcontact
       description: "The billing contact on the policy."
    -  name: createtime
       description: "Timestamp when the object was created. This will be the same as the CreateTime in PC_POLICYPERIOD."
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_createtime_not_null
+            config:
+               severity: warn
    -  name: wcsicontlevy_icare
       description: "WC Self Insurance Contribution Levy"
    -  name: isimmediatecover_icare
@@ -66,6 +101,11 @@ models:
       description: "GST Amount. Applies only for Legacy policies"
    -  name: producercodeid
       description: "Intermediary organisation. Captured at PC_POLICYPERIOD.ProducerCodeOfRecordID instead"
+      tests:
+      -  not_null:
+            name: gwpc_pc_effectivedatedfields_producercodeid_not_null
+            config:
+               severity: warn
    -  name: expirationdate
       description: "Expiration date of this row. A value of NULL in the database indicates that this rows expiration date is equal to the Period End. This is always the case with icares implementation, effdated records are always as per the Period Start and End dates"
    -  name: groupperiodbtp_cur

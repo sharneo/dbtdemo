@@ -6,14 +6,34 @@ models:
       description: ""
    -  name: roleid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_userrole_roleid_not_null
+            config:
+               severity: warn
    -  name: publicid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_userrole_publicid_not_null
+            config:
+               severity: warn
    -  name: userid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_userrole_userid_not_null
+            config:
+               severity: warn
    -  name: beanversion
       description: ""
    -  name: id
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_userrole_id_not_null
+            config:
+               severity: warn
    -  name: gwcbi_connector_ts_ms
       description: ""
    -  name: gwcbi_lsn

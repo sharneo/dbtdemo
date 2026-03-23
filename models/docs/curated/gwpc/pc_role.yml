@@ -6,24 +6,54 @@ models:
       description: ""
    -  name: publicid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_role_publicid_not_null
+            config:
+               severity: warn
    -  name: beanversion
       description: ""
    -  name: retired
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_role_retired_not_null
+            config:
+               severity: warn
    -  name: createtime
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_role_createtime_not_null
+            config:
+               severity: warn
    -  name: carrierinternalrole
       description: ""
    -  name: name
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_role_name_not_null
+            config:
+               severity: warn
    -  name: updateuserid
       description: ""
    -  name: roletype
       description: ""
    -  name: updatetime
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_role_updatetime_not_null
+            config:
+               severity: warn
    -  name: id
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_role_id_not_null
+            config:
+               severity: warn
    -  name: description
       description: ""
    -  name: gwcbi_connector_ts_ms

@@ -4,14 +4,34 @@ models:
    columns:
    -  name: foreignentityid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_acctholderedge_foreignentityid_not_null
+            config:
+               severity: warn
    -  name: publicid
       description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pc_acctholderedge_publicid_not_null
+            config:
+               severity: warn
    -  name: beanversion
       description: ""
    -  name: id
       description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwpc_pc_acctholderedge_id_not_null
+            config:
+               severity: warn
    -  name: ownerid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_acctholderedge_ownerid_not_null
+            config:
+               severity: warn
    -  name: archivepartition
       description: ""
    -  name: gwcbi_connector_ts_ms

@@ -12,10 +12,20 @@ models:
       description: "The date when a job transitions into a quoted state i.e. when the transaction is essentially in Draft mode. This can be on any job i.e. submission job which transitions from Temporary -> New -> Draft -> Quoting -> Quoted -> Bound; or renewal job which transitions from Draft -> Quoting -> Quoted -> Bound or vairations to this i.e. Withdrawn etc. "
    -  name: updatetime
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_updatetime_not_null
+            config:
+               severity: warn
    -  name: notificationdate
       description: ""
    -  name: id
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_id_not_null
+            config:
+               severity: warn
    -  name: source
       description: ""
    -  name: excludereason
@@ -34,6 +44,11 @@ models:
       description: "Internal technical GW field to manage object versions."
    -  name: retired
       description: "Flag indicating if the reference data is no longer used"
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_retired_not_null
+            config:
+               severity: warn
    -  name: cancelreasoncode
       description: "Cancellation reason codes. Not used by icare, customised field PC_JOB.ReasoncodeForCancel_icare used instead"
    -  name: changepolicynumber
@@ -52,18 +67,43 @@ models:
       description: "Return DateQuoteNeeded for submission jobs. Internal GW field for submission job scheduling. Not used by icare as at Nov-17"
    -  name: publicid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_publicid_not_null
+            config:
+               severity: warn
    -  name: sidebyside
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_sidebyside_not_null
+            config:
+               severity: warn
    -  name: jobnumber
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_jobnumber_not_null
+            config:
+               severity: warn
    -  name: rewritetype
       description: ""
    -  name: createtime
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_createtime_not_null
+            config:
+               severity: warn
    -  name: auditinformationid
       description: "Internal technical GW field to manage audits"
    -  name: policyid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_policyid_not_null
+            config:
+               severity: warn
    -  name: excludedfromarchive
       description: "Internal technical GW field to manage archiving."
    -  name: rejectreasontext
@@ -74,6 +114,11 @@ models:
       description: ""
    -  name: purgestatus
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_purgestatus_not_null
+            config:
+               severity: warn
    -  name: initialnotificationdate
       description: ""
    -  name: lastnotifiedcancellationdate
@@ -106,6 +151,11 @@ models:
       description: ""
    -  name: subtype
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_subtype_not_null
+            config:
+               severity: warn
    -  name: submissiondate
       description: ""
    -  name: description
@@ -144,8 +194,18 @@ models:
       description: ""
    -  name: policyterm
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_policyterm_not_null
+            config:
+               severity: warn
    -  name: jobnumberdenorm
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_jobnumberdenorm_not_null
+            config:
+               severity: warn
    -  name: iscssportal_ext
       description: ""
    -  name: iscrifreminderemailsent_ext

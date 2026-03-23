@@ -8,12 +8,27 @@ models:
       description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
    -  name: publicid
       description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_publicid_not_null
+            config:
+               severity: warn
    -  name: batchgeocode
       description: "Boolean field to mark an address to be geocoded (if needed) by the batch geocoding work queue."
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_batchgeocode_not_null
+            config:
+               severity: warn
    -  name: active
       description: "Determines whether or not the location is available to be newly added to submissions"
    -  name: createtime
       description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_createtime_not_null
+            config:
+               severity: warn
    -  name: addressline1
       description: "First line of mailing address."
    -  name: addressline2
@@ -36,10 +51,20 @@ models:
       description: "The system uses this value when it is integrated with ContactManager and the related contact is linked. In this case, the ID represents the ID of the corresponding entity in ContactManager. This value is null if the object is not linked."
    -  name: updatetime
       description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_updatetime_not_null
+            config:
+               severity: warn
    -  name: country
       description: "Country."
    -  name: id
       description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_id_not_null
+            config:
+               severity: warn
    -  name: isvalidated_icare
       description: "To check whether address is validated or not"
    -  name: employeecount
@@ -58,6 +83,11 @@ models:
       description: "denorm field for City."
    -  name: retired
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_retired_not_null
+            config:
+               severity: warn
    -  name: city
       description: "City."
    -  name: lastupdatetime
@@ -86,8 +116,18 @@ models:
       description: "Postal code; string to handle Zip+4 and international codes."
    -  name: referenced
       description: "Whether or not this entity is Referenced."
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_referenced_not_null
+            config:
+               severity: warn
    -  name: subtype
       description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_subtype_not_null
+            config:
+               severity: warn
    -  name: linkedaddress
       description: "A potential link to a group of addresses"
    -  name: description
@@ -98,6 +138,11 @@ models:
       description: "Is a non-specific location."
    -  name: obfuscatedinternal
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_address_obfuscatedinternal_not_null
+            config:
+               severity: warn
    -  name: archivepartition
       description: ""
    -  name: gwcbi_connector_ts_ms

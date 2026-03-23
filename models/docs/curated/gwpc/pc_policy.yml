@@ -4,10 +4,20 @@ models:
    columns:
    -  name: donotdestroy
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_donotdestroy_not_null
+            config:
+               severity: warn
    -  name: isportalpolicy_icare
       description: "If the source of policy record is Legacy or not"
    -  name: publicid
       description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_publicid_not_null
+            config:
+               severity: warn
    -  name: priorpremiums
       description: "Premium for terms prior to conversion. GW Out-of-the-box functionality for prior losses and not used by icare as at Nov-17."
    -  name: issuedate
@@ -18,10 +28,25 @@ models:
       description: "Foreign key to PC_ACCOUNT.ID. This account id refers to the old Account ID if the policy was moved from an account. This functionality is not used by icare as at Nov-17."
    -  name: accountid
       description: "Foreign key to PC_ACCOUNT.ID"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_accountid_not_null
+            config:
+               severity: warn
    -  name: createtime
       description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_createtime_not_null
+            config:
+               severity: warn
    -  name: losshistorytype
       description: "How the loss history is described for this policy"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_losshistorytype_not_null
+            config:
+               severity: warn
    -  name: excludedfromarchive
       description: "Indicate if this entity should be excluded from archiving"
    -  name: archivestate
@@ -36,16 +61,36 @@ models:
       description: "The number of losses. Only applicable for a loss history type of attached."
    -  name: updatetime
       description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_updatetime_not_null
+            config:
+               severity: warn
    -  name: primarylanguage
       description: "The policys preferred language"
    -  name: donotarchive
       description: "Do not archive any of the terms for this Policy. Terms that are already archived will not be automatically retrieved."
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_donotarchive_not_null
+            config:
+               severity: warn
    -  name: id
       description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_id_not_null
+            config:
+               severity: warn
    -  name: primarylocale
       description: "The policys preferred locale"
    -  name: productcode
       description: "The Product defining what kind of Policy this is"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_productcode_not_null
+            config:
+               severity: warn
    -  name: excludereason
       description: "Reason for excluding or skipping the entity from archiving. If the ExcludeFromArchive bit is set, this gives the reason for excluding. Else, if this is not null, it is the reason for skipping."
    -  name: groupnumberfromportal
@@ -64,6 +109,11 @@ models:
       description: "Unique number to partition the data so that the multiple workers can work independently"
    -  name: retired
       description: "Indicator in GW signifying the record has been soft deleted."
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_retired_not_null
+            config:
+               severity: warn
    -  name: updateuserid
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: priortotalincurred
@@ -74,6 +124,11 @@ models:
       description: ""
    -  name: producercodeofserviceid
       description: "FK to the PC_PRODUCERCODE table which stores who the Intermediary of Service for this policy is i.e. icare (employer direct) or via broker. This is the same as the PC_EFFECTIVEDATEDFIELDS.ProducerCodeID"
+      tests:
+      -  not_null:
+            name: gwpc_pc_policy_producercodeofserviceid_not_null
+            config:
+               severity: warn
    -  name: newproducercode_ext
       description: "Interal technical GW field used to enact bulk changes of changing the Producer of the policies e.g. moving all Policy administration from icare to EML. The master data for the Producer of the policy will be sourced from persistent GW tables like pc_producercode once the change takes effect."
    -  name: newclaimschemeagent_icare

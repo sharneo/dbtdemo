@@ -8,8 +8,18 @@ models:
       description: ""
    -  name: publicid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_publicid_not_null
+            config:
+               severity: warn
    -  name: active
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_active_not_null
+            config:
+               severity: warn
    -  name: closedate
       description: ""
    -  name: beanversion
@@ -18,14 +28,29 @@ models:
       description: ""
    -  name: createtime
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_createtime_not_null
+            config:
+               severity: warn
    -  name: retired
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_retired_not_null
+            config:
+               severity: warn
    -  name: assignedbyuserid
       description: ""
    -  name: assignedgroupid
       description: ""
    -  name: policyid
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_policyid_not_null
+            config:
+               severity: warn
    -  name: updateuserid
       description: ""
    -  name: comments
@@ -36,10 +61,25 @@ models:
       description: ""
    -  name: updatetime
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_updatetime_not_null
+            config:
+               severity: warn
    -  name: role
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_role_not_null
+            config:
+               severity: warn
    -  name: id
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_id_not_null
+            config:
+               severity: warn
    -  name: assignmentdate
       description: ""
    -  name: previoususerid
@@ -48,6 +88,11 @@ models:
       description: ""
    -  name: assignmentstatus
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_policyuserroleassign_assignmentstatus_not_null
+            config:
+               severity: warn
    -  name: gwcbi_connector_ts_ms
       description: ""
    -  name: gwcbi_lsn

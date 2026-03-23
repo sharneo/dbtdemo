@@ -14,6 +14,11 @@ models:
       description: "Number of Accidents"
    -  name: publicid
       description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_publicid_not_null
+            config:
+               severity: warn
    -  name: industrycodeid
       description: "Refer to PC_ACCOUNT for this data"
    -  name: gooddriverdiscount
@@ -22,8 +27,18 @@ models:
       description: ""
    -  name: retired
       description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_retired_not_null
+            config:
+               severity: warn
    -  name: createtime
       description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_createtime_not_null
+            config:
+               severity: warn
    -  name: busopsdescription
       description: "Business operation description."
    -  name: numberofviolations
@@ -32,18 +47,43 @@ models:
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: accountcontact
       description: "The account contact that plays this role."
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_accountcontact_not_null
+            config:
+               severity: warn
    -  name: updatetime
       description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_updatetime_not_null
+            config:
+               severity: warn
    -  name: trainingclasstype
       description: "The kind of training class driver completed."
    -  name: referenced
       description: "Whether or not this entity is Referenced."
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_referenced_not_null
+            config:
+               severity: warn
    -  name: subtype
       description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_subtype_not_null
+            config:
+               severity: warn
    -  name: student
       description: "Is this driver a student?"
    -  name: id
       description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwpc_pc_accountcontactrole_id_not_null
+            config:
+               severity: warn
    -  name: orgtype
       description: "Organization type."
    -  name: archivepartition
