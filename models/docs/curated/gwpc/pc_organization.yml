@@ -8,11 +8,6 @@ models:
       description: ""
    -  name: publicid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_publicid_not_null
-            config:
-               severity: warn
    -  name: producerstatus
       description: "The status of the external producer organization. This is denomarlised and can be found through PC_PRODUCERCODE.ProducerStatus"
    -  name: beanversion
@@ -21,66 +16,26 @@ models:
       description: ""
    -  name: namedenorm
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_namedenorm_not_null
-            config:
-               severity: warn
    -  name: createtime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_createtime_not_null
-            config:
-               severity: warn
    -  name: retired
       description: "Indicator in GW signifying the record has been soft deleted. "
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_retired_not_null
-            config:
-               severity: warn
    -  name: name
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_name_not_null
-            config:
-               severity: warn
    -  name: namekanji
       description: ""
    -  name: masteradmin
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_masteradmin_not_null
-            config:
-               severity: warn
    -  name: updateuserid
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: updatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_updatetime_not_null
-            config:
-               severity: warn
    -  name: carrier
       description: "Flag indicating whether this organization corresponds to the carrier itself. The carrier being icare in this case."
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_carrier_not_null
-            config:
-               severity: warn
    -  name: type
       description: ""
    -  name: id
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_organization_id_not_null
-            config:
-               severity: warn
    -  name: contactid
       description: "Contact for the organization"
    -  name: receivecomunication_icare

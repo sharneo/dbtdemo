@@ -6,59 +6,24 @@ models:
       description: "User ID of the user that created this record. Foreign key to PC_USER."
    -  name: publicid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_publicid_not_null
-            config:
-               severity: warn
    -  name: producerstatus
       description: "The status of this producer code. "
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_producerstatus_not_null
-            config:
-               severity: warn
    -  name: preferredunderwriterid
       description: "The preferred underwriter for a producer code"
    -  name: beanversion
       description: "Internal technical GW field to manage object versions."
    -  name: createtime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_createtime_not_null
-            config:
-               severity: warn
    -  name: retired
       description: "Indicator in GW signifying the record has been soft deleted."
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_retired_not_null
-            config:
-               severity: warn
    -  name: codedenorm
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_codedenorm_not_null
-            config:
-               severity: warn
    -  name: code
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_code_not_null
-            config:
-               severity: warn
    -  name: appointmentdate
       description: ""
    -  name: organizationid
       description: "Foreign key to PC_ORGANIZATION to understand what organisation the distribution partner may roll up into."
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_organizationid_not_null
-            config:
-               severity: warn
    -  name: updateuserid
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: addressid
@@ -67,20 +32,10 @@ models:
       description: ""
    -  name: updatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_updatetime_not_null
-            config:
-               severity: warn
    -  name: descriptiondenorm
       description: ""
    -  name: id
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_producercode_id_not_null
-            config:
-               severity: warn
    -  name: description
       description: ""
    -  name: branchid

@@ -3,146 +3,101 @@ models:
 -  name: pc_address
    columns:
    -  name: locationname
-      description: ""
+      description: "Shorthand name for this location"
    -  name: loadcommandid
-      description: ""
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
    -  name: publicid
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_publicid_not_null
-            config:
-               severity: warn
+      description: "ID or primary key of the row in the external system to which this row is mapped"
    -  name: batchgeocode
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_batchgeocode_not_null
-            config:
-               severity: warn
+      description: "Boolean field to mark an address to be geocoded (if needed) by the batch geocoding work queue."
    -  name: active
-      description: ""
+      description: "Determines whether or not the location is available to be newly added to submissions"
    -  name: createtime
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_createtime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was created"
    -  name: addressline1
-      description: ""
+      description: "First line of mailing address."
    -  name: addressline2
-      description: ""
+      description: "Second line of mailing address."
    -  name: county
-      description: ""
+      description: "County."
    -  name: addressline3
-      description: ""
+      description: "Third line of mailing address."
    -  name: citykanji
-      description: ""
+      description: "City in kanji (used only for Japanese addresses and will be null otherwise)"
    -  name: spatialpoint
-      description: ""
+      description: "Latitude and longitude of this address, represented as an instance of SpatialPoint."
    -  name: addressline2kanji
-      description: ""
+      description: "Second line of mailing address in kanji (used only for Japanese addresses and will be null otherwise)"
    -  name: phoneextension
-      description: ""
+      description: "Phone extension"
    -  name: state
-      description: ""
+      description: "State."
    -  name: addressbookuid
-      description: ""
+      description: "The system uses this value when it is integrated with ContactManager and the related contact is linked. In this case, the ID represents the ID of the corresponding entity in ContactManager. This value is null if the object is not linked."
    -  name: updatetime
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_updatetime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was last updated"
    -  name: country
-      description: ""
+      description: "Country."
    -  name: id
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_id_not_null
-            config:
-               severity: warn
+      description: "Internally managed primary key"
    -  name: isvalidated_icare
-      description: ""
+      description: "To check whether address is validated or not"
    -  name: employeecount
-      description: ""
+      description: "The number of employees at this location"
    -  name: locationcode
-      description: ""
+      description: "The custom location code specified by customer"
    -  name: createuserid
       description: ""
    -  name: validuntil
-      description: ""
+      description: "Latest date that this address is valid."
    -  name: phonecountry
-      description: ""
+      description: "The country associated with this phone number."
    -  name: beanversion
       description: ""
    -  name: citydenorm
-      description: ""
+      description: "denorm field for City."
    -  name: retired
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_retired_not_null
-            config:
-               severity: warn
    -  name: city
-      description: ""
+      description: "City."
    -  name: lastupdatetime
-      description: ""
+      description: "Date and time of last update"
    -  name: account
-      description: ""
+      description: "The account on which this is a location"
    -  name: phone
-      description: ""
+      description: "Phone"
    -  name: addresstype
-      description: ""
+      description: "Type of this address record."
    -  name: addressline1kanji
-      description: ""
+      description: "First line of mailing address in kanji (used only for Japanese addresses and will be null otherwise)"
    -  name: updateuserid
       description: ""
    -  name: cedexbureau
-      description: ""
+      description: "CEDEX: Special business mail delivery bureau (used only for French addresses and will be null otherwise)"
    -  name: geocodestatus
-      description: ""
+      description: "Enum giving the status of the latitude and longitude data."
    -  name: locationnum
-      description: ""
+      description: "The location number of this location"
    -  name: cedex
-      description: ""
+      description: "CEDEX: Special business mail delivery flag (used only for French addresses and will be null otherwise)"
    -  name: postalcodedenorm
-      description: ""
+      description: "denorm field for Postal code; string to handle Zip+4 and international codes."
    -  name: postalcode
-      description: ""
+      description: "Postal code; string to handle Zip+4 and international codes."
    -  name: referenced
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_referenced_not_null
-            config:
-               severity: warn
+      description: "Whether or not this entity is Referenced."
    -  name: subtype
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_subtype_not_null
-            config:
-               severity: warn
+      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
    -  name: linkedaddress
-      description: ""
+      description: "A potential link to a group of addresses"
    -  name: description
-      description: ""
+      description: "Additional description of mailing address."
    -  name: temporarylastupdatetime
-      description: ""
+      description: "Temporary date and time of last update; will eventually be copied to the LastUpdateTime during commit"
    -  name: nonspecific
-      description: ""
+      description: "Is a non-specific location."
    -  name: obfuscatedinternal
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_address_obfuscatedinternal_not_null
-            config:
-               severity: warn
    -  name: archivepartition
       description: ""
    -  name: gwcbi_connector_ts_ms

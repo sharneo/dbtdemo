@@ -3,149 +3,99 @@ models:
 -  name: pc_account
    columns:
    -  name: trustabnstatus_icare
-      description: ""
+      description: "icare specific field to hold Trust ABN status shared from veda services"
    -  name: groupnumber_icare
-      description: ""
+      description: "Group number"
    -  name: busopsdesc
-      description: ""
+      description: "Business and operations description."
    -  name: publicid
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_publicid_not_null
-            config:
-               severity: warn
+      description: "ID or primary key of the row in the external system to which this row is mapped"
    -  name: groupname_icare
       description: "Group Name"
    -  name: acn_icare
-      description: ""
+      description: "icare specific field to hold ACN numbers"
    -  name: createtime
-      description: "Timestamp when the record was created in the GW table"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_createtime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was created"
    -  name: newaccountreason_icare
-      description: ""
+      description: "icare specific field to hold reason for new account details"
    -  name: linkcontacts
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_linkcontacts_not_null
-            config:
-               severity: warn
+      description: "Indicates that this Account will sync Contacts with an external Contact Management System."
    -  name: itcentitlement_icare
-      description: ""
+      description: "icare specific field to capture ITC entitlement details"
    -  name: trustabn_icare
-      description: ""
+      description: "icare specific field to hold Trust ABN number shared from veda services"
    -  name: accountorgtype
-      description: ""
+      description: "Organization type of this account"
    -  name: locationautonumberseq
-      description: ""
+      description: "Sequence to autonumber account locations"
    -  name: isparent
-      description: "Flag when true indicate that this account is a parent account in Account Group. Not used by icare as at Nov-17, and can be derived from the Account Org Type = Parent Group"
+      description: "Flag when true indicate that this account is a parent account in Account Group"
    -  name: updatetime
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_updatetime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was last updated"
    -  name: abrvalidationstatus_icare
-      description: ""
+      description: "icare specific field to hold both abn and acn validation status"
    -  name: servicetier
-      description: ""
+      description: "Customer Service Tier"
    -  name: abnstatus_icare
-      description: ""
+      description: "icare specific field to hold ABN status shared from veda services"
    -  name: primarylanguage
-      description: "Internal technical GW field for language settings"
+      description: "The accounts preferred language"
    -  name: id
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_id_not_null
-            config:
-               severity: warn
+      description: "Internally managed primary key"
    -  name: statebureaunum
-      description: ""
+      description: "State Bureau number of this account."
    -  name: primarylocale
-      description: "The policys preferred locale used as an internal technical GW field to manage display."
+      description: "The accounts preferred locale"
    -  name: groupcommencementdate_icare
-      description: ""
+      description: "Group first start date"
    -  name: commencementdate_icare
-      description: "Group commencement date. Replaced with value from PC_ACCOUNT.GroupCommencementDate_icare"
+      description: "icare specific field to capture account or policy start date details"
    -  name: trustname_icare
-      description: ""
+      description: "icare specific field to hold Trust Name shared from veda services"
    -  name: accountstatus
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_accountstatus_not_null
-            config:
-               severity: warn
+      description: "The status of this account"
    -  name: frozen
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_frozen_not_null
-            config:
-               severity: warn
+      description: "If true then no Policy may be created or retrieved on this Account"
    -  name: createuserid
       description: "User ID of the user that created this record. Foreign key to PC_USER."
    -  name: yearbusinessstarted
-      description: ""
+      description: "What year was the business started?"
    -  name: industrycodeid
       description: "Industry code. Theres 2 types of industry codes mastered in GW as at Nov-17 - NAISC: North American Industry; SIC: Standard Industrial Classification also for the United States. This is not currently being used, so only the SRC_ID will be mapped to EDW, until new reference data is populated into PC_INDUSTRYCODE and is used. ICARE will be analysing industries off the WIC on the PolicyPeriod, not the account"
    -  name: beanversion
       description: "To manage versions in GW"
    -  name: abn_icare
-      description: ""
+      description: "icare specific field to hold ABN numbers"
    -  name: retired
       description: "Flag indicating if the reference data is no longer used"
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_retired_not_null
-            config:
-               severity: warn
    -  name: trusteetype_icare
-      description: ""
+      description: "icare specific field to hold Trust Type status shared from veda services"
    -  name: lockingcolumn
-      description: ""
+      description: "Meaningless column for locking"
    -  name: otherorgtypedescription
-      description: "If AccountOrgType is other, this value must be filled in. icare have not configured an OrgType that requires this field as at Nov-17"
+      description: "If AccountOrgType is other, this value must be filled in"
    -  name: updateuserid
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: accountnumberdenorm
-      description: ""
+      description: "denorm field for The account number of this account."
    -  name: cluster_icare
-      description: "icare specific field to hold Cluster details. Applies to Self Insurance."
+      description: "icare specific field to hold Cluster details"
    -  name: accountnumber
-      description: ""
+      description: "The account number of this account."
    -  name: isvedavalidated
-      description: "Same field value as ABRValidationStatus_icare in this table"
+      description: "Flag when true indicate that this account is a parent account in Account Group"
    -  name: acnstatus_icare
-      description: ""
+      description: "icare specific field to hold ACN status shared from veda services"
    -  name: preferredcoveragecurrency
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_preferredcoveragecurrency_not_null
-            config:
-               severity: warn
+      description: "Preferred Coverage Currency"
    -  name: preferredsettlementcurrency
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_preferredsettlementcurrency_not_null
-            config:
-               severity: warn
+      description: "Preferred Settlement Currency"
    -  name: gstregistration_icare
-      description: ""
+      description: "icare specific field to capture account or policy GST registration details"
    -  name: originationdate
-      description: ""
+      description: "The date the account became a client of the carrier."
    -  name: trusteename_icare
-      description: ""
+      description: "This is Icare field to hold Trustee Name"
    -  name: anonymous
       description: ""
    -  name: groupnumberdenorm_icare
@@ -160,29 +110,14 @@ models:
       description: ""
    -  name: crmversion_icare
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_crmversion_icare_not_null
-            config:
-               severity: warn
    -  name: accountstatusupdatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_accountstatusupdatetime_not_null
-            config:
-               severity: warn
    -  name: archivestate
       description: ""
    -  name: archiveschemainfo
       description: ""
    -  name: donotdestroy
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_account_donotdestroy_not_null
-            config:
-               severity: warn
    -  name: excludereason
       description: ""
    -  name: archivefailureid

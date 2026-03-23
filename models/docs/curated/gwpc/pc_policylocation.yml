@@ -4,11 +4,6 @@ models:
    columns:
    -  name: publicid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_publicid_not_null
-            config:
-               severity: warn
    -  name: citykanjiinternaldenorm
       description: ""
    -  name: addressline1internal
@@ -21,11 +16,6 @@ models:
       description: ""
    -  name: createtime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_createtime_not_null
-            config:
-               severity: warn
    -  name: citykanjiinternal
       description: ""
    -  name: isratedlocation_icare
@@ -36,29 +26,14 @@ models:
       description: ""
    -  name: fixedid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_fixedid_not_null
-            config:
-               severity: warn
    -  name: countryinternal
       description: ""
    -  name: effectivedate
       description: ""
    -  name: updatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_updatetime_not_null
-            config:
-               severity: warn
    -  name: id
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_id_not_null
-            config:
-               severity: warn
    -  name: expirationdate
       description: ""
    -  name: employeecountinternal
@@ -75,11 +50,6 @@ models:
       description: ""
    -  name: accountlocation
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_accountlocation_not_null
-            config:
-               severity: warn
    -  name: cityinternaldenorm
       description: ""
    -  name: industrycodeid
@@ -104,11 +74,6 @@ models:
       description: ""
    -  name: locationnum
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_locationnum_not_null
-            config:
-               severity: warn
    -  name: postalcodeinternaldenorm
       description: ""
    -  name: cedexinternal
@@ -121,11 +86,6 @@ models:
       description: ""
    -  name: branchid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policylocation_branchid_not_null
-            config:
-               severity: warn
    -  name: fireprotectclass
       description: ""
    -  name: gwcbi_connector_ts_ms

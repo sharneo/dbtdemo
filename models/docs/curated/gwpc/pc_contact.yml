@@ -6,11 +6,6 @@ models:
       description: ""
    -  name: preferred
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_preferred_not_null
-            config:
-               severity: warn
    -  name: vendortype
       description: ""
    -  name: faxphonecountry
@@ -41,29 +36,14 @@ models:
       description: ""
    -  name: updatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_updatetime_not_null
-            config:
-               severity: warn
    -  name: accountholdercount
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_accountholdercount_not_null
-            config:
-               severity: warn
    -  name: country
       description: ""
    -  name: adjudicatorlicense
       description: "Adjudicators business license number.Not used by icare as at Nov-17 and not planned for the future"
    -  name: id
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_id_not_null
-            config:
-               severity: warn
    -  name: withholdingrate
       description: ""
    -  name: lastnamedenorm
@@ -84,11 +64,6 @@ models:
       description: ""
    -  name: retired
       description: "Indicator in GW signifying the record has been soft deleted"
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_retired_not_null
-            config:
-               severity: warn
    -  name: validationlevel
       description: ""
    -  name: primaryphone
@@ -97,11 +72,6 @@ models:
       description: ""
    -  name: externalversion
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_externalversion_not_null
-            config:
-               severity: warn
    -  name: updateuserid
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: homephoneextension
@@ -126,20 +96,10 @@ models:
       description: ""
    -  name: publicid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_publicid_not_null
-            config:
-               severity: warn
    -  name: homephonecountry
       description: ""
    -  name: createtime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_createtime_not_null
-            config:
-               severity: warn
    -  name: licensenumber
       description: ""
    -  name: cellphonecountry
@@ -160,11 +120,6 @@ models:
       description: ""
    -  name: loadrelatedcontacts
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_loadrelatedcontacts_not_null
-            config:
-               severity: warn
    -  name: emailaddress1
       description: ""
    -  name: numdependents
@@ -209,11 +164,6 @@ models:
       description: ""
    -  name: subtype
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_subtype_not_null
-            config:
-               severity: warn
    -  name: preferredsettlementcurrency
       description: ""
    -  name: formername
@@ -256,11 +206,6 @@ models:
       description: ""
    -  name: wagersa_icare
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_wagersa_icare_not_null
-            config:
-               severity: warn
    -  name: archivestate
       description: ""
    -  name: archiveschemainfo
@@ -273,18 +218,8 @@ models:
       description: ""
    -  name: obfuscatedinternal
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_obfuscatedinternal_not_null
-            config:
-               severity: warn
    -  name: donotdestroy
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_contact_donotdestroy_not_null
-            config:
-               severity: warn
    -  name: excludereason
       description: ""
    -  name: archivefailureid

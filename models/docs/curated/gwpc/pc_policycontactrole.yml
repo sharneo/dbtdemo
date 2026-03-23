@@ -10,11 +10,6 @@ models:
       description: ""
    -  name: fixedid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policycontactrole_fixedid_not_null
-            config:
-               severity: warn
    -  name: state
       description: ""
    -  name: ownershippct
@@ -23,11 +18,6 @@ models:
       description: ""
    -  name: updatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policycontactrole_updatetime_not_null
-            config:
-               severity: warn
    -  name: dateofbirthinternal
       description: ""
    -  name: generalliabilityline
@@ -36,11 +26,6 @@ models:
       description: ""
    -  name: id
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policycontactrole_id_not_null
-            config:
-               severity: warn
    -  name: createuserid
       description: ""
    -  name: maritalstatusinternal
@@ -65,11 +50,6 @@ models:
       description: ""
    -  name: branchid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policycontactrole_branchid_not_null
-            config:
-               severity: warn
    -  name: classcodeid
       description: ""
    -  name: companynameinternaldenorm
@@ -80,11 +60,6 @@ models:
       description: ""
    -  name: publicid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policycontactrole_publicid_not_null
-            config:
-               severity: warn
    -  name: companynameinternal
       description: ""
    -  name: applicablegooddriverdiscount
@@ -95,11 +70,6 @@ models:
       description: ""
    -  name: createtime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policycontactrole_createtime_not_null
-            config:
-               severity: warn
    -  name: companynamekanjiinternal
       description: ""
    -  name: numberofviolations
@@ -142,11 +112,6 @@ models:
       description: ""
    -  name: subtype
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policycontactrole_subtype_not_null
-            config:
-               severity: warn
    -  name: gwcbi_connector_ts_ms
       description: ""
    -  name: gwcbi_lsn

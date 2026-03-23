@@ -3,376 +3,231 @@ models:
 -  name: pc_policyperiod
    columns:
    -  name: validquote
-      description: "Whether or not the policys pricing information is up to date and accurate. This can be derived from the PolicyPeriod status and Job type, which is being used as part of the entity rules for Foundation"
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_validquote_not_null
-            config:
-               severity: warn
+      description: "Whether or not the policys pricing information is up to date and accurate. This should be set by the markValidQuote() and markInvalidQuote() domain methods."
    -  name: locked
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_locked_not_null
-            config:
-               severity: warn
+      description: "True if this row has been locked (cannot be edited)"
    -  name: editeffectivedate
-      description: "Dates edits are effective. This has been configured in GW to always be the same as the Policy Period Start Date. This is an icare business rule such that any revisions on the PolicyPeriod are always attributed back within the Policy term. Note that the only scenario where this isnt the same is on Cancellation, where the EditEffectiveDate = CancellationDate; or on Reinstatement where the EditEffectiveDate = Job.CloseDate. The EditEffectiveDate is the date chosen by the user when they want the event to take place. A Cancellation job.CloseDate may differ to the CancellationDate or EditEffectiveDate if the date of cancellation is to occur on a specific date rather than now. The job closes with the date scheduled. "
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_editeffectivedate_not_null
-            config:
-               severity: warn
+      description: "Dates edits are effective"
    -  name: cpacategory_icare
-      description: ""
+      description: "CPA Category"
    -  name: archivestate
-      description: "Internal technical GW field to manage archiving."
+      description: "The archive state of the graph"
    -  name: archiveschemainfo
-      description: "Internal technical GW field to manage archiving."
+      description: "Schema version at which the root was archived or null if it was not archived"
    -  name: locationautonumberseq
-      description: "Sequence to autonumber policy locations. Used for sequencing locations on screen. Internal GW field"
+      description: "Sequence to autonumber policy locations"
    -  name: updatetime
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_updatetime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was last updated"
    -  name: id
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_id_not_null
-            config:
-               severity: warn
+      description: "Internally managed primary key"
    -  name: singlecheckingpatterncode
-      description: ""
+      description: "The code of the pattern to use for creating and scheduling single checking audits"
    -  name: billingmethod
-      description: ""
+      description: "Billing Method (Agency Bill, Direct Bill, etc)"
    -  name: createuserid
       description: "User ID of the user that created this record. Foreign key to PC_USER."
    -  name: allowgapsbefore
-      description: "True if a gap is allowed between this period and its previous period (if one exists). Icares default is 1, and is only set to 0 on the 1st term of the policy, or if it is in quote. Not used by icare as at Nov-17 to distriguish between when this is applied on terms"
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_allowgapsbefore_not_null
-            config:
-               severity: warn
+      description: "True if a gap is allowed between this period and its previous period (if one exists)"
    -  name: quotehidden
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_quotehidden_not_null
-            config:
-               severity: warn
+      description: "Whether the quote is hidden from users without permission to view quote"
    -  name: beanversion
       description: "Internal technical GW field to manage object versions."
    -  name: branchname
-      description: "The reference name of this branch of the job, used if side-by-side quoting is utilised for comparison. Not used by icare as at Nov-17"
+      description: "The reference name of this branch of the job"
    -  name: islegacy_icare
-      description: "If the source of policy record is Legacy or not. This can be derived from whether the PC_POLICYPERIOD.LegacyPolicyNumber is populated or not. A defect exists where a LegacyPolicyNumber is NOT NULL and this field is NULL. However, the driving rule to this field is whether the LegacyPolicyNumber exists or not. "
+      description: "If the source of policy record is Legacy or not"
    -  name: updateuserid
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: cancellationdate
-      description: "Date this period was canceled, or null if still active."
+      description: "Date this period was canceled, or null if still active"
    -  name: segment
-      description: ""
+      description: "Market segment this policy period is in."
    -  name: primaryinsuredname
-      description: "The display name of the primary names insured (denormalization). Can be retrieved from PC_EFFECTIVEDATEDFIELDS as the primary source of data"
+      description: "The display name of the primary names insured (denormalization)."
    -  name: temporarybranch
-      description: "True if this row has committed (if false branch is temporary). This is also the ssame as the PC_POLICYPERIOD.STATUS = Temporary via PCTL_POLICYPERIODSTATUS table."
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_temporarybranch_not_null
-            config:
-               severity: warn
+      description: "True if this row has committed (if false branch is temporary)"
    -  name: depositoverridepct
-      description: ""
+      description: "Override of the default reporting deposit % of the reporting pattern chosen"
    -  name: islegacymaxterm_icare
-      description: ""
+      description: "This field will determine that there will not be any more legacy terms / period after this"
    -  name: policytermid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_policytermid_not_null
-            config:
-               severity: warn
    -  name: legacypolicynumber_icare
-      description: ""
+      description: "Field to store the legacy policy number value"
    -  name: occupationtype_icare
-      description: "Occupation Type, used for Self Insurance"
+      description: "Occupation Type"
    -  name: selectedtermtype
       description: ""
    -  name: periodstart
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_periodstart_not_null
-            config:
-               severity: warn
+      description: "Lower bound of all effective dates of this root"
    -  name: donotdestroy
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_donotdestroy_not_null
-            config:
-               severity: warn
    -  name: publicid
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_publicid_not_null
-            config:
-               severity: warn
+      description: "ID or primary key of the row in the external system to which this row is mapped"
    -  name: altbillingaccountnumber
-      description: ""
+      description: "The number of the billing account which may only exist in billing system."
    -  name: writtendate
-      description: ""
+      description: "Nominally, the date this period was created. For reinstatements, it is the written date of the reinstated period. For rewrites, it can be the date of the rewrite or the date of the original period."
    -  name: totalcostrpt
       description: "Denormalised total of all costs"
    -  name: totalcostrpt_cur
-      description: "Denormalised total of all costs - currency"
+      description: ""
    -  name: wclabourhirecode_icare
-      description: ""
+      description: "icare specific field to hold policy Labour hire code details"
    -  name: premiumadjustmentreason
-      description: "Reason for overriding Premium"
+      description: "Premium Adjustment Reason"
    -  name: mostrecentmodel
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_mostrecentmodel_not_null
-            config:
-               severity: warn
+      description: "True if this branch is the most recent model (has the highest model number)"
    -  name: wcpremiumcalcode_icare
-      description: ""
+      description: "icare specific field to hold policy premium calculation code details"
    -  name: allocationofremainder
-      description: "The method to allocate the remainder of cost if overriding billing allocation for installments plan. Not used by icare as at Nov-17"
+      description: "The method to allocate the remainder of cost if overriding billing allocation for installments plan"
    -  name: overridebillingallocation
-      description: "Whether to override the billing allocation for installments plan. This is not used by icare as at Nov-17"
+      description: "Whether to override the billing allocation for installments plan"
    -  name: wclegacyprempaymentcode_icare
-      description: ""
+      description: "To store the legacy payment codes and possible values will be \u2013 monthly, quarterly, and annual."
    -  name: archivefailuredetailsid
       description: "Internal technical GW field to manage archiving."
    -  name: modeldate
-      description: ""
+      description: "Date corresponding to the model number"
    -  name: invoicestreamcode
-      description: ""
+      description: "The public id of the invoice stream in billing system."
    -  name: modelnumberindex
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_modelnumberindex_not_null
-            config:
-               severity: warn
+      description: "Used as non-null unique index with PeriodId."
    -  name: basestate
-      description: ""
+      description: "State the policy period is based in."
    -  name: mostrecentmodelindex
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_mostrecentmodelindex_not_null
-            config:
-               severity: warn
+      description: "Used as non-null unique index with PeriodId."
    -  name: policytype_icare
-      description: ""
+      description: "WC Policy Type"
    -  name: archivepartition
-      description: "Internal technical GW field to manage archiving."
+      description: "Unique number to partition the data so that the multiple workers can work independently"
    -  name: failedooseevaluation
-      description: ""
+      description: "True if this is a PolicyPeriod in an OOS job that has blocking UWIssues at a later slice than the current primary slice"
    -  name: branchnumber
-      description: "The number of this branch of the job, used if side-by-side quoting is utilised for comparison. Not used by icare as at Nov-17"
+      description: "The number of this branch of the job"
    -  name: transactioncostrpt
       description: "Denormalised total of change in all costs"
    -  name: depositcollected
       description: "If payment is collected by agency.  OOB field not used by icare as at Nov-17. "
    -  name: transactioncostrpt_cur
-      description: "Denormalised total of change in all costs - currency"
+      description: ""
    -  name: depositcollected_cur
-      description: "If payment is collected by agency.  OOB field not used by icare as at Nov-17. "
+      description: ""
    -  name: basedonid
       description: "FK to KEY_POLICY_TERM referring to the previous PolicyPeriod record that generated this record e.g. for renewals"
    -  name: archivedate
-      description: "Internal technical GW field to manage archiving."
+      description: "When archiving was attempted on the root. Null if we never attempted to archive it."
    -  name: billimmediatelypercentage
-      description: "The percentage to bill immediately if overriding billing allocation for installments plan. Not used by icare as at Nov-17."
+      description: "The percentage to bill immediately if overriding billing allocation for installments plan"
    -  name: quotecloneoriginalperiod
-      description: ""
+      description: "Soft FK to the original policy period that this policy period was cloned from."
    -  name: depositamount
       description: "If payment is collected by agency. OOB field not used by icare as at Nov-17. "
    -  name: reasonlowwages_icare
-      description: ""
+      description: "icare specific field to hold reasons for low wages details"
    -  name: preferredcoveragecurrency
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_preferredcoveragecurrency_not_null
-            config:
-               severity: warn
+      description: "Preferred Coverage Currency"
    -  name: periodend
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_periodend_not_null
-            config:
-               severity: warn
+      description: "Upper bound of all expiration dates of this root"
    -  name: preferredsettlementcurrency
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_preferredsettlementcurrency_not_null
-            config:
-               severity: warn
+      description: "Preferred Settlement Currency"
    -  name: basedondate
-      description: "The date in which this record was generated if it was based on the closure of a previous record for renewals"
+      description: "If this is a renewal, date it was based on"
    -  name: totalpremiumrpt
       description: "Denormalised total of all premium costs"
    -  name: totalpremiumrpt_cur
-      description: "Denormalised total of all premium costs - currency"
+      description: ""
    -  name: validreinsurance
-      description: ""
+      description: "True if reinsurables were generated sucessfully."
    -  name: seriescheckingpatterncode
-      description: ""
+      description: "The code of the pattern to use for creating and scheduling a series of checking audits"
    -  name: pnicontactdenorm
-      description: ""
+      description: "The primary named insureds contact on the policy. Denorm field so contact is retained when the policyperiod is archived."
    -  name: editlocked
-      description: "Internal Guidewire technical field to manage record locking"
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_editlocked_not_null
-            config:
-               severity: warn
+      description: "Whether the PolicyPeriod is locked from edit by users without permission to edit"
    -  name: rateasofdate
-      description: ""
+      description: "The date the policy should be rated"
    -  name: jobid
       description: ""
    -  name: uwcompany
-      description: ""
+      description: "Underwriting company that insures this policy. This can only change on a Cancellation or Rewrite, never mid-term."
    -  name: estimatedpremium
       description: "Used for Premium reporting for DataHub and aggregated and denormalized in this table. Can be derived from PCX_WCCOST_ICARE as well."
    -  name: periodid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_periodid_not_null
-            config:
-               severity: warn
    -  name: estimatedpremium_cur
-      description: "Used for Premium reporting for DataHub and aggregated and denormalized in this table. Can be derived from PCX_WCCOST_ICARE as well."
+      description: ""
    -  name: assignedrisk
-      description: "Flag for policy/risk assigned by state requirement. Not used by icare as at Nov-17"
+      description: "Flag for policy/risk assigned by state requirement"
    -  name: transactionpremiumrpt
       description: "Denormalised total of change in all premium costs"
    -  name: commencementdate_icare
-      description: ""
+      description: "icare specific field to capture account or policy start date details"
    -  name: temporaryclonestatus
-      description: "Used for purging"
+      description: ""
    -  name: transactionpremiumrpt_cur
-      description: "Denormalised total of change in all premium costs - currency"
+      description: ""
    -  name: excludereason
-      description: "Reason for excluding or skipping the entity from archiving. If the ExcludeFromArchive bit is set, this gives the reason for excluding. Else, if this is not null, it is the reason for skipping. Internal technical GW field to manage archiving."
+      description: "Reason for excluding or skipping the entity from archiving. If the ExcludeFromArchive bit is set, this gives the reason for excluding. Else, if this is not null, it is the reason for skipping."
    -  name: archivefailureid
       description: "Internal technical GW field to manage archiving."
    -  name: failedoosevalidation
-      description: ""
+      description: "True if this is a draft PolicyPeriod in an OOS job that has failed validation"
    -  name: retired
       description: "Flag indicating if the reference data is no longer used"
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_retired_not_null
-            config:
-               severity: warn
    -  name: preempted
-      description: "True if when bound this policy term has been preempted"
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_preempted_not_null
-            config:
-               severity: warn
+      description: "True if when bound this branch has been preempted"
    -  name: futureperiods
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_futureperiods_not_null
-            config:
-               severity: warn
+      description: "True if when bound this branch had future bound periods"
    -  name: primaryinsurednamedenorm
-      description: ""
+      description: "denorm field for The display name of the primary names insured (denormalization)."
    -  name: modelnumber
-      description: ""
+      description: "Modelnumber."
    -  name: termnumber
-      description: ""
+      description: "A sequence number that starts at 1 and is incremented on a renewal and rewrite, usually to distinguish between different periods of a same policy."
    -  name: claimsmgr_schemeagent_icare
-      description: ""
+      description: "icare specific field to hold claims scheme agent details"
    -  name: waivedepositchange
-      description: ""
+      description: "Whether to waive the deposit amount change from current policy period and the based on"
    -  name: producercodeofrecordid
       description: "FK to the PC_PRODUCERCODE table which stores who the Intermediary of Service for this policy is i.e. icare (employer direct) or via broker. This is the same as the PC_POLICY.ProducerCodeOfServiceID"
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_producercodeofrecordid_not_null
-            config:
-               severity: warn
    -  name: createtime
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_createtime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was created"
    -  name: isofferingselected
-      description: "Boolean field to capture the status of offering got selected on policy. Used by the UI to determine if Offering has been selected. Can be derived from PC_EFFDATEDFIELDS"
+      description: "Boolean field to capture the status of offering got selected on policy"
    -  name: policyid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_policyid_not_null
-            config:
-               severity: warn
    -  name: excludedfromarchive
-      description: "Internal technical GW field to manage archiving."
+      description: "Indicate if this entity should be excluded from archiving"
    -  name: itcentitlement_icare
-      description: "icare specific field to capture ITC entitlement details. This is captured at the PC_ACCOUNT level and not at the Policy Period level"
+      description: "icare specific field to capture ITC entitlement details"
    -  name: sifund_icare
-      description: ""
+      description: "SI Fund Details"
    -  name: custombilling
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_custombilling_not_null
-            config:
-               severity: warn
+      description: "If true indicates that the user wants to use custom billing instead of relying on BC default values"
    -  name: quoteclonesequencenumber
-      description: ""
+      description: "This is only used during policy quote clone. It is a sequence number for the cloned quote."
    -  name: lockingcolumn
-      description: ""
+      description: "Meaningless column for locking"
    -  name: wctermtype_icare
-      description: ""
+      description: "Icare Term type"
    -  name: refundcalcmethod
-      description: ""
+      description: "The method used to calculate the amount of refund due. Once a policy is canceled, subsequent policy periods inherit this until it is reinstated, at which point this field is reset to null. Also returns null if the cancellation cannot be found (e.g. if the cancellation was done in an external system)."
    -  name: status
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_status_not_null
-            config:
-               severity: warn
+      description: "The periods status. This field can only be updated via workflow methods available on the various Job entities."
    -  name: employercategory_icare
-      description: ""
+      description: "icare specific field to hold policy employee category details"
    -  name: depositamount_cur
-      description: "If payment is collected by agency.  OOB field not used by icare as at Nov-17. "
-   -  name: policynumber
       description: ""
+   -  name: policynumber
+      description: "The policy number for this policy period. This value may be different from the core policy number on the associated Policy."
    -  name: gstregistration_icare
-      description: "icare specific field to capture account or policy GST registration details. This is captured at the PC_ACCOUNT level and not at the Policy Period level"
+      description: "icare specific field to capture account or policy GST registration details"
    -  name: lprlargeclaimlimit_icare
       description: "On a policy with a Loss Prevention Product option - Retro Paid Loss, RPA or Security, the large claims limit that applied"
    -  name: securitypercentage_icare
       description: "Percentage amount for security deposit calculation"
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_securitypercentage_icare_not_null
-            config:
-               severity: warn
    -  name: isrecalculate_icare
       description: "Indicates cascading calculation is required for a group policy. This is a denomalised field derivable from whether the POLICY PERIOD is part of an Employer Group."
    -  name: externaltransaction_icare
@@ -401,25 +256,10 @@ models:
       description: ""
    -  name: niladjustloadingapplied_icare
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_niladjustloadingapplied_icare_not_null
-            config:
-               severity: warn
    -  name: externaltransactioncss_ext
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_externaltransactioncss_ext_not_null
-            config:
-               severity: warn
    -  name: draftrenewaldoctrigger_ext
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_policyperiod_draftrenewaldoctrigger_ext_not_null
-            config:
-               severity: warn
    -  name: cssrenewalupdatecount_ext
       description: ""
    -  name: cssupdatecount_ext

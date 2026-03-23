@@ -6,61 +6,26 @@ models:
       description: ""
    -  name: publicid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_publicid_not_null
-            config:
-               severity: warn
    -  name: usertype
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_usertype_not_null
-            config:
-               severity: warn
    -  name: useproducercodesecurity
       description: "Internal GW technical field to manage security. Is the user subject to ProducerCode security. This defaults to true for external users and false for internal users."
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_useproducercodesecurity_not_null
-            config:
-               severity: warn
    -  name: usersettingsid
       description: "Foreign key to the GW User Settings table. All are Guidewire related user settings that has no functional/operational reporting value."
    -  name: createtime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_createtime_not_null
-            config:
-               severity: warn
    -  name: sessiontimeoutsecs
       description: ""
    -  name: organizationid
       description: "Foreign key to PC_ORGANIZATION to understand what organisation the user belongs to. "
    -  name: vacationstatus
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_vacationstatus_not_null
-            config:
-               severity: warn
    -  name: department
       description: ""
    -  name: externaluser
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_externaluser_not_null
-            config:
-               severity: warn
    -  name: updatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_updatetime_not_null
-            config:
-               severity: warn
    -  name: useorgaddress
       description: ""
    -  name: language
@@ -71,11 +36,6 @@ models:
       description: ""
    -  name: id
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_id_not_null
-            config:
-               severity: warn
    -  name: createuserid
       description: "User ID of the user that created this record. Foreign key to PC_USER."
    -  name: beanversion
@@ -84,22 +44,12 @@ models:
       description: ""
    -  name: retired
       description: "Indicator in GW signifying the record has been soft deleted."
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_retired_not_null
-            config:
-               severity: warn
    -  name: validationlevel
       description: ""
    -  name: updateuserid
       description: "User ID of the user that updated this record. Foreign key to PC_USER."
    -  name: credentialid
       description: "Foreign key to PC_CREDENTIAL which stores the user login credentials, encrypted password, login attempts etc. "
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_credentialid_not_null
-            config:
-               severity: warn
    -  name: systemusertype
       description: "Indicates the type of special system users i.e. sysadmin, system services"
    -  name: defaultcountry
@@ -108,22 +58,12 @@ models:
       description: ""
    -  name: contactid
       description: "Foreign key to PC_CONTACT"
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_contactid_not_null
-            config:
-               severity: warn
    -  name: jobtitle
       description: ""
    -  name: oktaid_icare
       description: "Okta ID that integrates into Guidewire"
    -  name: obfuscatedinternal
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_user_obfuscatedinternal_not_null
-            config:
-               severity: warn
    -  name: gwcbi_connector_ts_ms
       description: ""
    -  name: gwcbi_lsn

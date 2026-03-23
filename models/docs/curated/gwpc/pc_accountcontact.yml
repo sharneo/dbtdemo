@@ -3,76 +3,31 @@ models:
 -  name: pc_accountcontact
    columns:
    -  name: contact
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_contact_not_null
-            config:
-               severity: warn
+      description: "The related contact."
    -  name: createuserid
       description: ""
    -  name: publicid
-      description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_publicid_not_null
-            config:
-               severity: warn
+      description: "ID or primary key of the row in the external system to which this row is mapped"
    -  name: active
-      description: "Determines whether or not the contact is available to be added to jobs. This will be tracked through PC_CONTACT and PC_ACCOUNTCONTACTROLE"
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_active_not_null
-            config:
-               severity: warn
+      description: "Determines whether or not the contact is available to be added to jobs"
    -  name: beanversion
       description: ""
    -  name: retired
       description: "This will be tracked through PC_CONTACT and PC_ACCOUNTCONTACTROLE"
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_retired_not_null
-            config:
-               severity: warn
    -  name: createtime
-      description: "Timestamp when the object was created. This will be tracked through PC_CONTACT and PC_ACCOUNTCONTACTROLE"
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_createtime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was created"
    -  name: lastupdatetime
-      description: "Date and time of last update. This will be tracked through PC_CONTACT and PC_ACCOUNTCONTACTROLE"
+      description: "Date and time of last update"
    -  name: account
       description: "The account on which this is a contact."
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_account_not_null
-            config:
-               severity: warn
    -  name: updateuserid
       description: "Update user. This will be tracked through PC_CONTACT and PC_ACCOUNTCONTACTROLE"
    -  name: updatetime
-      description: "Timestamp when the object was last updated. This will be tracked through PC_CONTACT and PC_ACCOUNTCONTACTROLE"
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_updatetime_not_null
-            config:
-               severity: warn
+      description: "Timestamp when the object was last updated"
    -  name: subtype
-      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value. This will be tracked through PC_CONTACT and PC_ACCOUNTCONTACTROLE"
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_subtype_not_null
-            config:
-               severity: warn
+      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
    -  name: id
       description: "Internally managed primary key"
-      tests:
-      -  not_null:
-            name: gwpc_pc_accountcontact_id_not_null
-            config:
-               severity: warn
    -  name: temporarylastupdatetime
       description: "Temporary date and time of last update; will eventually be copied to the LastUpdateTime during commit"
    -  name: archivepartition

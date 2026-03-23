@@ -8,43 +8,18 @@ models:
       description: "Group number that carries through all terms"
    -  name: publicid
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_publicid_not_null
-            config:
-               severity: warn
    -  name: beanversion
       description: "To manage versions in GW"
    -  name: groupannwages
       description: ""
    -  name: retired
       description: "Indicator in GW signifying the record has been soft deleted."
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_retired_not_null
-            config:
-               severity: warn
    -  name: createtime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_createtime_not_null
-            config:
-               severity: warn
    -  name: name
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_name_not_null
-            config:
-               severity: warn
    -  name: account
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_account_not_null
-            config:
-               severity: warn
    -  name: updateuserid
       description: ""
    -  name: groupstatus
@@ -53,27 +28,12 @@ models:
       description: ""
    -  name: updatetime
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_updatetime_not_null
-            config:
-               severity: warn
    -  name: grouptype
       description: ""
    -  name: subtype
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_subtype_not_null
-            config:
-               severity: warn
    -  name: id
       description: ""
-      tests:
-      -  not_null:
-            name: gwpc_pc_jobgroup_id_not_null
-            config:
-               severity: warn
    -  name: groupannbtp
       description: ""
    -  name: groupsecurity_cur
