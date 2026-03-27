@@ -1,5 +1,15 @@
 {% snapshot wc_qbe_rehabilitation_snapshot %}
 
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table wc_qbe_rehabilitation_snapshot . RFTM 
+                                                
+-#}
+
+
 {{ config(
     target_schema='ifnsw_claim_interface',
     unique_key='wc_qbe_rehabilitation_sk',
