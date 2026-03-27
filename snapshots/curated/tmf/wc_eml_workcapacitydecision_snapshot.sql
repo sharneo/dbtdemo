@@ -5,7 +5,8 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
-2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table wc_eml_workcapacitydecision_snapshot . RFTM 
+2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table wc_eml_workcapacitydecision_snapshot . 
+                                                dbt snapshot is SCD Type 2 .
                                                 
 -#}
 
@@ -14,6 +15,7 @@ Date            Version         Author          Description of Change
     target_schema='ifnsw_claim_interface',
     unique_key='wc_eml_workcapacitydecision_sk',
     strategy='check',
+    alias='wc_eml_workcapacitydecision',
     check_cols=['claims_manager', 'line_of_business', 'extract_date', 'record_number', 'policy_number', 'claim_number', 'original_decision_date', 'work_capacity_decn_type', 'work_capacity_revw_stage', 'work_capacity_date_type', 'work_capacity_trans_date', 'work_capacity_outcome'],
     tags=['snapshot_tmf','snapshot_curated','snapshot','wc_eml_workcapacitydecision']
 ) }}

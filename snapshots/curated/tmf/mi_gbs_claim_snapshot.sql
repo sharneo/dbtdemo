@@ -5,7 +5,8 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
-2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table mi_gbs_claim_snapshot . RFTM 
+2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table mi_gbs_claim_snapshot . 
+                                                dbt snapshot is SCD Type 2 .
                                                 
 -#}
 
@@ -14,6 +15,7 @@ Date            Version         Author          Description of Change
     target_schema='ifnsw_claim_interface',
     unique_key='mi_gbs_claim_sk',
     strategy='check',
+    alias='mi_gbs_claim',
     check_cols=['claims_manager', 'agency', 'line_of_business', 'extract_date', 'record_number', 'policy_number', 'claim_number', 'claim_lodged', 'claim_status', 'claim_type', 'clmnt_surname', 'clmnt_first_name', 'claims_officer', 'cost_centre', 'date_reported', 'date_entered', 'date_finalised', 'date_occurred', 'date_received', 'incident_number', 'litigation_claim_status', 'time_occurred', 'recovery_claim_status', 'incident_narrative', 'salvage_action', 'event_code', 'accident_cause', 'result_code', 'claimant_gender', 'accident_location_postcode', 'country_code', 'assessor', 'incident_code', 'previous_policy_number', 'claimants_date_of_birth', 'bodily_location_code', 'nature_of_injury_code', 'area_health_service', 'claim_sensitivity_code', 'claim_sensitivity_desc'],
     tags=['snapshot_tmf','snapshot_curated','snapshot','mi_gbs_claim']
 ) }}

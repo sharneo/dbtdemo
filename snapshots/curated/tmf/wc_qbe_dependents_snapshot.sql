@@ -5,7 +5,8 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
-2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table wc_qbe_dependents_snapshot . RFTM 
+2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table wc_qbe_dependents_snapshot . 
+                                                dbt snapshot is SCD Type 2 .
                                                 
 -#}
 
@@ -14,6 +15,7 @@ Date            Version         Author          Description of Change
     target_schema='ifnsw_claim_interface',
     unique_key='wc_qbe_dependents_sk',
     strategy='check',
+    alias='wc_qbe_dependents',
     check_cols=['claims_manager', 'agency', 'line_of_business', 'extract_date', 'record_number', 'policy_number', 'claim_number', 'dependents_children', 'dependents_other', 'dependent_name', 'relationship', 'date_of_birth', 'working_spouse', 'student', 'residing_at_home', 'child', 'dependent_id', 'dependent_status'],
     tags=['snapshot_tmf','snapshot_curated','snapshot','wc_qbe_dependents']
 ) }}

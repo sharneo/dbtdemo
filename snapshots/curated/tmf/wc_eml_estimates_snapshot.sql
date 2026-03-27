@@ -5,7 +5,8 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
-2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table wc_eml_estimates_snapshot . RFTM 
+2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table wc_eml_estimates_snapshot . 
+                                                dbt snapshot is SCD Type 2 .
                                                 
 -#}
 
@@ -14,6 +15,7 @@ Date            Version         Author          Description of Change
     target_schema='ifnsw_claim_interface',
     unique_key='wc_eml_estimates_sk',
     strategy='check',
+    alias='wc_eml_estimates',
     check_cols=['claims_manager', 'agency', 'line_of_business', 'extract_date', 'record_number', 'policy_number', 'claim_number', 'estimate_date', 'payment_type', 'payment_transaction_code', 'estimate_amount', 'estimate_gst', 'estimate_future_weeks_off', 'original_estimate'],
     tags=['snapshot_tmf','snapshot_curated','snapshot','wc_eml_estimates']
 ) }}

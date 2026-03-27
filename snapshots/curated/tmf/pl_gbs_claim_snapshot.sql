@@ -5,7 +5,8 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
-2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table pl_gbs_claim_snapshot . RFTM 
+2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table pl_gbs_claim_snapshot . 
+                                                dbt snapshot is SCD Type 2 .
                                                 
 -#}
 
@@ -14,6 +15,7 @@ Date            Version         Author          Description of Change
     target_schema='ifnsw_claim_interface',
     unique_key='pl_gbs_claim_sk',
     strategy='check',
+    alias='pl_gbs_claim',
     check_cols=['claims_manager', 'agency', 'line_of_business', 'extract_date', 'record_number', 'policy_number', 'claim_number', 'accident_cause', 'assessor', 'assessor_fees', 'bodily_location_code', 'bodily_location_code_dsc', 'claim_lodged', 'claim_type', 'clmnt_surname', 'clmnt_first_name', 'claims_officer', 'cost_centre', 'date_reported', 'date_entered', 'date_finalised', 'date_occurred', 'incident_narrative', 'incident_number', 'litigation_claim_status', 'litigation_status_date', 'location_street', 'location_suburb', 'location_postcode', 'nature_of_injury_code', 'nature_of_injury_code_dsc', 'recovery_claim_status', 'result_code', 'result_of_injury_code', 'result_of_injury_code_dsc', 'settlement_date', 'solicitor', 'time_occurred', 'date_received', 'country_code', 'jurisdiction_state', 'litigation_result', 'defendants_solicitor', 'event_code', 'incident_code', 'liability_claim_type', 'claimants_date_of_birth', 'claimants_gender', 'general_nature_of_loss', 'cause_loss', 'severity_loss', 'primary_body_function', 'previous_policy_number', 'product_type', 'deductible_excess', 'hd_past_economic_loss', 'hd_future_economic_loss', 'hd_past_medical_hosp_caring', 'hd_future_medical_hosp_caring', 'hd_future_caring_services', 'hd_general_damages', 'hd_interest', 'hd_plaintiff_legal_costs', 'hd_defendant_legal_costs', 'hd_investigation_costs', 'hd_other_costs', 'date_claim_lodged_in_court', 'claim_sensitivity_code', 'claim_sensitivity_desc'],
     tags=['snapshot_tmf','snapshot_curated','snapshot','pl_gbs_claim']
 ) }}
