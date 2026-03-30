@@ -95,12 +95,7 @@ models:
 
 snapshots:
   icare_dbt_transformations_fndn:   # folder where all your snapshots live
-    +column_map:
-      dbt_valid_from: valid_from
-      dbt_valid_to: valid_to
-      dbt_current: current_record_flag
     +target_database: DEV_CURATED_DB
-    +tags: ['snapshot','type2']  
     +persist_docs:
       relation: true
       columns: true
