@@ -101,6 +101,8 @@ snapshots:
       dbt_current: current_record_flag
     +target_database: DEV_CURATED_DB
     +tags: ['snapshot','type2']  
-
+    +persist_docs:
+      relation: true
+      columns: true
 on-run-end:
   - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
