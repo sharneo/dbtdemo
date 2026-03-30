@@ -43,7 +43,7 @@ WITH cte_policy AS (
         priortotalincurred,
         publicid,
         to_char(originaleffectivedate, 'dd-mm-yyyy') AS inception_date
-    FROM {{ ref('pc_policy') }}
+    FROM {{ ref('vw_pc_policy') }}
     WHERE retired = 0
       AND COALESCE(GWCBI_OPERATION,0) <> 1 
       AND productcode = 'WC_ICARE'
@@ -64,11 +64,12 @@ cte_policyperiod AS (
         legacypolicynumber_icare,
         createtime,
         updatetime
-    FROM {{ ref('pc_policyperiod') }}
+    FROM {{ ref('vw_pc_policyperiod') }}
     WHERE policynumber IS NOT NULL
+      AND COALESCE(GWCBI_OPERATION,0) <> 1  
       AND policy_number NOT LIKE 'SIC%'
  QUALIFY
-  ROW_NUMBER() OVER (PARTITION BY id ORDER BY updatetime DESC) = 1
+  ROW_NUMBER() OVER (PARTITION BY hash_key ORDER BY updatetime DESC) = 1
 
 ),
 
@@ -79,9 +80,10 @@ cte_pc_account AS (
         accountorgtype,
         agencytype_ext,
         agencycode_ext
-    FROM {{ ref('pc_account') }}
+    FROM {{ ref('vw_pc_account') }}
+    WHERE COALESCE(GWCBI_OPERATION,0) <> 1
  QUALIFY
-  ROW_NUMBER() OVER (PARTITION BY id ORDER BY updatetime DESC) = 1
+  ROW_NUMBER() OVER (PARTITION BY hash_key ORDER BY updatetime DESC) = 1
 
 ),
 
@@ -90,7 +92,8 @@ cte_pctl_accountorgtype AS (
     SELECT
         id,
         name
-    FROM {{ ref('pctl_accountorgtype') }}
+    FROM {{ ref('vw_pctl_accountorgtype') }}
+    WHERE COALESCE(GWCBI_OPERATION,0) <> 1
  QUALIFY
   ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
 
@@ -101,7 +104,8 @@ cte_pctl_policyperiodstatus AS (
     SELECT
         id,
         name                                         AS current_status_code
-    FROM {{ ref('pctl_policyperiodstatus') }}
+    FROM {{ ref('vw_pctl_policyperiodstatus') }}
+    WHERE COALESCE(GWCBI_OPERATION,0) <> 1
     QUALIFY
       ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
 
@@ -113,9 +117,10 @@ cte_policyline AS (
         branchid,
         id,
         subtype
-    FROM {{ ref('pc_policyline') }}
-     QUALIFY
-  ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
+    FROM {{ ref('vw_pc_policyline') }}
+    WHERE COALESCE(GWCBI_OPERATION,0) <> 1
+    QUALIFY
+      ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
 
 ),
 
@@ -124,9 +129,10 @@ cte_pctl_policyline AS (
     SELECT
         id,
         name
-    FROM {{ ref('pctl_policyline') }}
-     QUALIFY
-  ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
+    FROM {{ ref('vw_pctl_policyline') }}
+    WHERE COALESCE(GWCBI_OPERATION,0) <> 1
+    QUALIFY
+      ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
 
 ),
 
@@ -134,9 +140,10 @@ cte_pc_job AS (
 
     SELECT
         policyid
-    FROM {{ ref('pc_job') }}
-QUALIFY
-  ROW_NUMBER() OVER (PARTITION BY policyid ORDER BY updatetime DESC) = 1
+    FROM {{ ref('vw_pc_job') }}
+    WHERE COALESCE(GWCBI_OPERATION,0) <> 1
+    QUALIFY
+      ROW_NUMBER() OVER (PARTITION BY policyid ORDER BY updatetime DESC) = 1
 
 ),
 
@@ -145,9 +152,10 @@ cte_pctl_agencytype_ext AS (
     SELECT
         id,
         name
-    FROM {{ ref('pctl_agencytype_ext') }}
- QUALIFY
- ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
+    FROM {{ ref('vw_pctl_agencytype_ext') }}
+    WHERE COALESCE(GWCBI_OPERATION,0) <> 1
+    QUALIFY
+      ROW_NUMBER() OVER (PARTITION BY id ORDER BY file_ingestion_timestamp DESC) = 1
 
 ),
 
