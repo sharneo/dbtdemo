@@ -4,7 +4,7 @@
 Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
 
--- General COALESCE is to ensure Deleted Records are 1 in Snowflake hence should be ignored 
+General COALESCE is to ensure Deleted Records i.e. 1 for GWCP in Snowflake hence should be ignored. However AVRO files will not have this flag 
 Date            Version         Author          Description of Change
 2026-01-01      0.0                             This Builds the Integrated Layer for Policy NI
 2026-03-12      0.0             Ranjita         This Builds includes R2 changes
