@@ -16,7 +16,7 @@ Date            Version         Author          Description of Change
     config(
         target_schema='integrated_ni',
         unique_key='policy_period_sk',
-        alias='int_policy_ni_period',
+        alias='int_policy_period_ni',
         strategy='check',
         check_cols='all',
         tags=['policy', 'integrated', 'NI', 'snapshot_ni']
