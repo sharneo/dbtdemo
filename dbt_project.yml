@@ -24,6 +24,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 vars:
   'dbt_date:time_zone': 'Australia/Sydney'
+  disable_dbt_artifacts_autoupload: true
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -92,7 +93,9 @@ models:
       sources:
         +database: DEV_RAW_DB # optional, default is your target database
         +schema: ELT_UTILS # optional, default is your target schema
-
+    elementary:
+      +database: DEV_RAW_DB
+      +schema: "elementary"
 snapshots:
   icare_dbt_transformations_fndn:   # folder where all your snapshots live
     +target_database: DEV_CURATED_DB
@@ -100,4 +103,4 @@ snapshots:
       relation: true
       columns: true
 on-run-end:
-  - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
+  - "{{ dbt_artifacts.upload_results(results) }}" 

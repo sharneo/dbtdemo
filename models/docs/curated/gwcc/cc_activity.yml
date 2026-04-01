@@ -11,7 +11,7 @@ models:
       - name: assignedbyuserid
         description: "User who assigned this entity."
       - name: externallyowned
-        description: "Whether the activity is externally owned."
+        description: "Timestamp when the object was last updated"
         tests:
           - not_null:
               name: gwcc_cc_activity_externallyowned_not_null
