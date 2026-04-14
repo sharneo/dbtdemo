@@ -11,10 +11,7 @@ packages:
   - name: dbt_artifacts
     package: brooklyn-data/dbt_artifacts
     version: 2.10.0
-  - name: elementary
-    package: elementary-data/elementary
-    version: 0.23.0
   - name: dbt_date
     package: godatadriven/dbt_date
     version: 0.17.2
-sha1_hash: 77a651d7531e55837e143094339d611117ca2db6
+sha1_hash: 3d4cfc9bd10a69ffdf5a8762b2a75fb668d8178c

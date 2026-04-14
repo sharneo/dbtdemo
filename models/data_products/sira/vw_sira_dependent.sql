@@ -31,8 +31,7 @@ cc_claimcontactrole as (
 ),
 
 cctl_contactrole as (
-    select
-        id
+    select id
     from {{ ref('vw_cctl_contactrole_current') }}
 ),
 
@@ -44,14 +43,14 @@ cctl_dependenttype as (
 ),
 
 base as (
-    select 
+    select
         coalesce(clmctct.claimid, '') as claimid,
         case when dependenttype.typecode = 'childunder16' then 1 end as childunder16,
         case when dependenttype.typecode != 'childunder16' then 1 end as other
-    from cc_claimcontact clmctct
-    left join cc_claimcontactrole clmctctrole on clmctctrole.claimcontactid = clmctct.id
-    left join cctl_contactrole contactrole on contactrole.id = clmctctrole.role
-    left join cctl_dependenttype dependenttype on dependenttype.id = clmctct.dependenttype
+    from cc_claimcontact as clmctct
+    left join cc_claimcontactrole as clmctctrole on clmctct.id = clmctctrole.claimcontactid
+    left join cctl_contactrole as contactrole on clmctctrole.role = contactrole.id
+    left join cctl_dependenttype as dependenttype on clmctct.dependenttype = dependenttype.id
 )
 
 select
