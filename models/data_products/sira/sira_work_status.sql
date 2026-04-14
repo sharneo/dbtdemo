@@ -83,9 +83,8 @@ cte_workstatus_enriched as (
 -- Single row expected — used as a scalar filter, not a fan-out cross join
 cte_submission_period as (
     select
-        submission_period
-    from {{ ref('vw_sira_submission_period') }}
-    limit 1
+        '202602' as submission_period
+
 ),
 
 -- Work capacity type code lookup (e.g. Off-work, Modified duty, Full duty)
