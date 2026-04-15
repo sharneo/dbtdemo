@@ -18,7 +18,7 @@ with cc_claim as (
     select
         id,
         claimnumber
-    from {{ ref('vw_cc_claim_current') }}
+    from {{ ref('vw_cc_claim') }}
     where retired = 0
 ),
 
@@ -33,7 +33,7 @@ cc_contact as (
         occupationdetails_icareid,
         primaryaddressid,
         gender
-    from {{ ref('vw_cc_contact_current') }}
+    from {{ ref('vw_cc_contact') }}
     where retired = 0
 ),
 
@@ -47,7 +47,7 @@ cc_address as (
         addressline3,
         city,
         postalcode
-    from {{ ref('vw_cc_address_current') }}
+    from {{ ref('vw_cc_address') }}
     where retired = 0
 ),
 
@@ -56,7 +56,7 @@ cc_claimcontactrole as (
         claimcontactid,
         retired,
         role
-    from {{ ref('vw_cc_claimcontactrole_current') }}
+    from {{ ref('vw_cc_claimcontactrole') }}
     where retired = 0
 ),
 
@@ -65,7 +65,7 @@ ccx_occupationdetails_icare as (
         id,
         retired,
         unitcode
-    from {{ ref('vw_ccx_occupationdetails_icare_current') }}
+    from {{ ref('vw_ccx_occupationdetails_icare') }}
     where retired = 0
 ),
 
@@ -74,13 +74,13 @@ cc_claimcontact as (
         claimid,
         contactid,
         id
-    from {{ ref('vw_cc_claimcontact_current') }}
+    from {{ ref('vw_cc_claimcontact') }}
 ),
 
 cctl_contactrole as (
     select
         id
-    from {{ ref('vw_cctl_contactrole_current') }}
+    from {{ ref('vw_cctl_contactrole') }}
     where typecode = 'claimant'
 ),
 
@@ -89,14 +89,14 @@ cctl_gendertype as (
         id,
         typecode,
         name
-    from {{ ref('vw_cctl_gendertype_current') }}
+    from {{ ref('vw_cctl_gendertype') }}
 ),
 
 cctl_country as (
     select
         id,
         name
-    from {{ ref('vw_cctl_country_current') }}
+    from {{ ref('vw_cctl_country') }}
 ),
 
 base as (

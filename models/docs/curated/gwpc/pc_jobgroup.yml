@@ -1,0 +1,146 @@
+version: 2
+models:
+-  name: pc_jobgroup
+   columns:
+   -  name: createuserid
+      description: ""
+   -  name: groupnumber_icare
+      description: "Group number that carries through all terms"
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_publicid_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "To manage versions in GW"
+   -  name: groupannwages
+      description: ""
+   -  name: retired
+      description: "Indicator in GW signifying the record has been soft deleted."
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_createtime_not_null
+            config:
+               severity: warn
+   -  name: name
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_name_not_null
+            config:
+               severity: warn
+   -  name: account
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_account_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: ""
+   -  name: groupstatus
+      description: ""
+   -  name: cpacategory
+      description: ""
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_updatetime_not_null
+            config:
+               severity: warn
+   -  name: grouptype
+      description: ""
+   -  name: subtype
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_subtype_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_jobgroup_id_not_null
+            config:
+               severity: warn
+   -  name: groupannbtp
+      description: ""
+   -  name: groupsecurity_cur
+      description: ""
+   -  name: lprproduct
+      description: "Groups LPR Product Option selected"
+   -  name: groupdepositpremium_amt
+      description: "Groups Deposit Premium Amount"
+   -  name: sfactor
+      description: "Groups LPR S Factor applied"
+   -  name: groupsecurity_amt
+      description: ""
+   -  name: groupstage
+      description: "Group Stage i.e. new, complete or invoked"
+   -  name: groupsecurityperc
+      description: "LPR Group Security Percentage"
+   -  name: termnumber
+      description: "Term for the Group"
+   -  name: lprclaimslimit
+      description: ""
+   -  name: groupdepositpremium_cur
+      description: ""
+   -  name: groupcostofclaims_cur
+      description: ""
+   -  name: groupcostofclaims_amt
+      description: "LPR Group Cost of Claims"
+   -  name: archivepartition
+      description: ""
+   -  name: grpbasepremforlprplus_cur
+      description: ""
+   -  name: grpbasepremforlprplus_amt
+      description: ""
+   -  name: groupbtp_ext
+      description: ""
+   -  name: grouptotalpremium
+      description: ""
+   -  name: recalculateavailable
+      description: ""
+   -  name: isissueclicked
+      description: ""
+   -  name: policychangedescription
+      description: ""
+   -  name: isrecalculategrp
+      description: ""
+   -  name: policychangetype
+      description: ""
+   -  name: policychangereason
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

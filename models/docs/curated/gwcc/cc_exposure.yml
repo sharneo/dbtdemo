@@ -1,0 +1,330 @@
+version: 2
+models:
+-  name: cc_exposure
+   columns:
+   -  name: coverageid
+      description: "The specific coverage for this exposure."
+   -  name: previousgroupid
+      description: "Group to which this entity was previously assigned."
+   -  name: incidentlimitreached
+      description: "Whether the exposures incident limit has been exceeded."
+   -  name: locked
+      description: "Whether the property or vehicle was properly locked."
+   -  name: assignedbyuserid
+      description: "User who assigned this entity."
+   -  name: othercovgchoice
+      description: "Whether there is other coverage."
+   -  name: diagnosticcnsistnt
+      description: "Whether the diagnostic is consistent."
+   -  name: pipclaimagglimitreached
+      description: "Whether the exposures PIP Claim Aggregate limit has been exceeded."
+   -  name: previousqueueid
+      description: "Queue to which this entity was previously assigned."
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_updatetime_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_id_not_null
+            config:
+               severity: warn
+   -  name: examinationdate
+      description: "Date of the Examination."
+   -  name: vocbenefitsid
+      description: "Vocational benefits details."
+   -  name: losscategory
+      description: "Detailed category of the exposure."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: compbenefitsid
+      description: "Compensation benefits details."
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: lifepensionbenefitsid
+      description: "Life Pension benefits details."
+   -  name: reopendate
+      description: "The last time an exposure was reopened. "
+   -  name: averageweeklywages
+      description: "Average weekly wages; this calculation differs by state."
+   -  name: progress
+      description: "Description of the progress of an open exposure."
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: segment
+      description: "Segmentation type of the exposure. Both the claim and exposure may be segmented."
+   -  name: lastdayworked
+      description: "Last day worked."
+   -  name: depreciatedvalue
+      description: "Depreciated value of property or vehicle."
+   -  name: ssbenefit
+      description: "Whether Social Security benefits are being collected."
+   -  name: ppdbenefitsid
+      description: "PPD benefits details."
+   -  name: tpdbenefitsid
+      description: "TPD benefits details."
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_publicid_not_null
+            config:
+               severity: warn
+   -  name: securitylevel
+      description: "The security level of this exposure."
+   -  name: deathbenefitsid
+      description: "Death benefits details."
+   -  name: wcbenefit
+      description: "Whether Workers Compensation benefits are being collected."
+   -  name: assignedgroupid
+      description: "Group to which this entity is assigned; null if none assigned"
+   -  name: fatalityinterest_icare
+      description: "Interest percent determined by WCC"
+   -  name: supplementalworkloadweight
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_supplementalworkloadweight_not_null
+            config:
+               severity: warn
+   -  name: wcpreexdisblty
+      description: "Whether the injured person had a pre-existing disability."
+   -  name: claimid
+      description: "The Claim for this Exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_claimid_not_null
+            config:
+               severity: warn
+   -  name: assignedqueueid
+      description: "Either the Queue to which this entity is assigned (if AssignmentStatus is assigned), the Queue to which the system suggests assignment (if AssignmentStatus is manual), or null if none assigned. Only one of AssignedUserID or AssignedQueueID should be non null."
+   -  name: metriclimitgeneration
+      description: "Generation number, used to identify the limits for this exposures metrics"
+   -  name: statlineid
+      description: "Statistical line associated with this exposure."
+   -  name: workloadupdated
+      description: "Last time user workload was calculated and updated"
+   -  name: breakin
+      description: "Whether there is evidence of a break-in."
+   -  name: templocationid
+      description: "Temporary location of policy holder. This is for a homeowners claim."
+   -  name: closedoutcome
+      description: "Outcome reached when closing the exposure."
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: exposuretier
+      description: "The tier of this exposure, used to decide how to rate the exposure metrics."
+   -  name: isoreceivedate
+      description: "The last time a response was received from ISO for this object. "
+   -  name: incidentid
+      description: "Incident that caused this exposure."
+   -  name: newempdataid
+      description: "Information about a new job that the claimant has taken."
+   -  name: wagebenefit
+      description: "Whether wage benefites are being collected."
+   -  name: strategy
+      description: "Strategy type of the exposure. Both the claim and exposure may define a strategy."
+   -  name: assigneduserid
+      description: "Either the User to which this entity is assigned (if AssignmentStatus is assigned), the User to which the system suggests assignment (if AssignmentStatus is manual), or null if none assigned. Only one of AssignedUserID or AssignedQueueID should be non null."
+   -  name: settledate
+      description: "Date of settlement."
+   -  name: ssdibenefitsid
+      description: "Social security disability benefits details."
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: wccdate_icare
+      description: "Date WCC apportionment decision has been made"
+   -  name: wcpreexdisbltyinfo
+      description: "Information about the pre-existing disability."
+   -  name: treatedpatientbfr
+      description: "Whether the the patient has been treated before."
+   -  name: priorempdataid
+      description: "Information about the job the claimant had at the time of injury."
+   -  name: existingweeklybenefits_icare
+      description: ""
+   -  name: wagestmtsent
+      description: "Wage Statement sent date."
+   -  name: pippersonagglimitreached
+      description: "Whether the exposures PIP Per Person Aggregate limit has been exceeded."
+   -  name: state
+      description: "Internal state of the exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_state_not_null
+            config:
+               severity: warn
+   -  name: hospitaldays
+      description: "Estimated days in hospital."
+   -  name: coveragesubtype
+      description: "The coverage subtype."
+   -  name: claimorder
+      description: "Order of the exposure on the claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_claimorder_not_null
+            config:
+               severity: warn
+   -  name: replacementvalue
+      description: "Replacement value of the property or vehicle."
+   -  name: reopenedreason
+      description: "The reason for reopening the exposure."
+   -  name: lossparty
+      description: "The loss party; generally either first- or third-party loss."
+   -  name: wcbenefitsid
+      description: "Workers comp benefits details."
+   -  name: othercoverageinfo
+      description: "Information regarding additional coverage."
+   -  name: closedate
+      description: "Date and time when this entity was closed. (Not applicable to all assignable entities)"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_retired_not_null
+            config:
+               severity: warn
+   -  name: validationlevel
+      description: "Validation level the exposure has passed (if any)."
+   -  name: workloadweight
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_workloadweight_not_null
+            config:
+               severity: warn
+   -  name: daysinweek
+      description: "Days in week used for benefit calculation."
+   -  name: jurisdictionstate
+      description: "State of jurisdiction, if different than location of loss. The Jurisdiction must be associated with JurisdictionType.TC_INSURANCE."
+   -  name: lostpropertytype
+      description: "ISO category of lost property, for theft losses."
+   -  name: isostatus
+      description: "Status of exposure with ISO - for example checked, not of interest."
+   -  name: ptdbenefitsid
+      description: "PTD benefits details."
+   -  name: isosenddate
+      description: "The last time a search request was sent to ISO. "
+   -  name: ttdbenefitsid
+      description: "TTD benefits details."
+   -  name: ssdieligible
+      description: "Whether the exposure is eligible for SSDI."
+   -  name: exposurelimitreached
+      description: "Whether the exposures exposure limit has been exceeded."
+   -  name: exposuretype
+      description: "Types of exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_exposuretype_not_null
+            config:
+               severity: warn
+   -  name: pipnonmedagglimitreached
+      description: "Whether the exposures PIP Non Medical Aggregate limit has been exceeded."
+   -  name: claimantdenormid
+      description: "The claimant for the exposure, denormalized from the claims contact array."
+   -  name: wagestmtrecd
+      description: "Wage Statement received date."
+   -  name: pipesslimitreached
+      description: "Whether the exposures PIP Replacement Services Aggregate limit has been exceeded."
+   -  name: riagreementgroupid
+      description: "Reinsurance group associated with this exposure."
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_createtime_not_null
+            config:
+               severity: warn
+   -  name: futurecowearnings_icare
+      description: ""
+   -  name: rigroupsetexternally
+      description: "Whether the reinsurance association was determined by an external system."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_rigroupsetexternally_not_null
+            config:
+               severity: warn
+   -  name: furthertreatment
+      description: "Whether further treatment is required."
+   -  name: pipdeathbenefitsid
+      description: "Death benefits details."
+   -  name: rsbenefitsid
+      description: "Replacement services benefits details."
+   -  name: previoususerid
+      description: "User to which this entity was previously assigned."
+   -  name: isoknown
+      description: "Has a search request for this object been successfully received by ISO?"
+   -  name: surgerydate_icare
+      description: "Date of Surgery"
+   -  name: excessrecoveryamount
+      description: "Value of the created excess recovery"
+   -  name: claimanttype
+      description: "Categorizes the claimant relative to policyholder."
+   -  name: disbenefitsid
+      description: "Disability benefits details."
+   -  name: hospitaldate
+      description: "Date admitted to the hospital."
+   -  name: primarycoverage
+      description: "Coverage Type of the coverage on this exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_primarycoverage_not_null
+            config:
+               severity: warn
+   -  name: pipvocbenefitsid
+      description: "Vocational rehab benefits details."
+   -  name: settlemethod
+      description: "Method of settlement."
+   -  name: currentconditions
+      description: "Current conditions."
+   -  name: othercoverage
+      description: "True if the claimant has additional coverage."
+   -  name: contactpermitted
+      description: "Whether contact is permitted with the claimant."
+   -  name: assignmentdate
+      description: "Time when entity last assigned"
+   -  name: assignmentstatus
+      description: "Typelist describing assignment status."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposure_assignmentstatus_not_null
+            config:
+               severity: warn
+   -  name: workerpayer_icare
+      description: ""
+   -  name: currentsection38effdate_icare
+      description: ""
+   -  name: issection41eligible_icare
+      description: ""
+   -  name: mbcd_ext
+      description: ""
+   -  name: iss59a7secsurgerytype_ext
+      description: ""
+   -  name: iss59a3reinstatementwbtype_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

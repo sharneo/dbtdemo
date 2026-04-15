@@ -1,0 +1,90 @@
+version: 2
+models:
+-  name: cc_history
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: exposureid
+      description: "Associated exposure. Optional."
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_history_publicid_not_null
+            config:
+               severity: warn
+   -  name: subrogationid
+      description: ""
+   -  name: userid
+      description: "User who created this history event. Optional."
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: customtype
+      description: "Customer-defined history event type. This is used to support rules that execute only once per claim."
+   -  name: ruleuid
+      description: "The unique id of the rule that caused this history event to be created. Optional."
+   -  name: bulkinvoiceid
+      description: "Associated bulk invoice. Optional."
+   -  name: claimid
+      description: "Associated claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_history_claimid_not_null
+            config:
+               severity: warn
+   -  name: dispute_icareid
+      description: "Related dispute entity"
+   -  name: type
+      description: "Type of claim or exposure event."
+   -  name: subtype
+      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
+      tests:
+      -  not_null:
+            name: gwcc_cc_history_subtype_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_history_id_not_null
+            config:
+               severity: warn
+   -  name: description
+      description: "Description of the history event."
+   -  name: eventtimestamp
+      description: "Timestamp when the event occurred."
+   -  name: matterid
+      description: "Associated matter. Optional."
+   -  name: workcapacitydecision_icareid
+      description: ""
+   -  name: transactionsetid
+      description: "Associated transaction set. Optional."
+   -  name: mspreferral_extid
+      description: ""
+   -  name: ocrinvoice_extid
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

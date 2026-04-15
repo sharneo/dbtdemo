@@ -1,0 +1,41 @@
+version: 2
+sources:
+- name: sap
+  description: 'Data Lake Curated Data'
+  database: DEV_RAW_DB
+  schema: sap
+  tables:
+    - name: doc_types
+    - name: acdoca
+    - name: bpc_profit_center
+    - name: bpc_costcenter
+    - name: bpc_glacct
+    - name: bpc_compcode
+    - name: bseg
+    - name: fsv
+    - name: hierarchy_header
+    - name: hierarchy_texts
+    - name: profit_center
+    - name: procurement
+    - name: bpc_order
+    - name: mon_bal
+    - name: bpc_fiscyear
+    - name: acct_doc_header
+    - name: hierarchy_item
+    - name: ccenter_security
+    - name: bpc_szplanyear
+    - name: bpc_fiscper3
+    - name: bpc_ficare_r15
+    - name: vendor
+    - name: cost_center
+    - name: bpc_tradpartner
+    - name: customer
+    - name: trading_partner
+    - name: manual_budget
+    - name: chart_of_acc
+    - name: comp_code
+    - name: costcenter_manual_budget
+    - name: boardreport_manual_budget
+    - name: internal_order
+    - name: acdoca_set
+    - name: supplier

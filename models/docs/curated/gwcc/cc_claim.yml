@@ -1,0 +1,534 @@
+version: 2
+models:
+-  name: cc_claim
+   columns:
+   -  name: findocsclosetrigger_icare
+      description: "The date in which the closure of the claim will happen after the finalisation docs were generated."
+   -  name: reporteddate
+      description: "Date on which the loss was reported."
+   -  name: maincontacttype
+      description: "Relationship of the main contact to the insured."
+   -  name: dateformgiventoemp
+      description: "The date the work comp form was given to an employee."
+   -  name: previousgroupid
+      description: "Group to which this entity was previously assigned."
+   -  name: siulifecyclestate
+      description: "Current state of SIU trigger rule processing for this Claim."
+   -  name: safetyequipprov
+      description: "Was safety equipment provided."
+   -  name: flaggeddate
+      description: "The date and time the claim was initially flagged.  When the flag is unset, this date is set to null and will be set to a new date if a new reason for flagging the claim is found later."
+   -  name: exposurebegan
+      description: "Workers Comp only. Date when the exposure began."
+   -  name: assignedbyuserid
+      description: "User who assigned this entity."
+   -  name: callbacktime_icare
+      description: ""
+   -  name: daterptdtoagent
+      description: "The date the agent was notified about the claim."
+   -  name: diagnosticcnsistnt
+      description: "Is the diagnostic consistent."
+   -  name: currency
+      description: "The currency for the claim, copied from the policy."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_currency_not_null
+            config:
+               severity: warn
+   -  name: daterptdtoemployer
+      description: "The date the claim was reported to the employer."
+   -  name: litigationstatus
+      description: "The status of the litigation."
+   -  name: exposureended
+      description: "Workers Comp only. Date when the exposure ended."
+   -  name: previousqueueid
+      description: "Queue to which this entity was previously assigned."
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_updatetime_not_null
+            config:
+               severity: warn
+   -  name: storageboxnum
+      description: "Storage Box Number."
+   -  name: statefilenumber
+      description: "Number of the state file for this claim."
+   -  name: nextreserveweek_icare
+      description: ""
+   -  name: otherrecovstatus
+      description: "The Other Recoverable status for a claim."
+   -  name: drugsinvolved
+      description: "Does the employer question the validity of the claim."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_id_not_null
+            config:
+               severity: warn
+   -  name: isoenabled
+      description: "Is this field enabled for ISO."
+   -  name: dateeligibleforarchive
+      description: "The date and time that this claim will become eligible for archiving. While this field is null or set to a date in the future, this claim is not selected by the archive batch process. (Note that being passed over by the archive batch process is different from being skipped or excluded.)"
+   -  name: flaggedreason
+      description: "The reason this claim is flagged."
+   -  name: claimtier
+      description: "The tier of this claim, used to decide how to rate the claim metrics."
+   -  name: examinationdate
+      description: "Date of the Examination."
+   -  name: closedate_icare
+      description: ""
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: deathdate
+      description: "Date of death (if injury type is death)."
+   -  name: fault
+      description: "Insureds probable percentage of fault."
+   -  name: finalisationdocstrigger_icare
+      description: "The date in which the generation of the finalisation docs will be generated."
+   -  name: howreported
+      description: "How the claim was reported."
+   -  name: reinsuranceflaggedstatus
+      description: "The reinsurance flagged status for a claim."
+   -  name: isclaimmigrated_icare
+      description: "Flag indicating if the claim is migrated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_isclaimmigrated_icare_not_null
+            config:
+               severity: warn
+   -  name: losscause
+      description: "General cause of loss; dependent on loss type."
+   -  name: triggertriage_icare
+      description: "Flag that will be used to determine if triage engine needs to be called for this claim."
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: fnolguid_icare
+      description: ""
+   -  name: claimsagent_icare
+      description: "Claims Agent managing the claim"
+   -  name: reopendate
+      description: "Date claim was reopened."
+   -  name: progress
+      description: "Description of the progress of an open claim."
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: modifieddutyavail
+      description: "Is Modified Duty Available at Work."
+   -  name: insurersentmpnnotice
+      description: "Date that Insurer sent out the MPN Notification."
+   -  name: segment
+      description: "Segmentation type of the claim. Both the claim and the exposure may be segmented."
+   -  name: locationoftheft
+      description: "the Location where the property was stolen."
+   -  name: storagetype
+      description: "Storage Type."
+   -  name: employersize_icare
+      description: "Employer size refers to how the claim will be managed."
+   -  name: empqusvalidity
+      description: "Does the employer question the validity of the claim."
+   -  name: triggerassessreminderdate
+      description: "Date when the assessment reminder activity workflow should be triggered"
+   -  name: datecompdcsndue
+      description: "The date the compensability Decision (for entire claim) was Due."
+   -  name: faultrating
+      description: "Indicates in the insured is at fault."
+   -  name: newdateofloss_icare
+      description: ""
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_publicid_not_null
+            config:
+               severity: warn
+   -  name: wicdescription_icare
+      description: "The Industry Classification of the WIC the claim is lodged against"
+   -  name: claimantrprtddate
+      description: "Workers Comp only. Date when the claimant reported incident to insured (employer)."
+   -  name: navigatorclaimnumber_icare
+      description: "Lifetime Care Claim Number"
+   -  name: commonlawdateflaged_icare
+      description: ""
+   -  name: assignedgroupid
+      description: "Group to which this entity is assigned; null if none assigned"
+   -  name: iseditablebyportal_icare
+      description: "Flags if this Claim can be edited from the Claims Portal"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_iseditablebyportal_icare_not_null
+            config:
+               severity: warn
+   -  name: lossdate
+      description: "The date on which the loss occurred."
+   -  name: supplementalworkloadweight
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_supplementalworkloadweight_not_null
+            config:
+               severity: warn
+   -  name: triggertriagedate_icare
+      description: "Date when request to Triage Engine should be triggered"
+   -  name: claimsource
+      description: "Information about how Claim was entered into the System."
+   -  name: siescalatesiu
+      description: "Escalate to SIU team."
+   -  name: salvagestatus
+      description: "The salvage status for a claim."
+   -  name: flagged
+      description: "This claims status as a flagged claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_flagged_not_null
+            config:
+               severity: warn
+   -  name: computersecurity
+      description: "Whether computer security issues were involved."
+   -  name: safetyequipused
+      description: "Was safety equipment used."
+   -  name: assignedqueueid
+      description: "Either the Queue to which this entity is assigned (if AssignmentStatus is assigned), the Queue to which the system suggests assignment (if AssignmentStatus is manual), or null if none assigned. Only one of AssignedUserID or AssignedQueueID should be non null."
+   -  name: storagelocationstate
+      description: "Storage Location State."
+   -  name: empsentmpnnotice
+      description: "Date that the Employer sent out the MPN Notification."
+   -  name: employmentinjury
+      description: "Workers Comp only. Whether the injury occurred in course of employment."
+   -  name: workloadupdated
+      description: "Last time user workload was calculated and updated"
+   -  name: closedoutcome
+      description: "The outcome reached when closing the claim."
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: isoreceivedate
+      description: "The last time a response was received from ISO for this object. "
+   -  name: tempclaimnumber_icare
+      description: ""
+   -  name: insuredpremises
+      description: "True if the incident occurred on the employers premises."
+   -  name: injwkrinmpn
+      description: "Date that the injured Worker moved to MPN."
+   -  name: permissionrequired
+      description: "If non-null, this is an additional permission that users are required to have to view or work on this claim. This field is used to restrict access to sensitive or private claims; for example, those involving an employee or that are under litigation."
+   -  name: employervalidityreason
+      description: "The reason the employer questions the validity of the claim."
+   -  name: strategy
+      description: "Segmentation type of the claim. Both the claim and the exposure may be segmented."
+   -  name: assigneduserid
+      description: "Either the User to which this entity is assigned (if AssignmentStatus is assigned), the User to which the system suggests assignment (if AssignmentStatus is manual), or null if none assigned. Only one of AssignedUserID or AssignedQueueID should be non null."
+   -  name: storagecategory
+      description: "Storage Category."
+   -  name: ptpinmpn
+      description: "Is Primary Treating Physician in MPN?"
+   -  name: datemade_icare
+      description: "Date that a claim is made with the insurer with the claim made data"
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: statutedate
+      description: "Date at which the statute of limitations expires for this claim."
+   -  name: injuredonpremises
+      description: "Was the employee injured on the premesis."
+   -  name: dateformretbyemp
+      description: "The date the work comp form was returned by an employee."
+   -  name: insureddenormid
+      description: "Insured FK denorm."
+   -  name: treatedpatientbfr
+      description: "Has the patient been treated before."
+   -  name: claimnumber
+      description: "The external identifier of the claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_claimnumber_not_null
+            config:
+               severity: warn
+   -  name: siescalatesiudate
+      description: "Date escalated to SIU team."
+   -  name: incidentreport
+      description: "True if this is an incident report only and the claim will not be processed."
+   -  name: preexdisblty
+      description: "Whether the injured person had a pre-existing disability."
+   -  name: triggerassessreminder
+      description: "Flag to triggers the assessment reminder workflow"
+   -  name: itcchangedflagpel
+      description: "ITC Percentage Changed flag for transaction line item ITC/AA amount recalculation"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_itcchangedflagpel_not_null
+            config:
+               severity: warn
+   -  name: branchinsurer_icare
+      description: "Branch of insurer handling claim"
+   -  name: hospitaldays
+      description: "Estimated Days in hospital."
+   -  name: policedeptinfo
+      description: "Reports, incident number, and other information from the police deptartment."
+   -  name: state
+      description: "Internal state of the claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_state_not_null
+            config:
+               severity: warn
+   -  name: siustatus
+      description: "The SIU status for a claim"
+   -  name: donotdestroy
+      description: "If set then the entity should not be destroyed"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_donotdestroy_not_null
+            config:
+               severity: warn
+   -  name: firstnoticesuit
+      description: "Boolean field to indicate suit at the time of the first notice."
+   -  name: mold
+      description: "Boolean field to mark a claim as involving mold."
+   -  name: reopenedreason
+      description: "The reason for reopening the claim."
+   -  name: stateacknumber
+      description: "Acknowledgment number of the state file for this claim."
+   -  name: totalitcaapel
+      description: "ITC and AA total amount"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_totalitcaapel_not_null
+            config:
+               severity: warn
+   -  name: reportedbytype
+      description: "Relationship of the person who reported the claim to the insured."
+   -  name: closedate
+      description: "Date and time when this entity was closed. (Not applicable to all assignable entities)"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_retired_not_null
+            config:
+               severity: warn
+   -  name: storagedate
+      description: "Date file shipped to storage facility."
+   -  name: firedeptinfo
+      description: "Reports, incident number, and other information from the fire department."
+   -  name: validationlevel
+      description: "Validation level that this object passed (if any) before it was stored."
+   -  name: lobcode
+      description: "Line of Business code; typically related to the policy."
+   -  name: workloadweight
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_workloadweight_not_null
+            config:
+               severity: warn
+   -  name: jurisdictionstate
+      description: "The state of jurisdiction. This indicates jurisdiction that covers the loss, which may differ from the state in which the loss occurred. The Jurisdiction must be associated with JurisdictionType.TC_INSURANCE."
+   -  name: concurrentemp
+      description: "Did the employee have concurrent employment."
+   -  name: sharedclaim_icare
+      description: "Identifies that a claim is being shared with another insurer"
+   -  name: daterptdtoinsured
+      description: "The date the insured was notified about the claim."
+   -  name: isostatus
+      description: "Status of exposure with ISO - for example checked, not of interest."
+   -  name: liabilitystatusdenorm_icare
+      description: ""
+   -  name: weatherrelated
+      description: "Is related to weather"
+   -  name: isosenddate
+      description: "The last time a search request was sent to ISO. "
+   -  name: locationcodeid
+      description: "Workers Comp only. Location at the employers facilities where the accident occurred."
+   -  name: storagevolumes
+      description: "Storage Volumes."
+   -  name: catastropheid
+      description: "Associated catastrophe."
+   -  name: storagebarcodenum
+      description: "Storage Bar Code Number."
+   -  name: injuredregularjob
+      description: "Was the employee injured while doing his or her regular job."
+   -  name: claimantdenormid
+      description: "Claimant FK denorm."
+   -  name: claimhash_icare
+      description: "Claim Hash used for Unauthenticated Portal FNOL"
+   -  name: losslocationcode
+      description: "Location Code for the Loss Location."
+   -  name: benefitsstatusdcsn
+      description: "Indicates if the benefits decision has been made yet."
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_createtime_not_null
+            config:
+               severity: warn
+   -  name: accidenttype
+      description: "Detailed accident type; augments LossCause."
+   -  name: policyid
+      description: "The policy associated with this claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_policyid_not_null
+            config:
+               severity: warn
+   -  name: manifestationdate
+      description: "The manifestation date."
+   -  name: furthertreatment
+      description: "Is further treatment required."
+   -  name: reinsurancereportable
+      description: "True if this claim has exceeded the Reinsurance Reporting Threshold"
+   -  name: odgmeddiagnosis
+      description: ""
+   -  name: purgedate
+      description: "Date at which the claim should be purged. Configurations can use this field to decide when to mark the claim for purge, and there are sample Claim Closed and Claim Reopened rules to set it. It is not used by the internal purge logic."
+   -  name: previoususerid
+      description: "User to which this entity was previously assigned."
+   -  name: losstype
+      description: "High level claim type (for example, Auto or Property)."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_losstype_not_null
+            config:
+               severity: warn
+   -  name: isoknown
+      description: "Has a search request for this object been successfully received by ISO?"
+   -  name: agencyid
+      description: "An ID assigned to indicate company and office a claim is being submitted by, this data is used by ISO integration"
+   -  name: hospitaldate
+      description: "Date admitted to the hospital."
+   -  name: losslocationspatialdenorm
+      description: ""
+   -  name: triageriskscore_icare
+      description: ""
+   -  name: showmedicalfirstinfo
+      description: "Show Medical First info section."
+   -  name: datecompdcsnmade
+      description: "The date the compensability Decision (for entire claim) was Made."
+   -  name: lockingcolumn
+      description: "Meaningless column for locking"
+   -  name: currentconditions
+      description: "Current conditions"
+   -  name: coverageinquestion
+      description: "Whether the claim is covered by the claimants policies."
+   -  name: losslocationid
+      description: "Location of the loss."
+   -  name: weather
+      description: "Weather conditions at the time of accident."
+   -  name: mmidate
+      description: "Date Maximum Medical Improvement was reached."
+   -  name: claimworkcompid
+      description: "Claims workers compensation data"
+   -  name: assignmentdate
+      description: "Time when entity last assigned"
+   -  name: largelossnotificationstatus
+      description: "The status of large loss notices."
+   -  name: description
+      description: "Description of the accident or loss."
+   -  name: siscore
+      description: "Special Investigations Score."
+   -  name: assignmentstatus
+      description: "Typelist describing assignment status."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_assignmentstatus_not_null
+            config:
+               severity: warn
+   -  name: hazardouswaste
+      description: "Boolean field to mark a claim as involving hazardous waste."
+   -  name: lodgingagent_icare
+      description: ""
+   -  name: reimbschagrmnt_icare
+      description: ""
+   -  name: funding_icare
+      description: ""
+   -  name: managingentity_icare
+      description: ""
+   -  name: externalidentifier_icareid
+      description: ""
+   -  name: generateimpflag_ext
+      description: ""
+   -  name: siraclaimnumber_ext
+      description: ""
+   -  name: othercostcenter_ext
+      description: ""
+   -  name: reopenexponclosedclaim_ext
+      description: ""
+   -  name: iscovidclaim_ext
+      description: ""
+   -  name: externalfactorsimpact_ext
+      description: ""
+   -  name: externalfactorsevent_ext
+      description: ""
+   -  name: claimslm_extid
+      description: ""
+   -  name: nulledclaim_ext
+      description: ""
+   -  name: organization_extid
+      description: ""
+   -  name: isconflictofinterest_ext
+      description: ""
+   -  name: claimtransferdetails_extid
+      description: ""
+   -  name: policeattestationdate_ext
+      description: ""
+   -  name: reasonforexempt_ext
+      description: ""
+   -  name: claimtype_ext
+      description: ""
+   -  name: appendsirasuffix_ext
+      description: ""
+   -  name: legacycreatetime_ext
+      description: ""
+   -  name: transitionoutcome_ext
+      description: ""
+   -  name: transitiondecisiondate_ext
+      description: ""
+   -  name: isclaimimported_ext
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_cc_claim_isclaimimported_ext_not_null
+            config:
+               severity: warn
+   -  name: importdate_ext
+      description: ""
+   -  name: isstaffclaim_ext
+      description: ""
+   -  name: referencecostcentrename_ext
+      description: ""
+   -  name: agencycostcentrename_ext
+      description: ""
+   -  name: referencecostcentrecode_ext
+      description: ""
+   -  name: agencycostcentrecode_ext
+      description: ""
+   -  name: secrefcostcentrecode_ext
+      description: ""
+   -  name: secrefcostcentrename_ext
+      description: ""
+   -  name: secagencycostcentrecode_ext
+      description: ""
+   -  name: secagencycostcentrename_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

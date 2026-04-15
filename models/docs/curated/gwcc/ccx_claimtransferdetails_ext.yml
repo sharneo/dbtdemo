@@ -1,0 +1,83 @@
+version: 2
+models:
+-  name: ccx_claimtransferdetails_ext
+   columns:
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimtransferdetails_ext_id_not_null
+            config:
+               severity: warn
+   -  name: loadcommandid
+      description: ""
+   -  name: createuserid
+      description: ""
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimtransferdetails_ext_publicid_not_null
+            config:
+               severity: warn
+   -  name: reasonfortailorcomm
+      description: ""
+   -  name: beanversion
+      description: ""
+   -  name: reasonforothers
+      description: ""
+   -  name: retired
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimtransferdetails_ext_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimtransferdetails_ext_createtime_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: ""
+   -  name: loaddate
+      description: ""
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimtransferdetails_ext_updatetime_not_null
+            config:
+               severity: warn
+   -  name: bulkcspxferdetail_extid
+      description: ""
+   -  name: istriggercomms
+      description: ""
+   -  name: transferstatus
+      description: ""
+   -  name: documentstatus
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

@@ -1,0 +1,109 @@
+version: 2
+models:
+-  name: cc_group
+   columns:
+   -  name: worldvisible
+      description: "If true, this group is visible to all users, regardless of what groups they belong to."
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_worldvisible_not_null
+            config:
+               severity: warn
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: supervisorid
+      description: "Supervisor of the group."
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_publicid_not_null
+            config:
+               severity: warn
+   -  name: securityzoneid
+      description: "Security zone to which the group belongs."
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_securityzoneid_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_createtime_not_null
+            config:
+               severity: warn
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_retired_not_null
+            config:
+               severity: warn
+   -  name: validationlevel
+      description: "Validation level that this object passed (if any) before it was stored."
+   -  name: name
+      description: "The group name; this must be unique."
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_name_not_null
+            config:
+               severity: warn
+   -  name: namekanji
+      description: "The group name in Kanji. Used only for Japanese and will be null otherwise."
+   -  name: organizationid
+      description: "The Organization that this group belongs to."
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: loadfactor
+      description: "Percentage value of normal workload to be given to this group. This is used for round-robin assignment."
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_updatetime_not_null
+            config:
+               severity: warn
+   -  name: grouptype
+      description: "Type of group (describes its function)."
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_grouptype_not_null
+            config:
+               severity: warn
+   -  name: behaviouralclaims_icare
+      description: "Does this group handle complex behavioural claims?"
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_group_id_not_null
+            config:
+               severity: warn
+   -  name: fatalityclaims_icare
+      description: "Does this group handle fatality claims?"
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

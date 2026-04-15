@@ -30,7 +30,7 @@ with cc_claim as (
         claimsagent_icare,
         managingentity_icare,
         retired
-    from {{ ref('vw_cc_claim_current') }}
+    from {{ ref('vw_cc_claim') }}
 ),
 
 claim_wic_icare as (
@@ -38,7 +38,7 @@ claim_wic_icare as (
         ownerid,
         foreignentityid,
         publicid
-    from {{ ref('vw_ccx_claimwicicare_current') }}
+    from {{ ref('vw_ccx_claimwicicare') }}
 ),
 
 ccx_wic_icare as (
@@ -47,7 +47,7 @@ ccx_wic_icare as (
         retired,
         code,
         tariffrate
-    from {{ ref('vw_ccx_wic_icare_current') }}
+    from {{ ref('vw_ccx_wic_icare') }}
     where retired = 0
 ),
 
@@ -55,7 +55,7 @@ shared_claim as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_sharedclaim_icare_current') }}
+    from {{ ref('vw_cctl_sharedclaim_icare') }}
     where retired = 0
 ),
 
@@ -63,7 +63,7 @@ insurer_branch as (
     select
         id,
         name
-    from {{ ref('vw_cctl_insurerbranch_icare_current') }}
+    from {{ ref('vw_cctl_insurerbranch_icare') }}
     where retired = 0
 ),
 
@@ -76,7 +76,7 @@ cc_policy as (
         manualverify_icare,
         legacypolicynumber_icare,
         verified
-    from {{ ref('vw_cc_policy_current') }}
+    from {{ ref('vw_cc_policy') }}
     where retired = 0
 ),
 
@@ -84,7 +84,7 @@ cctl_policytype as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_policytype_current') }}
+    from {{ ref('vw_cctl_policytype') }}
 ),
 
 policy_period as (
@@ -94,7 +94,7 @@ policy_period as (
         legacypolicynumber_icare,
         status,
         periodstart
-    from {{ ref('vw_pc_policyperiod_current') }}
+    from {{ ref('vw_pc_policyperiod') }}
 ),
 
 cc_incident as (
@@ -112,7 +112,7 @@ cc_incident as (
         natureofinjurycode_icare,
         deceaseddate_icare,
         agencyofinjurycode_icare
-    from {{ ref('vw_cc_incident_current') }}
+    from {{ ref('vw_cc_incident') }}
     where retired = 0 and claimincident = 1
 ),
 
@@ -120,7 +120,7 @@ duty_status as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_dutystatus_icare_current') }}
+    from {{ ref('vw_cctl_dutystatus_icare') }}
     where retired = 0
 ),
 
@@ -130,7 +130,7 @@ cc_policy_location as (
         id,
         retired,
         addressid
-    from {{ ref('vw_cc_policylocation_current') }}
+    from {{ ref('vw_cc_policylocation') }}
     where retired = 0
 ),
 
@@ -145,7 +145,7 @@ cc_address as (
         postalcode,
         city,
         description
-    from {{ ref('vw_cc_address_current') }}
+    from {{ ref('vw_cc_address') }}
     where retired = 0
 ),
 
@@ -153,7 +153,7 @@ country_ref as (
     select
         id,
         name
-    from {{ ref('vw_cctl_country_current') }}
+    from {{ ref('vw_cctl_country') }}
 ),
 
 cc_claimempdata as (
@@ -161,7 +161,7 @@ cc_claimempdata as (
         ownerid,
         id,
         foreignentityid
-    from {{ ref('vw_cc_claimempdata_current') }}
+    from {{ ref('vw_cc_claimempdata') }}
 ),
 
 cc_employmentdata as (
@@ -175,7 +175,7 @@ cc_employmentdata as (
         hoursworkedweek_icare,
         lpad(floor(hoursworkedweek_icare)::varchar, 2, '0') as hoursworkedweek_icare_hours,
         lpad(round((hoursworkedweek_icare % 1) * 60)::int::varchar, 2, '0') as hoursworkedweek_icare_minutes
-    from {{ ref('vw_cc_employmentdata_current') }}
+    from {{ ref('vw_cc_employmentdata') }}
 ),
 
 ccx_industrycode_icare as (
@@ -183,7 +183,7 @@ ccx_industrycode_icare as (
         id,
         retired,
         industrycode
-    from {{ ref('vw_ccx_industrycode_icare_current') }}
+    from {{ ref('vw_ccx_industrycode_icare') }}
     where retired = 0
 ),
 
@@ -191,14 +191,14 @@ employment_status_type as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_employmentstatustype_current') }}
+    from {{ ref('vw_cctl_employmentstatustype') }}
 ),
 
 training_status_icare as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_trainingstatus_icare_current') }}
+    from {{ ref('vw_cctl_trainingstatus_icare') }}
 ),
 
 cc_workcomp as (
@@ -206,7 +206,7 @@ cc_workcomp as (
         id,
         retired,
         accidentlocationtype_icare
-    from {{ ref('vw_cc_workcomp_current') }}
+    from {{ ref('vw_cc_workcomp') }}
     where retired = 0
 ),
 
@@ -214,7 +214,7 @@ accident_loc_type as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_accidentloctype_icare_current') }}
+    from {{ ref('vw_cctl_accidentloctype_icare') }}
     where retired = 0
 ),
 
@@ -225,7 +225,7 @@ toocs_bloi_connector as (
         retired,
         injurycode,
         selectedasprimary
-    from {{ ref('vw_ccx_toocsbloiconnector_icare_current') }}
+    from {{ ref('vw_ccx_toocsbloiconnector_icare') }}
     where retired = 0
 ),
 
@@ -233,21 +233,21 @@ severity_type as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_severitytype_current') }}
+    from {{ ref('vw_cctl_severitytype') }}
 ),
 
 lodging_agent as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_claimagent_icare_current') }}
+    from {{ ref('vw_cctl_claimagent_icare') }}
 ),
 
 managing_agent as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_claimagent_icare_current') }}
+    from {{ ref('vw_cctl_claimagent_icare') }}
 ),
 
 claimant as (
@@ -302,7 +302,7 @@ managing_entity as (
         role,
         retired,
         code
-    from {{ ref('vw_ccx_managingentity_icare_current') }}
+    from {{ ref('vw_ccx_managingentity_icare') }}
 ),
 
 insurer_control as (

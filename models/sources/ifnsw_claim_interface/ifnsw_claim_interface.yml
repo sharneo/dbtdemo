@@ -1,0 +1,48 @@
+version: 2
+sources:
+- name: ifnsw_claim_interface
+  description: 'Data Lake Curated Data'
+  database: DEV_RAW_DB
+  schema: ifnsw_claim_interface
+  tables:
+    - name: wc_qbe_claim
+    - name: wc_qbe_estimates
+    - name: wc_tmfgwcc_rehabilitation
+    - name: mi_gbs_claimstatushistory
+    - name: wc_qbe_payments
+    - name: wc_eml_workcapacitydecision
+    - name: wc_qbe_workcapacitydecision
+    - name: py_gbs_estimates
+    - name: py_gbs_payments
+    - name: wc_qbe_dependents
+    - name: wc_eml_dependents
+    - name: wc_aal_claim
+    - name: wc_tmfgwcc_payments
+    - name: wc_aal_workcapacitydecision
+    - name: mi_gbs_payments
+    - name: wc_tmfgwcc_claim
+    - name: wc_aal_estimates
+    - name: wc_aal_rehabilitation
+    - name: py_gbs_claimstatushistory
+    - name: wc_eml_payments
+    - name: wc_tmfgwcc_dependents
+    - name: wc_aal_dependents
+    - name: mi_gbs_estimates
+    - name: pl_gbs_payments
+    - name: mv_gbs_claimstatushistory
+    - name: wc_eml_estimates
+    - name: mv_gbs_payments
+    - name: mv_gbs_estimates
+    - name: pl_gbs_estimates
+    - name: wc_tmfgwcc_estimates
+    - name: wc_tmfgwcc_workcapacitydecision
+    - name: py_gbs_claim
+    - name: pl_gbs_health
+    - name: mv_gbs_claim
+    - name: wc_qbe_rehabilitation
+    - name: wc_eml_claim
+    - name: wc_eml_rehabilitation
+    - name: pl_gbs_claim
+    - name: mi_gbs_claim
+    - name: pl_gbs_claimstatushistory
+    - name: wc_aal_payments

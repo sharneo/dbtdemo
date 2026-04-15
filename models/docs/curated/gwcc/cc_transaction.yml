@@ -1,0 +1,181 @@
+version: 2
+models:
+-  name: cc_transaction
+   columns:
+   -  name: paymenttype
+      description: "Type of the payment."
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: matter
+      description: "Foreign key to Matter"
+   -  name: closeclaim
+      description: "If this transaction is a final payment, this indicates whether it should or did close its associated claim."
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_publicid_not_null
+            config:
+               severity: warn
+   -  name: submitdate
+      description: "Unused. May be removed in a future release."
+   -  name: costtype
+      description: "Type of cost (for example, claim cost or adjusting overhead)."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_costtype_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_createtime_not_null
+            config:
+               severity: warn
+   -  name: recoverytype_icare
+      description: "Recovery type"
+   -  name: reservingcurrency
+      description: "Reserving Currency of this transactions ReserveLine. Indicates the currency in which reserves are to be set aside and eroded."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_reservingcurrency_not_null
+            config:
+               severity: warn
+   -  name: costcategory
+      description: "The CostCategory for this transaction."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_costcategory_not_null
+            config:
+               severity: warn
+   -  name: reservelineid
+      description: "The ReserveLine associated with this transaction.  For all transaction subtypes this ReserveLine will have matching Claim, Exposure, CostType and CostCategory."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_reservelineid_not_null
+            config:
+               severity: warn
+   -  name: currency
+      description: "The Currency of the transaction amount."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_currency_not_null
+            config:
+               severity: warn
+   -  name: recoverycategory
+      description: "The RecoveryCategory to which this transaction is coded."
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_updatetime_not_null
+            config:
+               severity: warn
+   -  name: claimid
+      description: "The related claim.<p>Setting the claim also sets this transactions currency to the claims currency if it is null."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_claimid_not_null
+            config:
+               severity: warn
+   -  name: claimtoreportingexchangerate
+      description: "ExchangeRate to use when converting ClaimAmount to ReportingAmount. Setting this value updates the reporting amounts."
+   -  name: recoverycodingid
+      description: "The RecoveryCoding to which this transaction is coded."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_id_not_null
+            config:
+               severity: warn
+   -  name: transactionsetid
+      description: "Set that groups together one or more transactions for approval."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_transactionsetid_not_null
+            config:
+               severity: warn
+   -  name: doesnoterodereserves
+      description: "Indicates whether this payment should not erode reserves for its ReserveLine.  This field can only be set in the CheckWizard UI.  Otherwise, one of the setAsEroding() or setAsNonEroding() methods must be called from a rule to change whether a payment erodes reserves."
+   -  name: exposureid
+      description: "The related exposure."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: checkid
+      description: "Check that paid this payment."
+   -  name: lifecyclestate
+      description: "Current internal lifecycle state of the transaction. Changing state affects T-accounts."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_lifecyclestate_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_retired_not_null
+            config:
+               severity: warn
+   -  name: payerdenormid
+      description: "Payer FK denorm."
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: invoicenumber_icare
+      description: "Invoice number associated with the check."
+   -  name: status
+      description: "Status of the transaction. Further refines the LifeCycleState. Can only change status directly to another status in the same LifeCycleState, which does not affect Taccounts."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_status_not_null
+            config:
+               severity: warn
+   -  name: comments
+      description: "Comments about the transaction, such as a reason."
+   -  name: transtoreservingexchangerate
+      description: "ExchangeRate to use when converting TransactionAmount to ReservingAmount. Setting this value updates the reserving amounts. Also sets the same ExchangeRate as TransToClaimExchangeRate if ClaimCurrency and ReservingCurrency are equal."
+   -  name: subtype
+      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transaction_subtype_not_null
+            config:
+               severity: warn
+   -  name: oboclaimcontactid
+      description: "Person or company responsible for paying."
+   -  name: transtoclaimexchangerate
+      description: "ExchangeRate to use when converting TransactionAmount to ClaimAmount. Setting this value updates the claim and reporting amounts. Also sets the same ExchangeRate as TransToReservingExchangeRate if ClaimCurrency and ReservingCurrency are equal."
+   -  name: payeetype_icare
+      description: "The payee type. This is used for tax reporting purposes."
+   -  name: claimcontactid
+      description: "Person or company from whom the recovery was obtained."
+   -  name: closeexposure
+      description: "If this transaction is a final payment, this indicates whether it should or did close its associated exposure."
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

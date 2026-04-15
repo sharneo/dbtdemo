@@ -1,0 +1,164 @@
+version: 2
+models:
+-  name: cc_activitypattern
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: escbuscallocpath
+      description: "Location bean path to use for business calendar in calculating EscalationDate, if applicable."
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_publicid_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_createtime_not_null
+            config:
+               severity: warn
+   -  name: activityclass
+      description: "The class of the activity."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_activityclass_not_null
+            config:
+               severity: warn
+   -  name: command
+      description: "A Gosu command to execute for this activity."
+   -  name: externallyowned
+      description: "Whether the activity is externally owned."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_externallyowned_not_null
+            config:
+               severity: warn
+   -  name: targetincludedays
+      description: "Which days to include in calculating the TargetDate."
+   -  name: documenttemplate
+      description: "The id of an associated document template. The id gets passed to IDocumentTemplateSource to retrieve the DocumentTemplateDescriptor."
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_updatetime_not_null
+            config:
+               severity: warn
+   -  name: emailtemplate
+      description: "The id of an associated email template. The id gets passed to IEmailTemplateSource to retrieve the EmailTemplateDescriptor."
+   -  name: escalationbuscaltag
+      description: "Holiday tag code to use for business calendar in calculating EscalationDate, if applicable."
+   -  name: claimlosstype
+      description: "Used to optionally filter activity patterns by claim loss type."
+   -  name: mandatory
+      description: "Whether completion of the activity is mandatory."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_mandatory_not_null
+            config:
+               severity: warn
+   -  name: escalationhours
+      description: "Used in conjunction with EscalationStartPoint and EscalationIncludedDays to calculate the EscalationDate of the activity."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_id_not_null
+            config:
+               severity: warn
+   -  name: targetbuscaltag
+      description: "Holiday tag code to use for business calendar in calculating TargetDate, if applicable."
+   -  name: automatedonly
+      description: "True if the activity pattern is used only by automated additions to the workplan. If true, the pattern wont be shown as an option for users to choose in the applications interface."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_automatedonly_not_null
+            config:
+               severity: warn
+   -  name: recurring
+      description: "Whether this activity is recurring."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_recurring_not_null
+            config:
+               severity: warn
+   -  name: targethours
+      description: "Used in conjunction with TargetStartPoint and TargetIncludedDays to calculate the ActionDate of the activity."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: priority
+      description: "Priority of the activity with respect to other activities."
+   -  name: targetbuscallocpath
+      description: "Location bean path to use for business calendar in calculating TargetDate, if applicable."
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: targetdays
+      description: "Used in conjunction with TargetStartPoint and TargetIncludedDays to calculate the ActionDate of the activity."
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_retired_not_null
+            config:
+               severity: warn
+   -  name: subject
+      description: "Subject field of the activity."
+   -  name: escalationdays
+      description: "Used in conjunction with EscalationStartPoint and EscalationIncludedDays to calculate the EscalationDate of the activity."
+   -  name: code
+      description: "The concise name of the activity pattern, used to identify the pattern within rules."
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: shortsubject
+      description: "Short subject field of the activity. For use in small areas e.g., a calendar event entry."
+   -  name: escalationstartpt
+      description: "Which existing date on the activity or associated claim to use as the starting date for the EscalationDate."
+   -  name: closedclaimavlble
+      description: "True if the activity pattern is available for closed claims."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_closedclaimavlble_not_null
+            config:
+               severity: warn
+   -  name: importance
+      description: "The importance level of the activity."
+   -  name: type
+      description: "Type of the activity."
+      tests:
+      -  not_null:
+            name: gwcc_cc_activitypattern_type_not_null
+            config:
+               severity: warn
+   -  name: escalationincldays
+      description: "Which days to include in calculating the EscalationDate."
+   -  name: description
+      description: "Description of the activity pattern."
+   -  name: category
+      description: "Category used to organize the activity pattern."
+   -  name: targetstartpoint
+      description: "Which existing date on the activity or associated claim to use as the starting date for the TargetDate."
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

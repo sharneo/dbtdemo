@@ -1,0 +1,205 @@
+version: 2
+models:
+-  name: pcx_directwage_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader"
+   -  name: legacyddl
+      description: "Legacy Dust Disease Levy"
+   -  name: auditedappwages
+      description: "icare specific field capturing the audited value of apprentice wages"
+   -  name: wages_icare
+      description: ""
+   -  name: totalwages
+      description: "icare specific field to capture total wages details.  Used to calculate BTP"
+   -  name: wages_icare_cur
+      description: "Currency code for Wages_icare amount"
+   -  name: fixedid
+      description: "Unique ID for this object across all branches and periods"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_fixedid_not_null
+            config:
+               severity: warn
+   -  name: pac
+      description: "icare specific field to hold PAC code.  Not populated in GW.  Get the PAC code from PCX_DIRECTWAGEWIC_ICARE, as copied from rate book"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: noofunits
+      description: "icare specific field for number of units"
+   -  name: auditedasbestoswages
+      description: "icare specific field capturing the audited value of total asbestos related wages"
+   -  name: id
+      description: "Internally managed primary key.  Provides traceability back to PCX_DIRECTWAGE_ICARE when Wage Type = DIRECT"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_id_not_null
+            config:
+               severity: warn
+   -  name: noofinjuredemployees
+      description: "icare specific field for number of injured employees"
+   -  name: initialexclusionscreated
+      description: "Whether or not the initial set of exclusions has been created on this Coverable. Not used by iCare"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_initialexclusionscreated_not_null
+            config:
+               severity: warn
+   -  name: createuserid
+      description: "User ID of the user that created this record. Foreign key to PC_USER"
+   -  name: beanversion
+      description: "Internal technical GW field to manage object versions."
+   -  name: noofemployees
+      description: "icare specific field to capture number of employees"
+   -  name: grossvalue
+      description: "icare specific field to capture gross wages"
+   -  name: updateuserid
+      description: "User ID of the user that updated this record. Foreign key to PC_USER."
+   -  name: wicrate
+      description: "An iCare custom field that captures the WIC rate for the WIC code (copied from the rate book) at the time of wages entry.  This is the WIC rate used in premium calculations based on the entered wage details."
+   -  name: location
+      description: "Policy Location Specific information. \_This attribute is not currently used in GW (all values NULL as at Dec 2017). \_Get Location ID from PCX_COSTCENTER_ICARE.PolicyLocation"
+   -  name: referencedateinternal
+      description: "icare specific entity to hold Taxi Plates details.  Not used"
+   -  name: wcline_icare
+      description: "Icare Workers Comp line of business"
+   -  name: businessdescription
+      description: "iCare specific field for Business Description, as input by user in PC Direct Wages entry on a Policy"
+   -  name: branchid
+      description: "Link to root of effdated tree.  Foreign key to PC_POLICYPERIOD in GW (Policy Period = EDW Policy Term)"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_branchid_not_null
+            config:
+               severity: warn
+   -  name: auditedtotalwages
+      description: "icare specific field for Audite TotalWages details"
+   -  name: initialcoveragescreated
+      description: "Whether or not the initial set of coverages has been created on this Coverable. Not used by iCare"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_initialcoveragescreated_not_null
+            config:
+               severity: warn
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: total
+      description: "Total amount"
+   -  name: legacywicrate
+      description: "Legacy WIC rate"
+   -  name: createtime
+      description: "Timestamp indicating when the record was created in the GW table"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: noofapp
+      description: "icare specific field to capture number of apprentices"
+   -  name: appwages
+      description: "The amount of wages paid by the employer to apprentices under Apprenticeship Contracts for the specified WIC in a location and cost centre on a Policy Term"
+   -  name: wic
+      description: "icare specific field to hold WIC code.  This attribute is not used.  Get WIC code and WIC rate from associated PCX_DIRECTWAGEWIC_ICARE entity"
+   -  name: effectivedate
+      description: "Effective date of this row. A value of NULL in the database indicates that this rows effective date is equal to the Period Start."
+   -  name: claimyears1
+      description: "Claims Years 1 amount from Policy Prior Losses"
+   -  name: claimyears1_cur
+      description: "Currency of the Claims Year 1 amount.  GW has been configured for a single AUD currency, therefore this field is not used"
+   -  name: claimyears2
+      description: "Claim Years 2 amount from the Policy Prior Losses"
+   -  name: claimyears2_cur
+      description: "Currency of the Claims Year 2 amount.  GW has been configured for a single AUD currency, therefore this field is not used"
+   -  name: claimyears3
+      description: "Claim Years 3 amount from the Policy Prior Losses"
+   -  name: claimyears3_cur
+      description: "Currency of the Claims Year 3 amount.  GW has been configured for a single AUD currency, therefore this field is not used"
+   -  name: expirationdate
+      description: "Expiration date of this row. A value of NULL in the database indicates that this rows expiration date is equal to the Period End."
+   -  name: costcenter_icare
+      description: "The cost centre linked to the direct wages and/or apprentice wages entered on this row.  This is a foreign key to PCX_COSTCENTER_ICARE.  Pass through for traceability back to source"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_costcenter_icare_not_null
+            config:
+               severity: warn
+   -  name: auditedgrossvalue
+      description: "icare specifi field capturing the audited gross value amount.  In target entity ATTR_POLICY_WAGE valid only where WAGE_TYPE_CD = DIRECT"
+   -  name: archivepartition
+      description: "Internal technical GW field to manage archiving"
+   -  name: changetype
+      description: "Type of change made to this row"
+   -  name: directwageid
+      description: "icare specific entity to hold direct wage WIC details.  Pass through for traceability only"
+   -  name: initialconditionscreated
+      description: "Whether or not the initial set of conditions has been created on this Coverable.  Not used by iCare"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_initialconditionscreated_not_null
+            config:
+               severity: warn
+   -  name: basedonid
+      description: "Link to the row on which this row is based; or null if new to branch.  Foreign key to PCX_DIRECTWAGE_ICARE."
+   -  name: auditedunits
+      description: "icare specific field for Audited Units details"
+   -  name: btpyear1
+      description: "Year 1 BTP from Policy Loss History"
+   -  name: btpyear1_cur
+      description: "Currency of the BTP Year 1 amount.  GW has been configured for a single AUD currency, therefore this field is not used"
+   -  name: btpyear2
+      description: "Year 2 BTP from Policy Loss History"
+   -  name: btpyear2_cur
+      description: "Currency of the BTP Year 2 amount.  GW has been configured for a single AUD currency, therefore this field is not used"
+   -  name: btpyear3
+      description: "Year 3 BTP from Policy Loss History"
+   -  name: btpyear3_cur
+      description: "Currency of the BTP Year 3 amount.  GW has been configured for a single AUD currency, therefore this field is not used"
+   -  name: preferredcoveragecurrency
+      description: "Preferred Coverage Currency for coverages associated with this coverable"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_directwage_icare_preferredcoveragecurrency_not_null
+            config:
+               severity: warn
+   -  name: description
+      description: "icare specific field to hold wage description details.  Does not appear to be populated anywhere in the GW code (confirmed by GW)"
+   -  name: ddlcontribution
+      description: "icare specific field to hold DDL Contribution details copied from Rate Book"
+   -  name: auditednoofunits
+      description: "icare specific field for Audited No of Units details"
+   -  name: auditednoofemployees
+      description: "icare specific field for Audited No of Employees details.  In target entity ATTR_POLICY_WAGE valid only where WAGE_TYPE_CD = DIRECT"
+   -  name: auditedlabourcomp
+      description: "icare specific field for Audited Labour Component details"
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

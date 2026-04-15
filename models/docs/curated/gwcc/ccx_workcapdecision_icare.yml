@@ -1,0 +1,198 @@
+version: 2
+models:
+-  name: ccx_workcapdecision_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: evaluationprobableoutcome
+      description: ""
+   -  name: assessedasindefinitelyunable
+      description: "Assessed as indefinitely unable to undertake further work to increase earnings?"
+   -  name: paymentreductionreminderflag
+      description: "Flag to create the weekly payment reduction or cessation reminder activity if false"
+   -  name: furtherinforeasoning
+      description: ""
+   -  name: effectivedatefairnotice
+      description: ""
+   -  name: reviewtype
+      description: ""
+   -  name: currentweeklyhours
+      description: ""
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: reviewperiod
+      description: ""
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_id_not_null
+            config:
+               severity: warn
+   -  name: fairnoticerequired
+      description: ""
+   -  name: assessmentreminderflag
+      description: "Flag to create the assessment reminder activity if false"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: working15hourperweektext
+      description: "Working 15 hour per week text description"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: hoursperday
+      description: ""
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: effectivedatedecision
+      description: ""
+   -  name: furtherinfoimpactsdecision
+      description: ""
+   -  name: decisionreasoning
+      description: ""
+   -  name: issuedatefairnotice
+      description: ""
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: currentworkcapacity
+      description: ""
+   -  name: earningperweek
+      description: "Earning at least X $ per week S38 eligibility criteria"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: documentlinkableid
+      description: "This entity fk is designed to make other claim center entities linkable to documents."
+   -  name: wpipercentage
+      description: "Most recent deemed or actual WPI %"
+   -  name: referencenumber
+      description: ""
+   -  name: assessedasunabletext
+      description: "Assessed as indefinitely unable to undertake further work to increase earnings?"
+   -  name: claimid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_claimid_not_null
+            config:
+               severity: warn
+   -  name: daysperweek
+      description: ""
+   -  name: earningse
+      description: "Type of assessed potential weekly earnings"
+   -  name: medentitlement
+      description: ""
+   -  name: section38eligible
+      description: "Section 38 Eligible"
+   -  name: currentweeklyearnings
+      description: ""
+   -  name: issuedatedecision
+      description: ""
+   -  name: earningscapacity
+      description: "Assessed potential weekly earnings"
+   -  name: issuedatefollowflag
+      description: "It flags that the activity follow-up IssueDateDecision needs to be created."
+   -  name: issuedatereminderflag
+      description: "It flags that the activity reminder IssueDateDecision needs to be created."
+   -  name: relatedto
+      description: "Links the current work capacity record with a previous work capacity record"
+   -  name: draftfairnoticeready
+      description: "Indicates whether the draft fair notice documentation has been completed"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: eligibilityeffectivedate
+      description: "Eligibility Effective Date"
+   -  name: furtherinfosubmitted
+      description: "Indicates if further information has been submitted by the worker"
+   -  name: weeklypaymentimpact
+      description: "Impact of the decision on weekly payments"
+   -  name: assessedhours
+      description: "Assessed potential hours"
+   -  name: draftdecisioncompleted
+      description: ""
+   -  name: status
+      description: ""
+   -  name: earningperweektext
+      description: "Earning at least X $ per week S38 eligibility criteria description"
+   -  name: working15hourperweek
+      description: "Working15HourPerWeek S38 eligibility criteria"
+   -  name: currentworkstatus
+      description: ""
+   -  name: effectivedatefairnoticeflag
+      description: "It flags that the activity ending EffectiveDateFairNotice needs to be created."
+   -  name: wcdpiawe
+      description: ""
+   -  name: assessmentreminderweekscount
+      description: ""
+   -  name: scheduleassessmentreminderflag
+      description: ""
+   -  name: s38eligibilityissuedate
+      description: ""
+   -  name: rejectedsuitableemployment
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_rejectedsuitableemployment_not_null
+            config:
+               severity: warn
+   -  name: cwwrsuitableemployment
+      description: ""
+   -  name: acceptedofferemployment
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_workcapdecision_icare_acceptedofferemployment_not_null
+            config:
+               severity: warn
+   -  name: discretionaryentitlement
+      description: ""
+   -  name: abilitytoearn
+      description: ""
+   -  name: legacycreatetime
+      description: ""
+   -  name: legacyupdatetime
+      description: ""
+   -  name: decisionenddate_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""
