@@ -1,4 +1,4 @@
-{{#-
+{#-
 
 Project: Data Uplift Program 
 Project Description/Purpose: Data Uplift Program 
@@ -10,7 +10,7 @@ Date            Version         Author          Description of Change
                                                 dbt_updated_at: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
                                                 Uniform across AVRO and PARQUET - no code change when CDC goes live
                                                 UNION ALL for BackFill of Data i.e. Incase of Rebuild of Upstream Model 
--#}}   
+-#}   
 
 {{ config(
     materialized='incremental',
