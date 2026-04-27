@@ -26,7 +26,6 @@ Date            Version         Author          Description of Change
 SELECT
     policytradingname_icare_sk,
     hash_key,
-    COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at,
     loadcommandid,
     period,
     publicid,

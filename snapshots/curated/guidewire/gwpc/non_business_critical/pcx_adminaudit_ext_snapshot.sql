@@ -26,7 +26,6 @@ Date            Version         Author          Description of Change
 SELECT
     adminaudit_ext_sk,
     hash_key,
-    COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at,
     loadcommandid,
     originalvalue,
     createuserid,

@@ -26,7 +26,6 @@ Date            Version         Author          Description of Change
 SELECT
     losshistentry_sk,
     hash_key,
-    COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at,
     wages1_icare_cur,
     wages2_icare_cur,
     publicid,
