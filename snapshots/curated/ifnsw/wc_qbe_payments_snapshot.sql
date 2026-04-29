@@ -70,7 +70,6 @@ WITH source_data AS (
             'deductibles',
             'legal_provider_id'
     ]) }} AS wc_qbe_payments_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

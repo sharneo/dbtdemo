@@ -50,7 +50,6 @@ WITH source_data AS (
             'dam',
             'date_cheque_issued'
     ]) }} AS mi_gbs_payments_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

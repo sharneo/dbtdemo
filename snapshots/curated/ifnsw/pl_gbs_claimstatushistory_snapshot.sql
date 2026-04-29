@@ -35,7 +35,6 @@ WITH source_data AS (
             'date_changed',
             'reopen_reason_code'
     ]) }} AS pl_gbs_claimstatushistory_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

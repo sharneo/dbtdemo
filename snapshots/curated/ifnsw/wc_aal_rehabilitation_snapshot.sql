@@ -45,7 +45,6 @@ WITH source_data AS (
             'service_provision_null_date',
             'work_trial_host_employer_abn'
     ]) }} AS wc_aal_rehabilitation_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

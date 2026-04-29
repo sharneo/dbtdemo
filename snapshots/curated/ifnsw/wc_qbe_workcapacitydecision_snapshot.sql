@@ -36,7 +36,6 @@ WITH source_data AS (
             'work_capacity_trans_date',
             'work_capacity_outcome'
     ]) }} AS wc_qbe_workcapacitydecision_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         line_of_business,
         extract_date,

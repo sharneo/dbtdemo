@@ -37,7 +37,6 @@ WITH source_data AS (
             'estimate_gst',
             'estimate_future_weeks_off'
     ]) }} AS mi_gbs_estimates_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

@@ -217,7 +217,6 @@ WITH source_data AS (
             'assess_percent_pi_s66',
             'workers_email'
     ]) }} AS wc_eml_claim_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

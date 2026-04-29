@@ -34,7 +34,6 @@ WITH source_data AS (
             'claim_status_code_dsc',
             'date_changed'
     ]) }} AS mv_gbs_claimstatushistory_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

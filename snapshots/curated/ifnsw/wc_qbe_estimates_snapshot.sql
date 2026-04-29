@@ -38,7 +38,6 @@ WITH source_data AS (
             'estimate_future_weeks_off',
             'original_estimate'
     ]) }} AS wc_qbe_estimates_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

@@ -42,7 +42,6 @@ WITH source_data AS (
             'dependent_id',
             'dependent_status'
     ]) }} AS wc_qbe_dependents_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,

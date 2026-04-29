@@ -103,7 +103,6 @@ WITH source_data AS (
             'add_clncl_speciality_code_3',
             'class_action_flag'
     ]) }} AS pl_gbs_health_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,
