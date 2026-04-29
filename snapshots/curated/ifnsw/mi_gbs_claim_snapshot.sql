@@ -64,7 +64,6 @@ WITH source_data AS (
             'claim_sensitivity_code',
             'claim_sensitivity_desc'
     ]) }} AS mi_gbs_claim_sk,
-        CURRENT_TIMESTAMP() AS dbt_updated_at,
         claims_manager,
         agency,
         line_of_business,
