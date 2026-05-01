@@ -1,4 +1,5 @@
 {% snapshot int_claim_injury_bodypart_ni_snapshot %}
+
 {#-
 Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
@@ -6,6 +7,7 @@ Project Description/Purpose: Data Uplift Program
 Date            Version         Author          Description of Change
 2026-03-30      0.0                             This Builds the Integrated Layer for claim Injury for NI
 2026-03-30      0.0                             AF Changes
+
 -#}
 
 {{
@@ -18,7 +20,7 @@ Date            Version         Author          Description of Change
         tags=['claim', 'integrated', 'NI', 'snapshot_ni']
     )
 }}
-
+-- Get latest cc_incident record per hash_key
 WITH cte_incident AS (
     SELECT
         hash_key,
@@ -26,11 +28,12 @@ WITH cte_incident AS (
         claimid,
         claimincident,
         subtype,
-        source_system
+        sourc_system
     from
         {{ ref('v_cc_incident_current') }}
     WHERE claimincident=1
 ),
+-- Get latest ccx_toocsbloiconnector_icare record
 cte_ccx_toocsbloiconnector_icare AS (
     SELECT
         injurycode,
@@ -44,7 +47,7 @@ cte_ccx_toocsbloiconnector_icare AS (
     FROM
         {{ ref('v_ccx_toocsbloiconnector_icare_current') }}
 ),
-
+--get latest record from cctl_incident
 cte_cctl_incident AS (
     SELECT
         id,
@@ -53,6 +56,7 @@ cte_cctl_incident AS (
         {{ ref('v_cctl_incident_current') }}
     WHERE typecode = 'InjuryIncident'
 ),
+--get latest record from int_claim_injury_ni
 cte_int_claim_injury_ni AS (
     SELECT
         loss_sk,
@@ -88,6 +92,7 @@ cte_join AS (
         left join cte_cctl_incident ci on ci.id = i.subtype
         inner join cte_int_claim_injury_ni inj on inj.src_incident_id=i.id
 )
+-- Deduplicate to latest record per injury_body_part_sk
 SELECT
     *
 FROM
@@ -96,6 +101,5 @@ FROM
         ORDER BY
             src_eff_ts DESC
     ) = 1
-
-SELECT * FROM cte_incident
+	
 {% endsnapshot %}
