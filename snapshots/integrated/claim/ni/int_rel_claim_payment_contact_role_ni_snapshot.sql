@@ -1,4 +1,4 @@
-{%snapshot int_rel_claim_payment_contact_role_ni_snapshot %}
+{% snapshot int_rel_claim_payment_contact_role_ni_snapshot %}
 
 {#-
 Project: Data Uplift Program
@@ -60,16 +60,17 @@ cte_int_claim_contact_role_ni as (
         src_claim_id,
         src_contact_id,
         src_claim_contact_role_id,
-        contact_role_code,
-        contact_role_ref_id
+        claim_contact_role_code,
+        contact_role_ref_id,
+        contact_sk
     from
-        dev_curated_db.integrated_db.int_rel_claim_policy_contact_role
+        dev_curated_db.integrated_ni.int_rel_claim_policy_contact_role
     where
         dbt_valid_to is null
 ),
 cte_join as (
     select
-        {{ dbt_utils.generate_surrogate_key(['contactrole.src_contact_id','contactrole.src_claim_contact_role_id','payment.src_claim_payment_id') }} as claim_payment_contact_role_sk,
+        CAST({{ dbt_utils.generate_surrogate_key(['contactrole.src_contact_id', 'contactrole.src_claim_contact_role_id','payment.src_claim_payment_id']) }} AS VARCHAR(150)) as claim_payment_contact_role_sk,
         --hash_key as claim_payment_contact_role_sk,
         source_system,
         claim_payment_sk,
