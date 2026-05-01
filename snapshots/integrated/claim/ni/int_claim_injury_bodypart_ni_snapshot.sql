@@ -1,4 +1,4 @@
-{% snapshot int_claim_injury_bodypart_ni_snapshot %}
+{%snapshot int_claim_injury_bodypart_ni_snapshot %}
 
 {#-
 Project: Data Uplift Program
@@ -28,9 +28,9 @@ WITH cte_incident AS (
         claimid,
         claimincident,
         subtype,
-        sourc_system
+        source_system
     from
-        {{ ref('v_cc_incident_current') }}
+        {{ref('v_cc_incident_current')}}
     WHERE claimincident=1
 ),
 -- Get latest ccx_toocsbloiconnector_icare record
@@ -45,7 +45,7 @@ cte_ccx_toocsbloiconnector_icare AS (
         updatetime,
         injuryincident_icareid
     FROM
-        {{ ref('v_ccx_toocsbloiconnector_icare_current') }}
+        {{ref('v_ccx_toocsbloiconnector_icare_current')}}
 ),
 --get latest record from cctl_incident
 cte_cctl_incident AS (
@@ -53,7 +53,7 @@ cte_cctl_incident AS (
         id,
         typecode
     FROM
-        {{ ref('v_cctl_incident_current') }}
+        {{ref('v_cctl_incident_current')}}
     WHERE typecode = 'InjuryIncident'
 ),
 --get latest record from int_claim_injury_ni
@@ -62,7 +62,7 @@ cte_int_claim_injury_ni AS (
         loss_sk,
         src_incident_id
     FROM
-        { { ref('int_claim_injury_ni_snapshot') } }
+        {{ref('int_claim_injury_ni_snapshot')}}
     WHERE
         dbt_valid_to is null
 ),
@@ -71,7 +71,7 @@ cte_join AS (
       {{ dbt_utils.generate_surrogate_key(['i.id','toocs.id']) }} AS injury_body_part_sk,
         loss_sk,
         injurycode as injury_code,
-        sourc_system,
+        source_system,
         injurydescription as body_part_desc,
         case
             when selectedasprimary = 0
