@@ -1,0 +1,131 @@
+version: 2
+snapshots:
+-  name: cc_workcomp
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: dateofemployeerepresentation
+      description: "Date Claim Administrator Notified of Employee Representation"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_workcomp_publicid_not_null
+            config:
+               severity: warn
+   -  name: medicalreport
+      description: "True if this is claim has a report that the injured worker requires Medical treatment."
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_workcomp_createtime_not_null
+            config:
+               severity: warn
+   -  name: equipmentused
+      description: "Field to describe the equipment, materials or chemicals the employee was using when event or exposure occurred."
+   -  name: reasonableexcuse_icare
+      description: "Reason provisional liability payments are not proceeding"
+   -  name: activityperformed
+      description: "Field to describe the specific activity the injured worker was performing."
+   -  name: accidentpremises
+      description: "A code to indicate the premises where the accident occurred."
+   -  name: compensable
+      description: "Indicates status of the compensability decision"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_workcomp_updatetime_not_null
+            config:
+               severity: warn
+   -  name: discontinuedfringebenefits
+      description: "The amount of non-salary remuneration which the employer has discontinued as applicable to the calculation of benefits per the jurisdiction."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_workcomp_id_not_null
+            config:
+               severity: warn
+   -  name: othertriagequestions_icareid
+      description: "The third party triage questions."
+   -  name: fulldenialeffectivedate
+      description: "The date the compensability Decision (for entire claim) was set to Denied."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: timelossreport
+      description: "True if this is claim has a report that the injured worker will lose time from work."
+   -  name: jurisdictionclaimnumber
+      description: "Jurisdiction Claim Number will be filled once received by the Jurisdiction."
+   -  name: insuredreportnumber
+      description: "A number assigned by the insured to identify a specific claim. If this data is included on any FROI/SROI transaction, it should be returned on the transaction\xE2\u20AC\u2122s acknowledgment regardless of whether it is a data element collected by the jurisdiction."
+   -  name: emptriagequestions_icareid
+      description: "The employer triage questions."
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: triagequestionssummary_icare
+      description: "Text to summarise any info related to triage questions."
+   -  name: deathreport
+      description: "True if this claim has a report of death of the injured worker."
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_workcomp_retired_not_null
+            config:
+               severity: warn
+   -  name: injtriagequestions_icareid
+      description: "The injured worker triage questions."
+   -  name: medrecreleaseauth
+      description: "An indicator that the employees written authorization to release medical records related to the injury is on file."
+   -  name: partialdenialreason
+      description: "Indicates reason for partial denial"
+   -  name: illnessrelatedtoexposure
+      description: "Is claim being made for illness related to chemical or material exposure?"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: waitingperiodapplied
+      description: "Should the Waiting Period be applied?"
+   -  name: classcodebylocation
+      description: "Is Class Code filtered by Location"
+   -  name: employerliability
+      description: "True if this claim has a possible Employers Liability aspect."
+   -  name: initialtreatment
+      description: "Initial Treatment"
+   -  name: doctriagequestions_icareid
+      description: "The treating doctor triage questions."
+   -  name: accidentlocationtype_icare
+      description: "A code to identify the type of accident location"
+   -  name: relationshiptotheinjured_icare
+      description: "Reporters role in relation to the injured person."
+   -  name: overallriskrating_ext
+      description: ""
+   -  name: cmtriagequestions_extid
+      description: ""
+   -  name: propertydamageclaim_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

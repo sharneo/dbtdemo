@@ -1,0 +1,101 @@
+version: 2
+snapshots:
+-  name: cc_claimindicator
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: period
+      description: "Period defined"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claimindicator_publicid_not_null
+            config:
+               severity: warn
+   -  name: nettotal
+      description: "Net Total Incurred"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: ison
+      description: "Is this indicator on?"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claimindicator_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claimindicator_createtime_not_null
+            config:
+               severity: warn
+   -  name: riskreason_icare
+      description: ""
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: dateflaged_icare
+      description: "Date when Claim was flagged as Common Law potential"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claimindicator_updatetime_not_null
+            config:
+               severity: warn
+   -  name: complexbehaviourrisk_icare
+      description: "Complex Behaviour Risk flag"
+   -  name: claimid
+      description: "Claim to which this indicator is related."
+      tests:
+      -  not_null:
+            name: gwcc_cc_claimindicator_claimid_not_null
+            config:
+               severity: warn
+   -  name: whenon
+      description: "Time at which this indicator was set to on, or null if indicator off"
+   -  name: subtype
+      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claimindicator_subtype_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_claimindicator_id_not_null
+            config:
+               severity: warn
+   -  name: nettotalincurred
+      description: "Net Total Incurred"
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

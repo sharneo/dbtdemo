@@ -1,0 +1,187 @@
+version: 2
+snapshots:
+-  name: cc_servicerequest
+   columns:
+   -  name: hostabn_icare
+      description: "Host ABN"
+   -  name: requestedby_icare
+      description: "The role of the person on the claim who the SR is for."
+   -  name: previousgroupid
+      description: "Group to which this entity was previously assigned."
+   -  name: servicerequestnumber
+      description: "A globally-unique, user-readable identifier for this service request. This number is normally generated within ClaimCenter."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_servicerequestnumber_not_null
+            config:
+               severity: warn
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_publicid_not_null
+            config:
+               severity: warn
+   -  name: expectedservicecompletiondate
+      description: "Date by which the specialist expects to complete the work, or null if the specialist has not indicated such a date."
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_createtime_not_null
+            config:
+               severity: warn
+   -  name: documentlinkableid
+      description: "This entity fk is designed to make other claim center entities linkable to documents."
+   -  name: assignedbyuserid
+      description: "User who assigned this entity."
+   -  name: assignedgroupid
+      description: "Group to which this entity is assigned; null if none assigned"
+   -  name: specialistid
+      description: "The vendor or internal entity selected to do the work requested by this service request."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_specialistid_not_null
+            config:
+               severity: warn
+   -  name: siraaccredrehabprovider_icare
+      description: "Sira Accredited Rehab Provider"
+   -  name: expectedquotecompletiondate
+      description: "Date by which the specialist expects to submit the quote, or null if the specialist has not indicated such a date."
+   -  name: currency
+      description: "The currency of this service request, which is used for its quotes, invoices, and checks."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_currency_not_null
+            config:
+               severity: warn
+   -  name: requestedservicecompletiondate
+      description: "Desired date by which the specialist will have completed the work, or null if the specialist has not indicated such a date."
+   -  name: kind
+      description: "The kind for this service request."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_kind_not_null
+            config:
+               severity: warn
+   -  name: previousqueueid
+      description: "Queue to which this entity was previously assigned."
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_updatetime_not_null
+            config:
+               severity: warn
+   -  name: claimid
+      description: "The related claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_claimid_not_null
+            config:
+               severity: warn
+   -  name: requestedquotecompletiondate
+      description: "Desired date by which the specialist will have submitted the quote, or null if the specialist has not indicated such a date."
+   -  name: servicerequestreferencenumber
+      description: "A string identifier assigned to this ServiceRequest by the specialist. The value of this field may only be meaningful to the specialist."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_id_not_null
+            config:
+               severity: warn
+   -  name: previoususerid
+      description: "User to which this entity was previously assigned."
+   -  name: canceledreason
+      description: "The reason the service request was canceled"
+   -  name: assignedqueueid
+      description: "Either the Queue to which this entity is assigned (if AssignmentStatus is assigned), the Queue to which the system suggests assignment (if AssignmentStatus is manual), or null if none assigned. Only one of AssignedUserID or AssignedQueueID should be non null."
+   -  name: specialistcommmethod
+      description: "The channel through which the carrier will communicate with the specialist."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: tier
+      description: "The tier of this service request."
+   -  name: exposureid
+      description: "The exposure that led to the work requested by this service request."
+   -  name: closedate
+      description: "Date and time when this entity was closed. (Not applicable to all assignable entities)"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: incidentid
+      description: "The incident that led to the work requested by this service request."
+   -  name: progress
+      description: "This service requests current place in its life cycle."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_progress_not_null
+            config:
+               severity: warn
+   -  name: quotestatus
+      description: "The current quote status for this service request."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_quotestatus_not_null
+            config:
+               severity: warn
+   -  name: linkedtocommonlawcase_icare
+      description: "Is this linked to a specific Common Law Case? "
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: nulldate_icare
+      description: "Date the service was nulled"
+   -  name: linktoimp_icare
+      description: "Link To IMP"
+   -  name: assigneduserid
+      description: "Either the User to which this entity is assigned (if AssignmentStatus is assigned), the User to which the system suggests assignment (if AssignmentStatus is manual), or null if none assigned. Only one of AssignedUserID or AssignedQueueID should be non null."
+   -  name: description_icare
+      description: "Detailed note of the actual work being requested"
+   -  name: assignmentdate
+      description: "Time when entity last assigned"
+   -  name: daterequested_icare
+      description: ""
+   -  name: latestchangetimestampdenorm
+      description: "The timestamp of the latest ServiceRequestChange in the History. This value is denormalized here for ease of ordering ServiceRequests in queries. This is non-nullable because History cannot be empty."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_latestchangetimestampdenorm_not_null
+            config:
+               severity: warn
+   -  name: assignmentstatus
+      description: "Typelist describing assignment status."
+      tests:
+      -  not_null:
+            name: gwcc_cc_servicerequest_assignmentstatus_not_null
+            config:
+               severity: warn
+   -  name: otheroutcome_icare
+      description: ""
+   -  name: requestoutcome_ext
+      description: ""
+   -  name: totalapprovedamount_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

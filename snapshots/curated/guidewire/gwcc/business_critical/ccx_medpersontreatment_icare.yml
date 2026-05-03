@@ -1,0 +1,174 @@
+version: 2
+snapshots:
+-  name: ccx_medpersontreatment_icare
+   columns:
+   -  name: autocreatedahrr
+      description: "Flag if record was created automatically from incoming AHRR"
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: icd1id
+      description: "ICD-1."
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: enddate
+      description: "Finish date of the treatment if applicable"
+   -  name: documentlinkableid
+      description: "This entity fk is designed to make other claim center entities linkable to documents."
+   -  name: treatmentquantityrequested
+      description: "Quantity of treatments requested."
+   -  name: cost
+      description: "Cost of treatment approved"
+   -  name: hours
+      description: "Hours"
+   -  name: startdate
+      description: "Start date of the treatment if applicable"
+   -  name: totalcost
+      description: "TotalCost of these service"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: claimid
+      description: "Foreign key to Claim entity."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_claimid_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_id_not_null
+            config:
+               severity: warn
+   -  name: frequency
+      description: "Agreed Frequency at which the services will be provided"
+   -  name: impinclude
+      description: "Flag if this should be shown on The Plan"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_impinclude_not_null
+            config:
+               severity: warn
+   -  name: originalrequest
+      description: "Original Request"
+   -  name: odgflag
+      description: "ODG Recommendation for paycode and ICD combination"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: dateapproved
+      description: "Displays the date the approval letter was sent to the vendor"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: units
+      description: "Quantity of treatment approved"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: failedahrrdocid
+      description: "Document ID of Failed AHRR related to this medical treatment"
+   -  name: paycodeid
+      description: "Paycode associated with this Medical Treatment"
+   -  name: treatmenttype
+      description: "The payment type enabled."
+   -  name: odgmax
+      description: "Maximum units for the paycode and ICD combination as recommended by ODG"
+   -  name: frequencycount
+      description: "Frequency Count"
+   -  name: approvalstatus
+      description: "Displays the recommended status based on business rules"
+   -  name: treatmentquantityapproved
+      description: "Quantity of treatments approved."
+   -  name: subtype
+      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_medpersontreatment_icare_subtype_not_null
+            config:
+               severity: warn
+   -  name: contactid
+      description: "Treatment contact provider."
+   -  name: reviewrequiredreason
+      description: "Reason for Review Required status"
+   -  name: description
+      description: "Description if applicable"
+   -  name: requestdate
+      description: "Date of the treatment request"
+   -  name: hourlycost
+      description: "Hourly Cost"
+   -  name: category
+      description: "Displays a list of categories for the selected treatment type"
+   -  name: surgerycost
+      description: ""
+   -  name: surgerygroupid
+      description: ""
+   -  name: hicsirahospitalnumber
+      description: ""
+   -  name: dateofsurgery
+      description: ""
+   -  name: noofnightsinhospital
+      description: ""
+   -  name: minutesofoperatingtime
+      description: ""
+   -  name: autocalcsurgerycost
+      description: ""
+   -  name: isselectedformsp
+      description: ""
+   -  name: lasteditedby
+      description: ""
+   -  name: reasonfordecision
+      description: ""
+   -  name: medproviderid
+      description: ""
+   -  name: fractureordislocation
+      description: ""
+   -  name: reasonforcostvariancesurgery
+      description: ""
+   -  name: reasonforcostvariancehospital
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

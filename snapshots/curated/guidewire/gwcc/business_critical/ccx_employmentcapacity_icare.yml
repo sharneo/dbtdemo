@@ -1,0 +1,156 @@
+version: 2
+snapshots:
+-  name: ccx_employmentcapacity_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: engagedinpaidemployment
+      description: "Flag to indicate whether the Pre-existing injuries section on the Certificate is filled out"
+   -  name: drivingcapacity
+      description: "Description of driving capacity"
+   -  name: bendingcapacity
+      description: "Description of bending/twisting/squatting capacity"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_employmentcapacity_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: treatmentcomments1
+      description: "Comments on Treatment 1"
+   -  name: sittingcapacity
+      description: "Description of sitting capacity"
+   -  name: treatmentcomments2
+      description: "Comments on Treatment 2"
+   -  name: standingcapacity
+      description: "Description of standing capacity"
+   -  name: treatmentcomments3
+      description: "Comments on Treatment 3"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_employmentcapacity_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: enddate
+      description: "Sira certificate of capacity period end date"
+   -  name: documentlinkableid
+      description: "This entity fk is designed to make other claim center entities linkable to documents."
+   -  name: othercapacity
+      description: "Description of capacity for other activities"
+   -  name: referraltorehabprovider
+      description: "Flag to indicate whether the Provider recommends a Rehab referral"
+   -  name: startdate
+      description: "Sira certificate of capacity period start date"
+   -  name: initialcertificate
+      description: "Whether this is the initial certificate"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_employmentcapacity_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: factorsdelayingrecovery
+      description: "Factors delaying recovery"
+   -  name: requestforpositiondescription
+      description: "Flag to indicate whether the Provider has requested a position description"
+   -  name: daysperweek
+      description: "Number of days per week of capacity"
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_employmentcapacity_icare_id_not_null
+            config:
+               severity: warn
+   -  name: signatureprovided
+      description: "Whether the Injured Person signed the certificate of capacity"
+   -  name: comment
+      description: "Comment regarding errors or issues"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: treatmentduration1
+      description: "Treatment duration from the Certificate of Capacity"
+   -  name: preexistingconditions
+      description: "Flag to indicate whether the Pre-existing conditions section on the Certificate is filled out."
+   -  name: totalhoursperweek
+      description: "Total hours per week  of capacity - Note this field should not be used, it is only present in the data model for CTM extraction"
+   -  name: treatmentduration2
+      description: "Treatment duration from the Certificate of Capacity"
+   -  name: treatmentduration3
+      description: "Treatment duration from the Certificate of Capacity"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: fitness
+      description: "Sira capacity fitness"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_employmentcapacity_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: hoursperday
+      description: "Number of hours per day of capacity"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: pushingpullingcapacity
+      description: "Description of pushing/pulling capacity"
+   -  name: diagnosis
+      description: "Description of the Injured workers diagnosis"
+   -  name: liftingcapacity
+      description: "Description of lifting/carrying capacity"
+   -  name: consultationdate
+      description: "Date of consultation with Dr"
+   -  name: claimworkcompid
+      description: "Workers Compensation Information related to a claim"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_employmentcapacity_icare_claimworkcompid_not_null
+            config:
+               severity: warn
+   -  name: nextreviewdate
+      description: "Date of next review"
+   -  name: injuryconsistentwithcause
+      description: "Flag to indicate whether the Injury /disease is consistent with stated cause"
+   -  name: contactid
+      description: "Medical provider completing the Certificate of capacity"
+   -  name: cocstatus
+      description: ""
+   -  name: additionalinjury
+      description: ""
+   -  name: datecertificatereceived
+      description: ""
+   -  name: treatingmedpractsign
+      description: ""
+   -  name: legacycreatetime
+      description: ""
+   -  name: legacyupdatetime
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

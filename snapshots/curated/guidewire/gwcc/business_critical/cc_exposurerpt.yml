@@ -1,0 +1,181 @@
+version: 2
+snapshots:
+-  name: cc_exposurerpt
+   columns:
+   -  name: availablereserves
+      description: "The available reserves on an exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_availablereserves_not_null
+            config:
+               severity: warn
+   -  name: openreserves
+      description: "The open reserves."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_openreserves_not_null
+            config:
+               severity: warn
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_publicid_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_createtime_not_null
+            config:
+               severity: warn
+   -  name: openrecoveryreserves
+      description: "The open recovery reserves on an exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_openrecoveryreserves_not_null
+            config:
+               severity: warn
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_updatetime_not_null
+            config:
+               severity: warn
+   -  name: claimid
+      description: "The exposures claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_claimid_not_null
+            config:
+               severity: warn
+   -  name: openrecoveryresrprtng
+      description: "The open recovery reserves on a claim, in Reporting/Default Currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_openrecoveryresrprtng_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_id_not_null
+            config:
+               severity: warn
+   -  name: exposureid
+      description: "The exposure that the calculations are on."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_exposureid_not_null
+            config:
+               severity: warn
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: remainingresrvrprtng
+      description: "The remaining reserves on an exposure, in Reporting/Default Currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_remainingresrvrprtng_not_null
+            config:
+               severity: warn
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: futurepaymentsrprtng
+      description: "The total of awaiting submission payments scheduled to be sent after today, in Reporting/Default Currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_futurepaymentsrprtng_not_null
+            config:
+               severity: warn
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_retired_not_null
+            config:
+               severity: warn
+   -  name: totalpaymentsrprtng
+      description: "The total payments on an exposure, in Reporting/Default Currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_totalpaymentsrprtng_not_null
+            config:
+               severity: warn
+   -  name: remainingreserves
+      description: "The remaining reserves on an exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_remainingreserves_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: totalrecoveriesrprtng
+      description: "The total recoveries on a claim, in Reporting/Default Currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_totalrecoveriesrprtng_not_null
+            config:
+               severity: warn
+   -  name: futurepayments
+      description: "The total of awaiting submission payments scheduled to be sent after today."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_futurepayments_not_null
+            config:
+               severity: warn
+   -  name: totalpayments
+      description: "The total payments."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_totalpayments_not_null
+            config:
+               severity: warn
+   -  name: availableresrvrprtng
+      description: "The available reserves on an exposure, in Reporting/Default Currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_availableresrvrprtng_not_null
+            config:
+               severity: warn
+   -  name: totalrecoveries
+      description: "The total recoveries on an exposure."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_totalrecoveries_not_null
+            config:
+               severity: warn
+   -  name: openreservesrprtng
+      description: "The open reserves on an exposure, in Reporting/Default Currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_exposurerpt_openreservesrprtng_not_null
+            config:
+               severity: warn
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""
