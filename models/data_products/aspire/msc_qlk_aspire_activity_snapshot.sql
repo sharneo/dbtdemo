@@ -33,7 +33,7 @@ activity_base as (
         , approval_rationale
         , file_ingestion_timestamp
         , extract_date
-    from {{ ref('MSC_QLK_ASPIRE_ACTIVITY') }}
+    from {{ ref('msc_qlk_aspire_activity') }}
 ),
 
 final as (
