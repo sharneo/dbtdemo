@@ -1,4 +1,19 @@
--- models/msc_qlk_aspire_accident.sql
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             SCD Type 2 snapshot for cc_activitydocument.
+                                                Source: ref('stg_raw_cc_activitydocument')
+                                                unique_key: activitydocument_sk (surrogate on PK 'id')
+                                                check_cols: ['hash_key'] (surrogate on all business cols excl PK)
+                                                hard_deletes: new_record (inserts dbt_is_deleted=True row)
+                                                No code change required when PARQUET CDC goes live.
+-#}
+
+{{ config(
+    tags=['aspire']
+) }}
 
 with
 
