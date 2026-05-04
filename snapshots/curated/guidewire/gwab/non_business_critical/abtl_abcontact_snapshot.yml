@@ -3,6 +3,8 @@ snapshots:
     relation: ref('stg_raw_abtl_abcontact')
     config:
       schema: GWAB
+      docs:
+        node_color: "#4287f5"
       unique_key: abcontact_sk
       alias: abtl_abcontact
       strategy: check
