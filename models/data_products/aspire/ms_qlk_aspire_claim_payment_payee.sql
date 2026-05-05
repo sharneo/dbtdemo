@@ -33,7 +33,8 @@ cc_claim as (
     select
         id,
         claimnumber,
-        retired
+        retired,
+        claim_sk
     from {{ ref('v_cc_claim_current') }}
 ),
 cc_checkpayee as (
@@ -85,7 +86,7 @@ cc_eftdata as (
 )
 
 select
-    md5('GWCC' || clm.claimnumber) as claim_sk,
+    claim_sk,
     clm.claimnumber as claim_nbr,
     clm.id as src_claim_id,
     md5('GWCC' || chq.publicid) as claim_payment_sk,
