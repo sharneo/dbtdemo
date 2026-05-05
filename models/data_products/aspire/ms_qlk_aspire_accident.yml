@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: ms_qlk_aspire_accident
+    description: "Accident-related claim data including location, mechanism of injury, and recovery investigation indicators"
+    columns:
+      - name: claim_sk
+        description: "Surrogate key for the claim"
+        tests:
+          - not_null
+          - unique
+      - name: source_system
+        description: "Source system code"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['GWCC']
+      - name: claim_nbr
+        description: "Claim number"
+        tests:
+          - not_null
+      - name: src_claim_id
+        description: "Source system claim ID"
+        tests:
+          - not_null
+      - name: recovery_investigation_ind
+        description: "Indicates if recovery investigation is in progress"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: file_ingestion_timestamp
+        description: "Timestamp of file ingestion for incremental processing"
+        tests:
+          - not_null

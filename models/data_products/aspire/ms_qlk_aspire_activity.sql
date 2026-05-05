@@ -1,0 +1,148 @@
+{{
+  config(
+    materialized='incremental',
+    unique_key='claim_sk, src_activity_id',
+    incremental_strategy='merge'
+  )
+}}
+
+{#
+  Source: 02_ACTIVITY.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A02
+  TBL_NM: MSC_QLK_ASPIRE_ACTIVITY
+#}
+
+with cc_activity as (
+    select
+        id,
+        publicid,
+        subject,
+        targetdate,
+        escalationdate,
+        assignmentdate,
+        closedate,
+        lastvieweddate,
+        createtime,
+        closeuserid,
+        assigneduserid,
+        assignedgroupid,
+        claimid,
+        type,
+        status,
+        priority,
+        activitypatternid,
+        retired,
+        approvalissue,
+        transactionsetid,
+        approvalrationale,
+        file_ingestion_timestamp
+    from {{ ref('v_cc_activity_current') }}
+),
+cc_claim as (
+    select
+        id,
+        claimnumber,
+        retired
+    from {{ ref('v_cc_claim_current') }}
+),
+cctl_activitytype as (
+    select
+        id,
+        name
+    from {{ ref('v_cctl_activitytype_current') }}
+),
+cctl_activitystatus as (
+    select
+        id,
+        name
+    from {{ ref('v_cctl_activitystatus_current') }}
+),
+cctl_priority as (
+    select
+        id,
+        name
+    from {{ ref('v_cctl_priority_current') }}
+),
+cc_user as (
+    select
+        id,
+        publicid,
+        retired
+    from {{ ref('v_cc_user_current') }}
+),
+cc_activitypattern as (
+    select
+        id,
+        code
+    from {{ ref('v_cc_activitypattern_current') }}
+),
+cc_group as (
+    select
+        id,
+        publicid,
+        retired
+    from {{ ref('v_cc_group_current') }}
+)
+
+select
+    clm.claimnumber as claim_nbr,
+    act.id as src_activity_id,
+    act.publicid as activity_public_id,
+    act.subject as activity_subject_desc,
+    act.targetdate as activity_target_dttm,
+    cast(act.targetdate as date) as activity_target_dt,
+    act.escalationdate as activity_escalation_dttm,
+    act.assignmentdate as activity_assignment_dttm,
+    act.closedate as activity_close_dttm,
+    cast(act.closedate as date) as activity_close_dt,
+    act.lastvieweddate as activity_last_view_dttm,
+    act.createtime as src_create_dttm,
+    cast(act.createtime as date) as src_create_dt,
+    actpri.name as priority_desc,
+    acttype.name as activity_type_desc,
+    actstus.name as activity_status_desc,
+    actpatt.code as activity_pattern_code,
+    md5('GWCC' || clsusr.publicid) as close_user_sk,
+    md5('GWCC' || assgusr.publicid) as assigned_user_sk,
+    md5('GWCC' || assgnteam.publicid) as assigned_team_sk,
+    act.approvalissue as approval_issue,
+    act.transactionsetid as src_txn_set_id,
+    act.approvalrationale as approval_rationale,
+    current_date() as extract_date,
+    act.file_ingestion_timestamp
+
+from cc_activity act
+
+join cc_claim clm
+    on act.claimid = clm.id
+    and clm.retired = 0
+
+left join cctl_activitytype acttype
+    on act.type = acttype.id
+
+left join cctl_activitystatus actstus
+    on act.status = actstus.id
+
+left join cctl_priority actpri
+    on act.priority = actpri.id
+
+left join cc_user clsusr
+    on act.closeuserid = clsusr.id
+    and clsusr.retired = 0
+
+left join cc_user assgusr
+    on act.assigneduserid = assgusr.id
+    and assgusr.retired = 0
+
+left join cc_activitypattern actpatt
+    on act.activitypatternid = actpatt.id
+
+left join cc_group assgnteam
+    on act.assignedgroupid = assgnteam.id
+    and assgnteam.retired = 0
+
+where act.retired = 0
+
+{% if is_incremental() %}
+and act.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% endif %}
