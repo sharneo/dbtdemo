@@ -20,7 +20,7 @@ with cc_exposure as (
         claimid,
         exposuretype,
         retired
-    from {{ ref('vw_cc_exposure_current') }}
+    from {{ ref('v_cc_exposure_current') }}
     where retired = 0
 ),
 
@@ -40,7 +40,7 @@ ccx_piawe_icare as (
         rpstartdate,
         rpenddate,
         draft
-    from {{ ref('vw_ccx_piawe_icare_current') }}
+    from {{ ref('v_ccx_piawe_icare_current') }}
     where retired = 0
 ),
 
@@ -48,7 +48,7 @@ cctl_piawetype_icare as (
     select
         id,
         name
-    from {{ ref('vw_cctl_piawetype_icare_current') }}
+    from {{ ref('v_cctl_piawetype_icare_current') }}
     where retired = 0
 ),
 
@@ -56,7 +56,7 @@ cctl_exposuretype as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_exposuretype_current') }}
+    from {{ ref('v_cctl_exposuretype_current') }}
     where retired = 0
 ),
 
@@ -66,7 +66,7 @@ ccx_benefitsaccrual_icare as (
     select
         exposureid,
         totalweekspaid
-    from {{ ref('vw_ccx_benefitsaccrual_icare_current') }}    
+    from {{ ref('v_ccx_benefitsaccrual_icare_current') }}    
       where retired = 0
 ),
 -#}
@@ -75,7 +75,7 @@ cc_claim as (
         id,
         claimnumber,
         lossdate
-    from {{ ref('vw_cc_claim_current') }}
+    from {{ ref('v_cc_claim_current') }}
     where retired = 0
 ),
 

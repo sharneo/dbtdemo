@@ -18,7 +18,7 @@ with cc_claimcontact as (
         id,
         claimid,
         dependenttype
-    from {{ ref('vw_cc_claimcontact_current') }}
+    from {{ ref('v_cc_claimcontact_current') }}
     where retired = 0
 ),
 
@@ -26,20 +26,20 @@ cc_claimcontactrole as (
     select
         claimcontactid,
         role
-    from {{ ref('vw_cc_claimcontactrole_current') }}
+    from {{ ref('v_cc_claimcontactrole_current') }}
     where retired = 0
 ),
 
 cctl_contactrole as (
     select id
-    from {{ ref('vw_cctl_contactrole_current') }}
+    from {{ ref('v_cctl_contactrole_current') }}
 ),
 
 cctl_dependenttype as (
     select
         id,
         typecode
-    from {{ ref('vw_cctl_dependenttype_current') }}
+    from {{ ref('v_cctl_dependenttype_current') }}
 ),
 
 base as (

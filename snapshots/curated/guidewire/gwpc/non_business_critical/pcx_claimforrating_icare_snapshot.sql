@@ -1,0 +1,82 @@
+{% snapshot pcx_claimforrating_icare_snapshot %}
+
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             SCD Type 2 snapshot for pcx_claimforrating_icare.
+                                                Source: ref('stg_raw_pcx_claimforrating_icare')
+                                                unique_key: claimforrating_icare_sk (surrogate on PK 'id')
+                                                check_cols: ['hash_key'] (surrogate on all business cols excl PK)
+                                                hard_deletes: new_record (inserts dbt_is_deleted=True row)
+                                                No code change required when PARQUET CDC goes live.
+-#}
+
+{{ config(
+    target_schema='gwpc',
+    unique_key='claimforrating_icare_sk',
+    strategy='check',
+    alias='pcx_claimforrating_icare',
+    check_cols=['hash_key'],
+    hard_deletes='new_record',
+    tags=['snapshot', 'policy_centre', 'non_business_critical', 'pcx_claimforrating_icare']
+) }}
+
+SELECT
+    claimforrating_icare_sk,
+    hash_key,
+    loadcommandid,
+    effectivedatedfieldsid,
+    publicid,
+    claimnumber,
+    overwrittenclaimscost,
+    overwrittenclaimscost_cur,
+    createtime,
+    fixedid,
+    totalpaid,
+    czeroclaim,
+    lossdate,
+    totalpaid_cur,
+    rtwi,
+    effectivedate,
+    rtwi_cur,
+    updatetime,
+    id,
+    losshistoryentryid,
+    expirationdate,
+    createuserid,
+    archivepartition,
+    beanversion,
+    claimonpolicyid,
+    cprclaimscost,
+    changetype,
+    cprclaimscost_cur,
+    directwageid,
+    basedonid,
+    claimstatus,
+    rtwipercentage,
+    updateuserid,
+    externaldata,
+    recoveriesorestimates_cur,
+    claimantname,
+    subtype,
+    branchid,
+    recoveriesorestimates_amt,
+    estimates_cur,
+    estimates_amt,
+    isclaimcenterclaim,
+    policynumber,
+    'GWPC' AS source_system,
+    gwcbi_connector_ts_ms,
+    gwcbi_lsn,
+    gwcbi_operation,
+    gwcbi_payload_ts_ms,
+    gwcbi_seqval,
+    gwcbi_seqval_hex,
+    gwcbi_tx_id,
+    metadata_file_name,
+    file_ingestion_timestamp
+FROM {{ ref('stg_raw_pcx_claimforrating_icare') }}
+
+{% endsnapshot %}

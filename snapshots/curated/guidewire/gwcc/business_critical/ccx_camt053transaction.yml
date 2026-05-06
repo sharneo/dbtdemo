@@ -1,0 +1,124 @@
+version: 2
+snapshots:
+-  name: ccx_camt053transaction
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: reversalindicator
+      description: ""
+   -  name: paymentinformationid
+      description: ""
+   -  name: debtorname
+      description: ""
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+   -  name: processingstatus
+      description: ""
+   -  name: claimnumber
+      description: ""
+   -  name: bookingdate
+      description: ""
+   -  name: createtime
+      description: "Timestamp when the object was created"
+   -  name: statementid
+      description: ""
+   -  name: westpacuidnontransformed
+      description: ""
+   -  name: transactionproprietarycode
+      description: ""
+   -  name: transactiondomaincode
+      description: ""
+   -  name: transactionstatus
+      description: ""
+   -  name: gwccpaymentid
+      description: ""
+   -  name: checknumber
+      description: ""
+   -  name: debtoraccountid
+      description: ""
+   -  name: paymentmethodcode
+      description: ""
+   -  name: reconciliationstatus
+      description: ""
+   -  name: additionalinfo
+      description: ""
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+   -  name: transactionproprietaryissuer
+      description: ""
+   -  name: id
+      description: "Internally managed primary key"
+   -  name: creditdebitindicator
+      description: "Labels the transaction as either credit or debit"
+   -  name: valuedate
+      description: ""
+   -  name: endtoendid
+      description: ""
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: matchedpayment
+      description: ""
+   -  name: merchantid
+      description: ""
+   -  name: resolutiontype
+      description: ""
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+   -  name: instructionid
+      description: "The Public ID of the Check this relates to"
+   -  name: statementdatetime
+      description: ""
+   -  name: archivedcheckpublicid
+      description: ""
+   -  name: reasontounknown
+      description: ""
+   -  name: recallid
+      description: ""
+   -  name: creditoraccountid
+      description: ""
+   -  name: westpacuid
+      description: ""
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: camt053_id
+      description: ""
+   -  name: transactionsubfamilycode
+      description: ""
+   -  name: transactiondomainfamilycode
+      description: ""
+   -  name: controlrecordmessageid
+      description: ""
+   -  name: transactionamount
+      description: ""
+   -  name: memo
+      description: ""
+   -  name: paymentsource
+      description: ""
+   -  name: triggernotification
+      description: ""
+   -  name: provideruniquerefid
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

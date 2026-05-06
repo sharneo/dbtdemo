@@ -1,0 +1,105 @@
+version: 2
+snapshots:
+-  name: ccx_siraaccredservprov_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_siraaccredservprov_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: suburb
+      description: "Suburb of this Provider"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: companyname
+      description: "Company Name of this Provider"
+   -  name: givenname
+      description: "Given Name of this Provider"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_siraaccredservprov_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_siraaccredservprov_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: enddate
+      description: "Provider Service End Date"
+   -  name: addressline1
+      description: "Address line 1 of this Provider. NOTE: type is intentionally not addressline, CC will never use this field in that context"
+   -  name: addressline2
+      description: "Address line 2 of this Provider. NOTE: type is intentionally not addressline, CC will never use this field in that context"
+   -  name: providertype
+      description: "Provider Type"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_siraaccredservprov_icare_providertype_not_null
+            config:
+               severity: warn
+   -  name: postcode
+      description: "Postcode of this Provider"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: state
+      description: "State of this Provider"
+   -  name: effectivedate
+      description: "Provider Service Start Date"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_siraaccredservprov_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: country
+      description: "NOTE: this field is needed only to be able to validate correctly the postal code. It should always have value AU, so that is set as default value"
+   -  name: providernumber
+      description: "Provider Number"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_siraaccredservprov_icare_providernumber_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_siraaccredservprov_icare_id_not_null
+            config:
+               severity: warn
+   -  name: surname
+      description: "Surname of this Provider"
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

@@ -1,0 +1,142 @@
+version: 2
+snapshots:
+-  name: ccx_wpiassessrecord_icare
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpiassessrecord_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: wpiresult_icare
+      description: "Settled / agreed WPI percentage"
+   -  name: wpiassessment_icareid
+      description: "WPI Assessment"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpiassessrecord_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: documentlinkableid
+      description: "This entity fk is designed to make other claim center entities linkable to documents."
+   -  name: claimedbhlperventage_icare
+      description: "BHL percentage claimed"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpiassessrecord_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: wpiassessmentstate_icare
+      description: "State of WPI assessment, it true it is closed, else it is open."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpiassessrecord_icare_id_not_null
+            config:
+               severity: warn
+   -  name: settlementtype_icare
+      description: "Type of claim"
+   -  name: offeredbhlpercentage_icare
+      description: "BHL percentage offer made to worker"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: ""
+   -  name: letterofofferdate_icare
+      description: "Offer letter date"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpiassessrecord_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: medicare_icare
+      description: "Medicare claim type for interest percentage"
+   -  name: offeredwpipercentage_icare
+      description: "WPI percentage offer made to worker"
+   -  name: interest
+      description: "Interest Amount"
+   -  name: relevantparticularsdate_icare
+      description: "Date of Relevant Particulars"
+   -  name: actiontype_icare
+      description: "Type of offer"
+   -  name: offeraccepteddate_icare
+      description: "Date of offer acceptance / Settlement date"
+   -  name: approvaldate_icare
+      description: "icare Approval Date"
+   -  name: complyingagreementdate_icare
+      description: "Date when complying agreement was reached"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: claimedpercentage_icare
+      description: "WPI percentage claimed"
+   -  name: approved_icare
+      description: "icare user to approve WPI record"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wpiassessrecord_icare_approved_icare_not_null
+            config:
+               severity: warn
+   -  name: hasbackinjury_icare
+      description: "Indicates if there is any back injury been sustained"
+   -  name: maxmedimprovreached_icare
+      description: "Indicates if maximum medical improvement has been reached"
+   -  name: settlementamount_icare
+      description: "Settlement amount"
+   -  name: s66receiveddate_icare
+      description: "Date in which the WPI claim was received"
+   -  name: bhlresult_icare
+      description: "Settled / agreed BHL percentage"
+   -  name: offeraccepted_icare
+      description: "Indicates if the offer is accepted"
+   -  name: assessedwpifors66
+      description: ""
+   -  name: finallumpsumamount
+      description: ""
+   -  name: dateoffered
+      description: ""
+   -  name: claimeds67amount
+      description: ""
+   -  name: offeredamount
+      description: ""
+   -  name: lumpsumamountoffered
+      description: ""
+   -  name: s67settlementamount
+      description: ""
+   -  name: legacycreatetime
+      description: ""
+   -  name: legacyupdatetime
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

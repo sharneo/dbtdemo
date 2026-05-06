@@ -1,0 +1,90 @@
+version: 2
+snapshots:
+-  name: cc_specialistservice
+   columns:
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_publicid_not_null
+            config:
+               severity: warn
+   -  name: active
+      description: "Indicates whether the service should be used for new service requests."
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_active_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_createtime_not_null
+            config:
+               severity: warn
+   -  name: name
+      description: "Name of the service."
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_name_not_null
+            config:
+               severity: warn
+   -  name: code
+      description: "Unique string identifying this service."
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_code_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_updatetime_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_specialistservice_id_not_null
+            config:
+               severity: warn
+   -  name: description
+      description: "Description of the service."
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

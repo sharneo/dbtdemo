@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_certificate_of_capacity
+    description: "Model for Certificate of Capacity details, including fitness status and capacity dates. Sourced from CCX_EMPLOYMENTCAPACITY_ICARE."
+    columns:
+      - name: claim_sk
+        description: "MD5 hash of the claim number."
+        tests:
+          - not_null
+      - name: src_claim_id
+        description: "Internal ID for the claim."
+        tests:
+          - unique
+          - not_null
+      - name: claim_nbr
+        description: "Business identifier for the claim."
+      - name: file_ingestion_timestamp
+        description: "Timestamp used for incremental loading."

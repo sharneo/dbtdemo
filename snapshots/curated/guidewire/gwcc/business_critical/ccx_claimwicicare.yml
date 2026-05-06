@@ -1,0 +1,60 @@
+version: 2
+snapshots:
+-  name: ccx_claimwicicare
+   columns:
+   -  name: loadcommandid
+      description: ""
+   -  name: foreignentityid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimwicicare_foreignentityid_not_null
+            config:
+               severity: warn
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimwicicare_publicid_not_null
+            config:
+               severity: warn
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimwicicare_id_not_null
+            config:
+               severity: warn
+   -  name: ownerid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_claimwicicare_ownerid_not_null
+            config:
+               severity: warn
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

@@ -1,0 +1,63 @@
+{% snapshot mv_gbs_estimates_snapshot %}
+
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a  View for the Snapshot for the Table mv_gbs_estimates_snapshot . 
+                                                dbt snapshot is SCD Type 2 .
+                                                
+-#}
+
+
+{{ config(
+    target_schema='ifnsw_claim_interface',
+    unique_key='mv_gbs_estimates_sk',
+    strategy='check',
+    alias='mv_gbs_estimates',
+    check_cols=['claims_manager', 'agency', 'line_of_business', 'extract_date', 'record_number', 'policy_number', 'claim_number', 'estimate_date', 'payment_type', 'payment_transaction_code', 'estimate_amount', 'estimate_gst', 'estimate_future_weeks_off'],
+    tags=['snapshot_tmf','snapshot_curated','snapshot','mv_gbs_estimates']
+) }}
+
+WITH source_data AS (
+    SELECT
+        {{ dbt_utils.generate_surrogate_key([
+            'claims_manager',
+            'agency',
+            'line_of_business',
+            'extract_date',
+            'record_number',
+            'policy_number',
+            'claim_number',
+            'estimate_date',
+            'payment_type',
+            'payment_transaction_code',
+            'estimate_amount',
+            'estimate_gst',
+            'estimate_future_weeks_off'
+    ]) }} AS mv_gbs_estimates_sk,
+        claims_manager,
+        agency,
+        line_of_business,
+        extract_date,
+        record_number,
+        policy_number,
+        claim_number,
+        estimate_date,
+        payment_type,
+        payment_transaction_code,
+        estimate_amount,
+        estimate_gst,
+        estimate_future_weeks_off,
+        metadata_file_name,
+        metadata_file_last_modified,
+        metadata_scan_time,
+        metadata_row_number,
+        file_ingestion_timestamp
+    FROM {{ source('ifnsw_claim_interface', 'mv_gbs_estimates') }}
+)
+
+SELECT * FROM source_data
+
+{% endsnapshot %}

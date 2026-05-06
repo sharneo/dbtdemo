@@ -1,0 +1,198 @@
+version: 2
+snapshots:
+-  name: cc_document
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: approver_icare
+      description: "First name and last name of the user who approved the outbound document"
+   -  name: peerreviewnotes_icare
+      description: "Details of documents peer review"
+   -  name: documentchannel_icare
+      description: "Typekey for Document Channel"
+   -  name: documentidentifier
+      description: "Short human-readable identifier for the document, often used as an extra storage location for form codes, when name and documenttype are inadequate."
+   -  name: physicallocation_icare
+      description: "The physical location of the original hard-copy version of a stored document"
+   -  name: authordenorm
+      description: "denorm field for Name of the person who created the document."
+   -  name: namedenorm
+      description: "denorm field for Human-readable name of the document."
+   -  name: documentpackid_icare
+      description: "The PackId this Document is going to be part of"
+   -  name: dms
+      description: "Whether this document has content stored in a Document Management System."
+   -  name: name
+      description: "Human-readable name of the document."
+   -  name: author
+      description: "Name of the person who created the document."
+   -  name: deliverymethod_icare
+      description: "Delivery method selected for the document"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_document_updatetime_not_null
+            config:
+               severity: warn
+   -  name: templatexml_icare
+      description: "The raw xml containing template information received from the Document Production system"
+   -  name: docuid
+      description: "The Unique Identifier (UID) for this document.     The format of this UID is specific to the deployed Document Management System (DMS), and is passed to the configured IDocumentContentSource implementation."
+   -  name: recipient
+      description: "Name of the intended recipient of the document (if any)."
+   -  name: obsolete
+      description: "If true, the information in the document can no longer be relied upon to be up-to-date and relevant. This is often used instead of deletion to preserve history."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_document_id_not_null
+            config:
+               severity: warn
+   -  name: matterid
+      description: "Associated matter. Note that only one of Exposure, Matter, and ClaimContact may be set."
+   -  name: workcapacity_icareid
+      description: "Associated work capacity decision."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: sharedwithworker_icare
+      description: "Indicates if the document is visible to the Injured worker on the claims portal"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_document_retired_not_null
+            config:
+               severity: warn
+   -  name: resendpackid_icare
+      description: ""
+   -  name: portalusertype_icare
+      description: "Indicates the portal user type that uploaded the document"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: direction_icare
+      description: ""
+   -  name: type
+      description: "The specific type of the document, if any."
+   -  name: redacted_icare
+      description: "Indicates if the document is redacted as stored in document metadata"
+   -  name: uploadfilekey_icare
+      description: "Identify the fileKey necessary to archive the document"
+   -  name: documentidentifierdenorm
+      description: "denorm field for Short human-readable identifier for the document, often used as an extra storage location for form codes, when name and documenttype are inadequate."
+   -  name: filename_icare
+      description: "Original file name of the document if uploaded or received as an email attachment"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_document_publicid_not_null
+            config:
+               severity: warn
+   -  name: processid_icare
+      description: "Identify the process that archived the document"
+   -  name: portalsecurityrealm_ext
+      description: "The security realm of the portal user which created the document. A realm identifies a collection of users and groups."
+   -  name: lineofbusiness_icare
+      description: "Line of Business"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_document_createtime_not_null
+            config:
+               severity: warn
+   -  name: interactivestatus_icare
+      description: "Determine the status of an interactive document. Leave null if the document is not interactive"
+   -  name: dpsxml_psc
+      description: "The XML returned by the document production system. This might be draft XML or XML generated from a GX model."
+   -  name: portalclaimupdate_icare
+      description: "When document is a part of portal claim update it is associated with entity PortalClaimUpdate_icare that holds data for the creation of proper activity in the right moment."
+   -  name: creationtype_icare
+      description: "Indicates the creational trigger type"
+   -  name: claimid
+      description: "Associated claim."
+      tests:
+      -  not_null:
+            name: gwcc_cc_document_claimid_not_null
+            config:
+               severity: warn
+   -  name: language
+      description: "The language in which this document is created."
+   -  name: approvalrequired_icare
+      description: "Is approval required for given document"
+   -  name: sharedwithemployer_icare
+      description: "Indicates if the document is visible to the Employer on the claims portal"
+   -  name: authorid_icare
+      description: "ID of the user who uploaded the document"
+   -  name: exposureid
+      description: "Associated exposure. Note that only one of Exposure, Matter, and ClaimContact may be set."
+   -  name: datesentreceived_icare
+      description: "For outbound documents, the date that the document was fulfilled for print/email as stored in document metadata  For inbound documents, the date that the document was scanned or uploaded as stored in document metadata"
+   -  name: section
+      description: "The section to which this document belongs, if any."
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: inboundpackid_icare
+      description: "Inbound document package ID, used to associate all documents within a single inbound package"
+   -  name: mimetype
+      description: "The MIME type of this document; for example, application/msword for a Microsoft Word document."
+   -  name: pendingdocuid
+      description: "The document is pending, and its pending storage has Unique Identifier (UID).     The format of this UID is specific to the IDCS implementation."
+   -  name: status
+      description: "The current status of the document, if any."
+   -  name: primaryrecipient_pscid
+      description: "The primary recipient for this Document"
+   -  name: datemodified
+      description: "Date and time the document was last modified."
+   -  name: inbound
+      description: "Whether the document is an inbound, outbound, or stationary (null) document"
+   -  name: securitytype
+      description: "Type of document used for access-restriction purposes, in conjunction with the information in security-config.xml."
+   -  name: datecreated
+      description: "Date and time the document was created."
+   -  name: schemeagent_icare
+      description: "Scheme agent for this document"
+   -  name: documentsubsection_icare
+      description: "Typekey for icare Document sub-category"
+   -  name: datelastsaved_icare
+      description: "Date the document was last saved after editing"
+   -  name: claimcontactid
+      description: "Associated claim contact. Note that only one of Exposure, Matter, and ClaimContact may be set."
+   -  name: newclaimnumber_icare
+      description: ""
+   -  name: batchid_ext
+      description: ""
+   -  name: prioritylevel_ext
+      description: ""
+   -  name: docgenerationtype_ext
+      description: ""
+   -  name: description
+      description: "Description of the document."
+   -  name: legacycreatetime_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

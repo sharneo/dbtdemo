@@ -1,0 +1,441 @@
+version: 2
+snapshots:
+-  name: cc_contact
+   columns:
+   -  name: trustabnisactive_icare
+      description: "Boolean flag for ABN validation."
+   -  name: singleremittanceperday_icare
+      description: ""
+   -  name: preferredpaymentmethod_icare
+      description: ""
+   -  name: faxphonecountry
+      description: "Fax phone country."
+   -  name: taxid
+      description: "Tax ID for the contact (SSN or EIN)."
+   -  name: namedenorm
+      description: "denorm field for This contacts name."
+   -  name: medicarevaliduntil_icare
+      description: ""
+   -  name: approvedpaymentmethod_icare
+      description: ""
+   -  name: organisationtype_icare
+      description: "Organisation Type"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_updatetime_not_null
+            config:
+               severity: warn
+   -  name: adjudicatorlicense
+      description: "Adjudicators business license number."
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_id_not_null
+            config:
+               severity: warn
+   -  name: lawfirmspecialty
+      description: "Law firm specialty"
+   -  name: lastnamedenorm
+      description: "denorm field for Last name."
+   -  name: oktaid_icare
+      description: ""
+   -  name: lastname
+      description: "Last name."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: payinfoupdusername_icare
+      description: "This is used to transfer the user name to CM as the contacts are not linked."
+   -  name: tradingname_icare
+      description: ""
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: venuetype
+      description: "Type of court."
+   -  name: autotowinglicense
+      description: "Auto towing agency business license number"
+   -  name: blockedvendor_icare
+      description: ""
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: homephoneextension
+      description: "Home phone extension."
+   -  name: medicarenumber_icare
+      description: ""
+   -  name: trustregisteredforgst_icare
+      description: ""
+   -  name: specialtytype
+      description: "Specialty of the doctor"
+   -  name: firstname
+      description: "First name."
+   -  name: trusteename_icare
+      description: ""
+   -  name: w9validfrom
+      description: "W-9 valid start date"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_publicid_not_null
+            config:
+               severity: warn
+   -  name: occupation
+      description: "Occupation."
+   -  name: cellphone
+      description: "Mobile phone number associated with the contact."
+   -  name: helpsslortsldebt_icare
+      description: ""
+   -  name: primaryaddressid
+      description: "Primary address associated with the contact."
+   -  name: trustabn_icare
+      description: ""
+   -  name: suffix
+      description: "Suffix for the persons name."
+   -  name: addressbookuid
+      description: "Represents the ID of the associated object in Address Book.  Null if the object is not linked to Address Book."
+   -  name: interpreterrequired_icare
+      description: "Used for claimants to determine if an interpreter is needed."
+   -  name: website_icare
+      description: ""
+   -  name: abnisactive_icare
+      description: "Boolean flag for ABN validation."
+   -  name: emailaddress1
+      description: "Primary email address associated with the contact."
+   -  name: emailaddress2
+      description: "Secondary email address associated with the contact."
+   -  name: primarylanguage
+      description: "The accounts preferred language"
+   -  name: numdependents
+      description: "Number of dependents the employee has."
+   -  name: taxstatus
+      description: "Status of the contacts tax ID; whether it is known or unknown."
+   -  name: otherlanguage_icare
+      description: "Claimants language where not included in the ABS list. Requested by Portal team."
+   -  name: offsetamount_icare
+      description: "Offset Amount"
+   -  name: tfndeclarationdate_icare
+      description: "TFN Declaration Date"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: namekanji
+      description: "This contacts name in kanji (used only for Japanese names and will be null otherwise)"
+   -  name: abslanguagedescription_icare
+      description: ""
+   -  name: faxphone
+      description: "Fax number associated with the contact."
+   -  name: abslanguagecode_icare
+      description: ""
+   -  name: cellphoneextension
+      description: "Mobile phone extension."
+   -  name: employeenumber
+      description: "Employee ID number. Applies to user contacts."
+   -  name: doctorspecialty_icare
+      description: "Doctors medical specialty moved from doctor"
+   -  name: subtype
+      description: "Identifies a particular subtype within a supertype table; each subtype of a supertype has its own unique subtype value"
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_subtype_not_null
+            config:
+               severity: warn
+   -  name: abnvalidated_icare
+      description: "Date the ABN is validated, to be used for validation every 12 months after."
+   -  name: formername
+      description: "Persons former name, if any."
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: preferred
+      description: "Whether the vendor is a preferred vendor."
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_preferred_not_null
+            config:
+               severity: warn
+   -  name: obfuscatedinternal
+      description: "Flag to let us know if the bean has been obfuscated."
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_obfuscatedinternal_not_null
+            config:
+               severity: warn
+   -  name: vendortype
+      description: "The companys vendor type."
+   -  name: w9received
+      description: "Has W-9 form been received"
+   -  name: sourcesystem_icare
+      description: "The name of the system that last updated the shared details of a contact shared with CRM."
+   -  name: particle
+      description: "Particle, such as de, von (used for French names and will be null otherwise)"
+   -  name: acn_icare
+      description: ""
+   -  name: employeesecurityid
+      description: " A unique number designated by the jurisdiction to be used in conjunction with or in the place of the Employee ID. If the jurisdiction requires the Employee Security ID, the jurisdiction must return the Employee Security ID in the acknowledgment to promote future reporting of the designated value."
+   -  name: name
+      description: "This contacts name."
+   -  name: medicallicense
+      description: "Doctors medical license number."
+   -  name: vendornumber
+      description: "Vendor number for the contact."
+   -  name: preferredcurrency
+      description: "The contacts preferred currency."
+   -  name: score
+      description: "Overall review Score for this Contact"
+   -  name: donotdestroy
+      description: "If set then the entity should not be destroyed"
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_donotdestroy_not_null
+            config:
+               severity: warn
+   -  name: prefix
+      description: "Prefix for the persons name."
+   -  name: ssnreleaseauthorized
+      description: "Workers Comp only. SSN Release Authorized"
+   -  name: w9validto
+      description: "W-9 valid to date"
+   -  name: lastnamekanji
+      description: "Last name in kanji (used only for Japanese names and will be null otherwise)"
+   -  name: auresidentfortaxpurposes_icare
+      description: ""
+   -  name: taxfilingstatus
+      description: "State-specific field."
+   -  name: greencardnumber
+      description: "Workers Comp only. Employee Green Card Number"
+   -  name: withholdingrate
+      description: "The contacts backup withholding rate, or null if backup withholding is not required or is not known to be required."
+   -  name: commencementdate_icare
+      description: "Business commencement date"
+   -  name: trustname_icare
+      description: ""
+   -  name: legalspecialty_icare
+      description: "Legal Specialty moved up from LawFirm"
+   -  name: middlename
+      description: "Middle name or initial."
+   -  name: attorneylicense
+      description: "Attorneys business license number."
+   -  name: eligibleoffset_icare
+      description: "Zone, Overseas Forces or other eligible offset"
+   -  name: abn_icare
+      description: ""
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_retired_not_null
+            config:
+               severity: warn
+   -  name: jurisdictionassignedid
+      description: "Workers Comp only. Employee ID Assigned by Jurisdiction"
+   -  name: taxexemptionsentitled
+      description: "Workers Comp only. Tax Exemptions Entitled."
+   -  name: medicalorgspecialty
+      description: "Medical specialty"
+   -  name: validationlevel
+      description: "Validation level that this object passed (if any) before it was stored."
+   -  name: primaryphone
+      description: "Primary phone number type for the contact."
+   -  name: trusteetype_icare
+      description: ""
+   -  name: tempcrmuniqueid_icare
+      description: "Used as a temporary value holder during contact creation. No data is actually written to this field. The AddressBookUUID holds the CRM Unique Identifier once a shared contact has been created in ContactManager."
+   -  name: w9receiveddate
+      description: "W-9 form received date"
+   -  name: medicareirn_icare
+      description: ""
+   -  name: crmversion_icare
+      description: "Holds the currently synchronized version number from CRM for a shared contact."
+   -  name: firstnamedenorm
+      description: "denorm field for First name."
+   -  name: adjudicativedomain
+      description: "Adjudicative Domain"
+   -  name: firstnamekanji
+      description: "First name in kanji (used only for Japanese names and will be null otherwise)"
+   -  name: policysystemid
+      description: "Identifier for the contact in an external policy system"
+   -  name: doctorspecialty
+      description: "Doctors medical specialty"
+   -  name: smsnotification_icare
+      description: ""
+   -  name: claimantidtype
+      description: "Workers Comp only. Claimant ID Type"
+   -  name: notes
+      description: "Notes on this contact."
+   -  name: gender
+      description: "Gender."
+   -  name: numdependentsu18
+      description: "Number of dependents under 18."
+   -  name: autorepairlicense
+      description: "Auto repair shop business license number"
+   -  name: homephonecountry
+      description: "Home phone country."
+   -  name: medicalspecialty_icare
+      description: "Medical Specialty  moved up from subtype Doctor"
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_createtime_not_null
+            config:
+               severity: warn
+   -  name: autosync
+      description: "A status code to indicate whether this entity allows auto-sync or not. Null means disallow."
+   -  name: cellphonecountry
+      description: "Mobile phone country."
+   -  name: licensenumber
+      description: "Drivers license number."
+   -  name: visanumber
+      description: "Workers Comp only. Employee Employment Visa Number"
+   -  name: financialsupplementdebt_icare
+      description: ""
+   -  name: trustabnvalidated_icare
+      description: "Date the ABN is validated, to be used for validation every 12 months after."
+   -  name: pendinglinkmessage
+      description: "whether the contact link messasge is still pending from ContactManager"
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_pendinglinkmessage_not_null
+            config:
+               severity: warn
+   -  name: loadrelatedcontacts
+      description: "This field is deprecated. It was formerly used to determine whether related contacts should be loaded from the Address Book."
+      tests:
+      -  not_null:
+            name: gwcc_cc_contact_loadrelatedcontacts_not_null
+            config:
+               severity: warn
+   -  name: aggregateremittance_icare
+      description: ""
+   -  name: dateofbirth
+      description: "Date of birth."
+   -  name: attorneyspecialty_icare
+      description: "Attorneys specialty moved from Attorney"
+   -  name: passportnumber
+      description: "Workers Comp only. Employee Passport Number"
+   -  name: educationlevel
+      description: "Workers Comp only. The highest number of years or equivalency level of formal education completed."
+   -  name: registeredforgst_icare
+      description: ""
+   -  name: primarylocale
+      description: "The accounts preferred locale"
+   -  name: communicationpreferences_icare
+      description: ""
+   -  name: numdependentsu25
+      description: "Number of dependents over 18 and under 25."
+   -  name: attorneyspecialty
+      description: "Attorneys specialty"
+   -  name: workphoneextension
+      description: "Business phone extension."
+   -  name: medicarelevyvariation_icare
+      description: "Medicare Levy Variation"
+   -  name: maritalstatus
+      description: "Marital status."
+   -  name: claimtaxfreethreshold_icare
+      description: ""
+   -  name: occupationdetails_icareid
+      description: ""
+   -  name: organizationtype
+      description: "Type of organization"
+   -  name: faxphoneextension
+      description: "Fax phone extension."
+   -  name: homephone
+      description: "Home phone number associated with the contact."
+   -  name: licensestate
+      description: "Drivers license jurisdiction."
+   -  name: workphonecountry
+      description: "Work phone country."
+   -  name: workphone
+      description: "Business phone number associated with the contact."
+   -  name: noofdepchild_icare
+      description: ""
+   -  name: snrpnsnrtaxoffsetstatus_icare
+      description: ""
+   -  name: medicarelevyexempt_icare
+      description: ""
+   -  name: spouse_icare
+      description: ""
+   -  name: snrpensnrtaxoffset_icare
+      description: ""
+   -  name: medicareexemptstatus_icare
+      description: ""
+   -  name: wagersa_icare
+      description: ""
+   -  name: managingentitycodes_icare
+      description: ""
+   -  name: effectivetovariation_icare
+      description: ""
+   -  name: upwardvariationpercent_icare
+      description: ""
+   -  name: downwardvariationamt_icare
+      description: ""
+   -  name: effectivefromvariation_icare
+      description: ""
+   -  name: upwardvariationamt_icare
+      description: ""
+   -  name: downwardvariationpercent_icare
+      description: ""
+   -  name: withholdingvariation_icare
+      description: ""
+   -  name: providerid_ext
+      description: ""
+   -  name: dpplatform_ext
+      description: ""
+   -  name: duplicatecreatereason_ext
+      description: ""
+   -  name: contactsecuritytype_ext
+      description: ""
+   -  name: cellphonecountry_ext
+      description: ""
+   -  name: organisationpartyid_ext
+      description: ""
+   -  name: crmlastmodifieddate_ext
+      description: ""
+   -  name: crmlastmodifiedbyid_ext
+      description: ""
+   -  name: status_ext
+      description: ""
+   -  name: cellphoneextension_ext
+      description: ""
+   -  name: crmcreateddate_ext
+      description: ""
+   -  name: relatedcompanyname_ext
+      description: ""
+   -  name: abnvalidationtimestamp_ext
+      description: ""
+   -  name: cellphone_ext
+      description: ""
+   -  name: crmlastmodifiedbyname_ext
+      description: ""
+   -  name: providercategory_ext
+      description: ""
+   -  name: abnexempt_ext
+      description: ""
+   -  name: creationsource_ext
+      description: ""
+   -  name: isexactmatch_ext
+      description: ""
+   -  name: issubrogation_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

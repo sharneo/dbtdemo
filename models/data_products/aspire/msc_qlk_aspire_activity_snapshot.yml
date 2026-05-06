@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_activity_snapshot
+    description: "Snapshot model for activities, capturing a rolling window of activity records. Sourced from MSC_QLK_ASPIRE_ACTIVITY."
+    columns:
+      - name: src_activity_id
+        description: "Primary key from source system for the activity."
+        tests:
+          - not_null
+      - name: claim_nbr
+        description: "Business identifier for the claim."
+      - name: file_ingestion_timestamp
+        description: "Timestamp used for incremental loading."
