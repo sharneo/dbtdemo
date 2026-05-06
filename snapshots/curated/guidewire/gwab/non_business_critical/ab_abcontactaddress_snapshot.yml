@@ -13,6 +13,6 @@ snapshots:
       snapshot_meta_column_names:
         dbt_valid_from: dbt_valid_from
         dbt_valid_to: dbt_valid_to
-        dbt_scd_id: scd_id
+        dbt_scd_id: dbt_scd_id
         dbt_updated_at: modified_date
         dbt_is_deleted: is_deleted
