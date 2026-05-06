@@ -37,7 +37,7 @@ models:
     icare_dbt_transformations_fndn:
       +transient: false
       +sql_header: "alter SESSION set QUOTED_IDENTIFIERS_IGNORE_CASE = TRUE;"
-      raw:
+      landing:
         +transient: false
         +enabled: true
         +persist_docs:
