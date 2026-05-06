@@ -6,6 +6,11 @@
   )
 }}
 
+{{ config(
+    tags=['aspire']
+) }}
+
+
 {#
   Source: 01_ACCIDENT.sas
   Original SAS Target: ASPIRE.GW_OUTPUT_A01
