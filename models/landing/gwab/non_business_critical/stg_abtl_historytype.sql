@@ -1,11 +1,12 @@
+
 {#-
 
 Project: Data Uplift Program 
 Project Description/Purpose: Data Uplift Program 
 
 Date            Version         Author          Description of Change           
-2026-01-01      0.0                             Incremental staging model for abtl_paymentmethod_icare.
-                                                paymentmethod_icare_sk: Entity identity surrogate key on PK ('id')
+2026-01-01      0.0                             Incremental staging model for abtl_historytype.
+                                                historytype_sk: Entity identity surrogate key on PK ('id')
                                                 hash_key: State change detection surrogate key on all business cols excluding PK
                                                 dbt_updated_at: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
                                                 Uniform across AVRO and PARQUET - no code change when CDC goes live
@@ -18,7 +19,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["raw_layer", "raw_contact_manager", "contact_manager", "non_business_critical", "abtl_paymentmethod_icare"]
+    tags=["layer:stg", "platform:guidewire","module:gwab","domain:contact_manager", "criticality:non_business_critical", "entity:abtl_historytype"]
 ) }}
 
 
@@ -49,8 +50,8 @@ WITH cte_source_data AS
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
-                'AVRO' file_type
-            FROM {{ source('gwab', 'abtl_paymentmethod_icare') }}
+                'GWAB' as source_system
+            FROM {{ source('gwab', 'abtl_historytype') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
             UNION ALL 
             SELECT
@@ -77,8 +78,8 @@ WITH cte_source_data AS
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
-                'PARQUET' file_type
-            FROM {{ source('gwab', 'abtl_paymentmethod_icare') }}
+                'GWAB' as source_system
+            FROM {{ source('gwab', 'abtl_historytype') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
             
 ),
@@ -88,7 +89,7 @@ cte_transformed AS (
         *,
         CAST({{ dbt_utils.generate_surrogate_key([
             'id'
-        ]) }} AS VARCHAR(150)) AS paymentmethod_icare_sk,
+        ]) }} AS VARCHAR(150)) AS historytype_sk,
         CAST({{ dbt_utils.generate_surrogate_key([
                         'l_en_us',
                         'priority',
@@ -112,3 +113,4 @@ SELECT * FROM cte_transformed
 {% if is_incremental() %}
 WHERE file_ingestion_timestamp > (SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
 {% endif %}
+        
