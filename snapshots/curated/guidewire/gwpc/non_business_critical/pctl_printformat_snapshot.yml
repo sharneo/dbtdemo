@@ -1,0 +1,19 @@
+snapshots:
+  - name: pctl_printformat_snapshot
+    relation: ref('stg_pctl_printformat')
+    config:
+      schema: GWPC
+      unique_key: printformat_sk
+      alias: pctl_printformat
+      strategy: check
+      check_cols: ["hash_key"]
+      hard_deletes: new_record
+      tags: ["curated","gwpc","policy_centre", "non_business_critical"]
+      snapshot_meta_column_names:
+        dbt_valid_from: valid_from
+        dbt_valid_to: valid_to
+        dbt_scd_id: scd_id
+        dbt_updated_at: modified_date
+        dbt_is_deleted: is_deleted
+
+      dbt_valid_to_current: "to_date('9999-12-31')"
