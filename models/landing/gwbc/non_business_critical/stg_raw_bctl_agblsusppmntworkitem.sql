@@ -18,7 +18,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["raw_layer", "raw_billing_centre", "billing_centre", "non_business_critical", "bctl_agblsusppmntworkitem"]
+    tags=["landing", "gwbc", "billing_centre", "non_business_critical", "bctl_agblsusppmntworkitem"]
 ) }}
 
 
