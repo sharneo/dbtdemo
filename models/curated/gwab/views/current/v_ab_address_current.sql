@@ -23,9 +23,9 @@ filtered as (
         source.*,
         'Y' as current_record
     from source
-    where dbt_valid_to = {{ snapshot_valid_to_current() }}
+    where valid_to = {{ snapshot_valid_to_current() }}
       and coalesce(gwcbi_operation, 0) <> 1
-      and lower(dbt_is_deleted) = 'false'
+      and lower(is_deleted) = 'false'
 
 )
 
