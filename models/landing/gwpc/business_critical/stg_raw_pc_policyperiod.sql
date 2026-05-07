@@ -485,7 +485,7 @@ cte_transformed AS (
                         'franchisedeductiblelimit_ext',
                         'currentcontributionamount_ext'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) as record_insertion_date
     FROM cte_source_data
 )
 

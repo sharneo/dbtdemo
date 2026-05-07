@@ -212,7 +212,7 @@ cte_transformed AS (
                         'legacycreatetime',
                         'legacyupdatetime'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) as record_insertion_date
     FROM cte_source_data
 )
 
