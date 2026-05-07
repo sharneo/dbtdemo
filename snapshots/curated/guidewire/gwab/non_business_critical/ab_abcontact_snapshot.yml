@@ -15,11 +15,12 @@ snapshots:
         # Maps dbt_valid_to to column 'valid_to' - end of record validity
         dbt_valid_to: valid_to
         # Surrogate key for each snapshot record - keeping dbt default name
-        dbt_scd_id: dbt_scd_id
-        # Maps dbt_updated_at to 'modified_date' - used by dbt to detect changes
+        dbt_scd_id: scd_id
+        # Maps dbt_is_deleted to 'is_deleted' - flags hard deletes from source
         dbt_updated_at: modified_date
         # Maps dbt_is_deleted to 'is_deleted' - flags hard deletes from source
         dbt_is_deleted: is_deleted
 
       # Set far-future date for current/open records instead of NULL
-      dbt_valid_to_current: '2999-12-31 23:59:59'
+      dbt_valid_to_current: "to_date('2999-12-31')"
+                            
