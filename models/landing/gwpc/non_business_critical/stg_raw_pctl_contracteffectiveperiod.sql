@@ -18,7 +18,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["raw_layer", "raw_policy_centre", "policy_centre", "non_business_critical", "pctl_contracteffectiveperiod"]
+    tags=["landing", "gwpc", "policy_centre", "non_business_critical", "pctl_contracteffectiveperiod"]
 ) }}
 
 
