@@ -18,7 +18,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["raw_layer", "raw_claim_centre", "claim_centre", "non_business_critical", "cctl_cts_weeklyentitlementrate"]
+    tags=["landing", "gwcc", "claim_centre", "non_business_critical", "cctl_cts_weeklyentitlementrate"]
 ) }}
 
 
