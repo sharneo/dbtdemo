@@ -24,6 +24,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 vars:
   'dbt_date:time_zone': 'Australia/Sydney'
   disable_dbt_artifacts_autoupload: true
+  snapshot_max_date: "to_date('9999-12-31')"
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
