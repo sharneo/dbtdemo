@@ -12,11 +12,16 @@ snapshots:
       # Custom snapshot meta column names - overrides dbt defaults
       # Docs: https://docs.getdbt.com/docs/build/snapshots?version=1.12#snapshot-meta-fields
       snapshot_meta_column_names:
+<<<<<<< HEAD
         # Maps dbt_valid_from to column 'valid_from' - start of record validity
         dbt_valid_from: valid_from
         # Maps dbt_valid_to to column 'valid_to' - end of record validity
         dbt_valid_to: valid_to
         # Surrogate key for each snapshot record - keeping dbt default name
+=======
+        dbt_valid_from: dbt_valid_from
+        dbt_valid_to: to_date("2999-12-31 23:59:59.990")
+>>>>>>> ac2887fbdce7160e7978488f73dfb4c92995ad77
         dbt_scd_id: dbt_scd_id
         # Maps dbt_updated_at to 'modified_date' - used by dbt to detect changes
         dbt_updated_at: modified_date
