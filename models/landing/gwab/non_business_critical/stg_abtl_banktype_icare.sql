@@ -1,4 +1,3 @@
-
 {#-
 
 Project: Data Uplift Program 
@@ -19,7 +18,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["layer:stg", "platform:guidewire","module:gwab","domain:contact_manager", "criticality:non_business_critical", "entity:abtl_banktype_icare"]
+    tags=["landing", "gwab","contact_manager", "non_business_critical"]
 ) }}
 
 
@@ -105,7 +104,7 @@ cte_transformed AS (
                         'description',
                         's_en_au'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) as record_insertion_date
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS record_insertion_date
     FROM cte_source_data
 )
 
@@ -113,4 +112,3 @@ SELECT * FROM cte_transformed
 {% if is_incremental() %}
 WHERE file_ingestion_timestamp > (SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
 {% endif %}
-        
