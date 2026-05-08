@@ -6,12 +6,6 @@
   )
 }}
 
-{#
-  Source: 12_CLAIM_RISK_FACTOR.sas
-  Original SAS Target: ASPIRE.GW_OUTPUT_A12
-  TBL_NM: MSC_QLK_ASPIRE_CLAIM_RISK_FACTOR
-#}
-
 with ccx_triageriskfactor_icare as (
     select
         claimid,

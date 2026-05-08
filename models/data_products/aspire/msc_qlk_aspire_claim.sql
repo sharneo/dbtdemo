@@ -6,12 +6,6 @@
   )
 }}
 
-{#
-  Source: 05_CLAIM.sas
-  Original SAS Target: ASPIRE.GW_OUTPUT_A05
-  TBL_NM: MSC_QLK_ASPIRE_CLAIM
-#}
-
 with cc_claim as (
     select
         id,

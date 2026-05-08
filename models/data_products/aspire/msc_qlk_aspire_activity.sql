@@ -6,11 +6,6 @@
   )
 }}
 
-{#
-  Source: 02_ACTIVITY.sas
-  Original SAS Target: ASPIRE.GW_OUTPUT_A02
-  TBL_NM: MSC_QLK_ASPIRE_ACTIVITY
-#}
 
 with cc_activity as (
     select

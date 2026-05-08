@@ -6,12 +6,6 @@
   )
 }}
 
-{#
-  Source: 07_CLAIM_FINANCIAL_SUMMARY.sas
-  Original SAS Target: ASPIRE.GW_OUTPUT_A07
-  TBL_NM: MSC_QLK_ASPIRE_CLAIM_FINANCIAL_SUMMARY
-#}
-
 with cc_claim as (
     select
         id,

@@ -6,11 +6,6 @@
   )
 }}
 
-{#
-  Source: 11_CLAIM_PAYMENT_PAYEE.sas
-  Original SAS Target: ASPIRE.GW_OUTPUT_A11
-  TBL_NM: MSC_QLK_ASPIRE_CLAIM_PAYMENT_PAYEE
-#}
 
 with cc_check as (
     select

@@ -6,12 +6,6 @@
   )
 }}
 
-{#
-  Source: 14_CLAIM_TXN.sas
-  Original SAS Target: ASPIRE.GW_OUTPUT_A14
-  TBL_NM: MSC_QLK_ASPIRE_CLAIM_TXN
-#}
-
 with cc_transaction as (
     select
         id,
