@@ -19,13 +19,13 @@ with cc_claim as (
         retired,
         file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 ccx_medpersontreatment_icare as (
     select
         claimid,
         publicid,
-        retired,
         subtype,
         treatmenttype,
         category,
@@ -52,6 +52,7 @@ ccx_medpersontreatment_icare as (
         createtime,
         updatetime
     from {{ ref('v_ccx_medpersontreatment_icare_current') }}
+    where retired = 0
 ),
 
 cctl_medentitytreatment_icare as (
@@ -74,9 +75,9 @@ ccx_paycode_icare as (
     select
         id,
         paycode,
-        paymentsubtype,
-        retired
+        paymentsubtype
     from {{ ref('v_ccx_paycode_icare_current') }}
+    where retired = 0
 ),
 
 cc_contact as (
@@ -85,17 +86,17 @@ cc_contact as (
         name,
         firstname,
         middlename,
-        lastname,
-        retired
+        lastname
     from {{ ref('v_cc_contact_current') }}
+    where retired = 0
 ),
 
 cc_icdcode as (
     select
         id,
-        code,
-        retired
+        code
     from {{ ref('v_cc_icdcode_current') }}
+    where retired = 0
 ),
 
 cctl_odgflag_icare as (
@@ -171,7 +172,6 @@ from cc_claim clm
 
 left join ccx_medpersontreatment_icare med
     on clm.id = med.claimid
-    and med.retired = 0
 
 left join cctl_medentitytreatment_icare dim_med
     on med.subtype = dim_med.id
@@ -181,15 +181,12 @@ left join cctl_medtreatsubserv_icare dim_medcat
 
 left join ccx_paycode_icare pay
     on med.paycodeid = pay.id
-    and pay.retired = 0
 
 left join cc_contact con
     on med.contactid = con.id
-    and con.retired = 0
 
 left join cc_icdcode icd
     on med.icd1id = icd.id
-    and icd.retired = 0
 
 left join cctl_odgflag_icare odgflag
     on med.odgflag = odgflag.id

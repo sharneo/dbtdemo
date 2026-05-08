@@ -20,14 +20,15 @@ with cc_check as (
         retired,
         file_ingestion_timestamp
     from {{ ref('v_cc_check_current') }}
+    where retired = 0
 ),
 
 cc_claim as (
     select
         id,
-        claimnumber,
-        retired
+        claimnumber
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 cc_checkpayee as (
@@ -49,9 +50,9 @@ cc_contact as (
         lastname,
         taxid,
         tfndeclarationdate_icare,
-        dateofbirth,
-        retired
+        dateofbirth
     from {{ ref('v_cc_contact_current') }}
+    where retired = 0
 ),
 
 cctl_contactrole as (
@@ -67,9 +68,9 @@ cc_claimcontact as (
         id,
         claimid,
         contactid,
-        contactprohibited,
-        retired
+        contactprohibited
     from {{ ref('v_cc_claimcontact_current') }}
+    where retired = 0
 ),
 
 cc_eftdata as (
@@ -157,14 +158,12 @@ from cc_check chq
 
 inner join cc_claim clm
     on chq.claimid = clm.id
-    and clm.retired = 0
 
 inner join cc_checkpayee chq_payee
     on chq_payee.checkid = chq.id
 
 inner join cc_contact con
     on chq_payee.payeedenormid = con.id
-    and con.retired = 0
 
 inner join cctl_contactrole dim_conrole
     on chq_payee.payeetype = dim_conrole.id
@@ -172,7 +171,6 @@ inner join cctl_contactrole dim_conrole
 left join cc_claimcontact clmctt
     on clmctt.claimid = clm.id
     and clmctt.contactid = con.id
-    and clmctt.retired = 0
 
 left join (
     select
@@ -196,8 +194,8 @@ left join (
 ) bnk
     on bnk.contactid = con.id
 
-where chq.retired = 0
-
 {% if is_incremental() %}
-    and chq.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+where chq.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% else %}
+where 1=1
 {% endif %}

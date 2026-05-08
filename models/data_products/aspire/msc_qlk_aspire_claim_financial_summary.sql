@@ -19,6 +19,7 @@ with cc_claim as (
         retired,
         file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 cc_exposurerpt as (
@@ -33,15 +34,14 @@ cc_exposurerpt as (
         futurepayments,
         totalpayments,
         totalrecoveries,
-        updatetime,
-        retired
+        updatetime
     from {{ ref('v_cc_exposurerpt_current') }}
+    where retired = 0
 ),
 
 cc_exposure as (
     select
         id,
-        retired,
         exposuretype,
         closedate,
         state,
@@ -50,6 +50,7 @@ cc_exposure as (
         assignedgroupid,
         workerpayer_icare
     from {{ ref('v_cc_exposure_current') }}
+    where retired = 0
 ),
 
 cctl_exposuretype as (
@@ -63,17 +64,17 @@ cctl_exposuretype as (
 ccx_benefitsaccrual_icare as (
     select
         exposureid,
-        totalweekspaid,
-        retired
+        totalweekspaid
     from {{ ref('v_ccx_benefitsaccrual_icare_current') }}
+    where retired = 0
 ),
 
 cctl_workerpayer_icare as (
     select
         id,
-        name,
-        retired
+        name
     from {{ ref('v_cctl_workerpayer_icare_current') }}
+    where retired = 0
 ),
 
 cctl_exposurestate as (
@@ -122,22 +123,18 @@ from cc_claim clm
 
 inner join cc_exposurerpt exprpt
     on clm.id = exprpt.claimid
-    and exprpt.retired = 0
 
 inner join cc_exposure exps
     on exprpt.exposureid = exps.id
-    and exps.retired = 0
 
 inner join cctl_exposuretype dim_exp
     on exps.exposuretype = dim_exp.id
 
 left join ccx_benefitsaccrual_icare benacc
     on benacc.exposureid = exps.id
-    and benacc.retired = 0
 
 left join cctl_workerpayer_icare pyr
     on pyr.id = exps.workerpayer_icare
-    and pyr.retired = 0
 
 left join cctl_exposurestate sts
     on sts.id = exps.state

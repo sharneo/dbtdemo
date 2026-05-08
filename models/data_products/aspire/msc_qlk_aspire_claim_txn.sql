@@ -30,14 +30,15 @@ with cc_transaction as (
         loadcommandid,
         file_ingestion_timestamp
     from {{ ref('v_cc_transaction_current') }}
+    where retired = 0
 ),
 
 cc_claim as (
     select
         id,
-        claimnumber,
-        retired
+        claimnumber
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 cctl_transaction as (
@@ -55,9 +56,9 @@ cc_transactionset as (
         approvaldate,
         approvalstatus,
         adjustmentpayment_icare,
-        requestinguserid,
-        retired
+        requestinguserid
     from {{ ref('v_cc_transactionset_current') }}
+    where retired = 0
 ),
 
 cctl_transactionset as (
@@ -175,7 +176,6 @@ from cc_transaction trn
 
 inner join cc_claim clm
     on trn.claimid = clm.id
-    and clm.retired = 0
 
 inner join cctl_transaction dimtrn
     on dimtrn.id = trn.subtype
@@ -183,7 +183,6 @@ inner join cctl_transaction dimtrn
 
 inner join cc_transactionset tset
     on tset.id = trn.transactionsetid
-    and tset.retired = 0
 
 left join cctl_transactionset tsettype
     on tsettype.id = tset.subtype
@@ -212,8 +211,8 @@ left join cctl_paymenttype_icare dimpycat
 left join cc_user usr
     on tset.requestinguserid = usr.id
 
-where trn.retired = 0
-
 {% if is_incremental() %}
-    and trn.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+where trn.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% else %}
+where 1=1
 {% endif %}

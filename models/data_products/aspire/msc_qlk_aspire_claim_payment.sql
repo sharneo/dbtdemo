@@ -51,40 +51,41 @@ with cc_check as (
         rejectionreason_ext,
         file_ingestion_timestamp
     from {{ ref('v_cc_check_current') }}
+    where retired = 0
 ),
 
 cc_claim as (
     select
         id,
-        claimnumber,
-        retired
+        claimnumber
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 cc_transactionset as (
     select
         id,
-        retired,
         transfertoclaimnumber_icare,
         voidtransactionreason_icare
     from {{ ref('v_cc_transactionset_current') }}
+    where retired = 0
 ),
 
 cc_checkportion as (
     select
         id,
-        fixedclaimamount,
-        retired
+        fixedclaimamount
     from {{ ref('v_cc_checkportion_current') }}
+    where retired = 0
 ),
 
 cc_deduction as (
     select
         id,
         checkid,
-        transactionamount,
-        retired
+        transactionamount
     from {{ ref('v_cc_deduction_current') }}
+    where retired = 0
 ),
 
 cctl_paymentmethod as (
@@ -130,9 +131,9 @@ cctl_weekbenpayeetype_icare as (
 ccx_checkreissuanceinfo_icare as (
     select
         rootcheckid,
-        reissuedtocheckid,
-        retired
+        reissuedtocheckid
     from {{ ref('v_ccx_checkreissuanceinfo_icare_current') }}
+    where retired = 0
 ),
 
 cc_check_reissue as (
@@ -170,7 +171,6 @@ cte_wb as (
         on ln.transactionid = trn.id
         and ln.retired = 0
     where chq.status in (2, 5)
-        and chq.retired = 0
 ),
 
 cc_activity as (
@@ -178,17 +178,17 @@ cc_activity as (
         id,
         claimid,
         activitypatternid,
-        transactionsetid,
-        retired
+        transactionsetid
     from {{ ref('v_cc_activity_current') }}
+    where retired = 0
 ),
 
 cc_activitypattern as (
     select
         id,
-        code,
-        retired
+        code
     from {{ ref('v_cc_activitypattern_current') }}
+    where retired = 0
 )
 
 select
@@ -208,10 +208,8 @@ select
             inner join cc_activitypattern actpattern
                 on act.activitypatternid = actpattern.id
                 and actpattern.code = 'approve_payment'
-                and actpattern.retired = 0
             where chq.checksetid = act.transactionsetid
                 and act.claimid = clm.id
-                and act.retired = 0
         ) then 'N'
         else 'Y'
     end as auto_payment_ind,
@@ -278,19 +276,15 @@ from cc_check chq
 
 inner join cc_claim clm
     on chq.claimid = clm.id
-    and clm.retired = 0
 
 left join cc_transactionset tset
     on tset.id = chq.checksetid
-    and tset.retired = 0
 
 left join cc_checkportion chqptn
     on chq.portionid = chqptn.id
-    and chqptn.retired = 0
 
 left join cc_deduction ded
     on chq.id = ded.checkid
-    and ded.retired = 0
 
 left join cctl_paymentmethod paymth
     on chq.paymentmethod = paymth.id
@@ -313,7 +307,6 @@ left join (
         on reichq.id = rei.reissuedtocheckid
 )
     on rei.rootcheckid = chq.id
-    and rei.retired = 0
 
 left join cte_wb wb
     on wb.checkid = chq.id
@@ -322,8 +315,8 @@ left join cte_wb wb
 left join cctl_transactionreason_icare rsn
     on rsn.id = tset.voidtransactionreason_icare
 
-where chq.retired = 0
-
 {% if is_incremental() %}
-    and chq.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+where chq.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% else %}
+where 1=1
 {% endif %}

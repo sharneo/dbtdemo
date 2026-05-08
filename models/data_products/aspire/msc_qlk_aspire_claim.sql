@@ -56,6 +56,7 @@ with cc_claim as (
         externalfactorsevent_ext,
         file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 cc_policy as (
@@ -66,24 +67,24 @@ cc_policy as (
         manualverify_icare,
         legacypolicynumber_icare,
         tariffrate_icare,
-        retired,
         employercategory_icare,
         policytype_icare,
         groupnumber_icare,
         labourhire_icare
     from {{ ref('v_cc_policy_current') }}
+    where retired = 0
 ),
 
 cc_workcomp as (
     select
         id,
-        retired,
         employerliability,
         timelossreport,
         medicalreport,
         accidentlocationtype_icare,
         overallriskrating_ext
     from {{ ref('v_cc_workcomp_current') }}
+    where retired = 0
 ),
 
 cctl_groupemployersize_icare as (
@@ -215,34 +216,34 @@ ccx_externalidentifier_icare as (
     select
         id,
         uniqueid,
-        systemname,
-        retired
+        systemname
     from {{ ref('v_ccx_externalidentifier_icare_current') }}
+    where retired = 0
 ),
 
 cctl_howreportedtype as (
     select
         id,
         typecode,
-        name,
-        retired
+        name
     from {{ ref('v_cctl_howreportedtype_current') }}
+    where retired = 0
 ),
 
 cc_user as (
     select
         id,
-        publicid,
-        retired
+        publicid
     from {{ ref('v_cc_user_current') }}
+    where retired = 0
 ),
 
 cc_group as (
     select
         id,
-        publicid,
-        retired
+        publicid
     from {{ ref('v_cc_group_current') }}
+    where retired = 0
 ),
 
 ccx_claimcostcentreicare as (
@@ -257,27 +258,27 @@ ccx_costcentre_icare as (
         id,
         number,
         name,
-        othername,
-        retired
+        othername
     from {{ ref('v_ccx_costcentre_icare_current') }}
+    where retired = 0
 ),
 
 cctl_claimsecuritytype as (
     select
         id,
         typecode,
-        name,
-        retired
+        name
     from {{ ref('v_cctl_claimsecuritytype_current') }}
+    where retired = 0
 ),
 
 cctl_accidentloctype_icare as (
     select
         id,
         typecode,
-        name,
-        retired
+        name
     from {{ ref('v_cctl_accidentloctype_icare_current') }}
+    where retired = 0
 ),
 
 cc_claimempdata as (
@@ -290,27 +291,26 @@ cc_claimempdata as (
 cc_employmentdata as (
     select
         id,
-        retirement,
-        retired,
         employmentstatus
     from {{ ref('v_cc_employmentdata_current') }}
+    where retired = 0
 ),
 
 cctl_employmentstatustype as (
     select
         id,
-        name,
-        retired
+        name
     from {{ ref('v_cctl_employmentstatustype_current') }}
+    where retired = 0
 ),
 
 cctl_litigationstatus as (
     select
         id,
         typecode,
-        name,
-        retired
+        name
     from {{ ref('v_cctl_litigationstatus_current') }}
+    where retired = 0
 ),
 
 cc_incident as (
@@ -368,7 +368,6 @@ cte_claim_contact as (
     from {{ ref('v_cc_claimcontact_current') }} clmcon
     left join {{ ref('v_cc_contact_current') }} ctt
         on ctt.id = clmcon.contactid
-        and ctt.retired = 0
     left join {{ ref('v_cctl_phonecountrycode_current') }} ctry
         on ctry.id = ctt.cellphonecountry
     where clmcon.retired = 0
@@ -379,12 +378,11 @@ cte_matter as (
     select
         clm.id as claim_id,
         cast(min(mtr.raiseddate_icare) as date) as litigation_identified_dt
-    from {{ ref('v_cc_claim_current') }} clm
-    inner join {{ ref('v_cc_matter_current') }} mtr
+    from cc_claim clm
+    left join {{ ref('v_cc_matter_current') }} mtr
         on mtr.claimid = clm.id
-        and mtr.retired = 0
     where clm.litigationstatus is not null
-        and clm.retired = 0
+        and mtr.retired = 0
     group by clm.id
 ),
 
@@ -392,11 +390,9 @@ cte_triage as (
     select
         clm.id as claim_id,
         cast(max(trg.triagedate) as date) as last_triage_date
-    from {{ ref('v_cc_claim_current') }} clm
+    from cc_claim clm
     inner join {{ ref('v_ccx_triagehistory_icare_current') }} trg
         on trg.claimid = clm.id
-        and trg.retired = 0
-    where clm.retired = 0
     group by clm.id
 ),
 
@@ -404,13 +400,11 @@ cte_risk as (
     select
         clm.id as claim_id,
         orr.name as overall_risk_rating
-    from {{ ref('v_cc_claim_current') }} clm
-    inner join {{ ref('v_cc_workcomp_current') }} wc
+    from cc_claim clm
+    inner join cc_workcomp wc
         on wc.id = clm.claimworkcompid
-        and wc.retired = 0
     left join {{ ref('v_cctl_overallriskrating_ext_current') }} orr
         on orr.id = wc.overallriskrating_ext
-    where clm.retired = 0
 ),
 
 cte_hours_per_week as (
@@ -429,17 +423,14 @@ cte_hours_per_week as (
                 coalesce(empcap.enddate, '1900-01-01 00:00:00.000') desc,
                 empcap.id desc
         ) as row_no
-    from {{ ref('v_cc_claim_current') }} clm
-    inner join {{ ref('v_cc_workcomp_current') }} wc
+    from cc_claim clm
+    inner join cc_workcomp wc
         on wc.id = clm.claimworkcompid
-        and wc.retired = 0
     inner join {{ ref('v_ccx_employmentcapacity_icare_current') }} empcap
         on empcap.claimworkcompid = wc.id
-        and empcap.retired = 0
     left join {{ ref('v_cctl_cocstatus_icare_current') }} sta
         on sta.id = empcap.cocstatus
-    where clm.retired = 0
-        and (empcap.cocstatus is null or sta.typecode = 'valid')
+    where (empcap.cocstatus is null or sta.typecode = 'valid')
 )
 
 select
@@ -581,7 +572,6 @@ from cc_claim clm
 
 left join cc_policy pol
     on pol.id = clm.policyid
-    and pol.retired = 0
 
 left join cctl_groupemployersize_icare dim_empsize
     on dim_empsize.id = clm.employersize_icare
@@ -600,11 +590,9 @@ left join cc_workcomp wrk
 
 left join cctl_claimagent_icare schmagn
     on schmagn.id = clm.claimsagent_icare
-    and schmagn.retired = 0
 
 left join cctl_insurerbranch_icare schmagnbr
     on schmagnbr.id = clm.branchinsurer_icare
-    and schmagnbr.retired = 0
 
 left join cctl_claimstate clmstate
     on clmstate.id = clm.state
@@ -638,50 +626,40 @@ left join cctl_claimsegment seg
 
 left join ccx_externalidentifier_icare ims
     on ims.id = clm.externalidentifier_icareid
-    and ims.retired = 0
 
 left join cctl_howreportedtype howrpt
     on howrpt.id = (case when ims.systemname is not null then 10009 else clm.howreported end)
-    and howrpt.retired = 0
 
 left join cc_user usrown
     on usrown.id = clm.assigneduserid
-    and usrown.retired = 0
 
 left join cc_group primgrp
     on primgrp.id = clm.assignedgroupid
-    and primgrp.retired = 0
 
 left join (
     ccx_claimcostcentreicare clmcc
     inner join ccx_costcentre_icare cc
         on cc.id = clmcc.foreignentityid
-        and cc.retired = 0
 )
     on clmcc.ownerid = clm.id
 
 left join cctl_claimsecuritytype clmsec
     on clmsec.id = clm.permissionrequired
-    and clmsec.retired = 0
 
 left join cctl_accidentloctype_icare loctyp
     on loctyp.id = wrk.accidentlocationtype_icare
-    and loctyp.retired = 0
 
 left join cc_claimempdata clmemp
     on clmemp.ownerid = clm.id
 
 left join cc_employmentdata emp
     on emp.id = clmemp.foreignentityid
-    and emp.retired = 0
 
 left join cctl_employmentstatustype dimempsts
     on dimempsts.id = emp.employmentstatus
-    and dimempsts.retired = 0
 
 left join cctl_litigationstatus ltg
     on ltg.id = clm.litigationstatus
-    and ltg.retired = 0
 
 left join cte_matter mtr
     on mtr.claim_id = clm.id
@@ -720,8 +698,8 @@ left join cte_hours_per_week hoursperweek
     on hoursperweek.claim_id = clm.id
     and hoursperweek.row_no = 1
 
-where clm.retired = 0
-
 {% if is_incremental() %}
-    and clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% else %}
+where 1=1
 {% endif %}

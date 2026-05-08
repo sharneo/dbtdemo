@@ -37,14 +37,15 @@ with cc_activity as (
         retired,
         file_ingestion_timestamp
     from {{ ref('v_cc_activity_current') }}
+    where retired = 0
 ),
 
 cc_claim as (
     select
         id,
-        claimnumber,
-        retired
+        claimnumber
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 cctl_activitytype as (
@@ -71,17 +72,17 @@ cctl_priority as (
 cc_user_close as (
     select
         id,
-        publicid,
-        retired
+        publicid
     from {{ ref('v_cc_user_current') }}
+    where retired = 0
 ),
 
 cc_user_assigned as (
     select
         id,
-        publicid,
-        retired
+        publicid
     from {{ ref('v_cc_user_current') }}
+    where retired = 0
 ),
 
 cc_activitypattern as (
@@ -94,9 +95,9 @@ cc_activitypattern as (
 cc_group as (
     select
         id,
-        publicid,
-        retired
+        publicid
     from {{ ref('v_cc_group_current') }}
+    where retired = 0
 )
 
 select
@@ -130,7 +131,6 @@ from cc_activity act
 
 inner join cc_claim clm
     on act.claimid = clm.id
-    and clm.retired = 0
 
 left join cctl_activitytype acttype
     on act.type = acttype.id
@@ -143,21 +143,18 @@ left join cctl_priority actpri
 
 left join cc_user_close clsusr
     on act.closeuserid = clsusr.id
-    and clsusr.retired = 0
 
 left join cc_user_assigned assgusr
     on act.assigneduserid = assgusr.id
-    and assgusr.retired = 0
 
 left join cc_activitypattern actpatt
     on act.activitypatternid = actpatt.id
 
 left join cc_group assgnteam
     on act.assignedgroupid = assgnteam.id
-    and assgnteam.retired = 0
-
-where act.retired = 0
 
 {% if is_incremental() %}
-    and act.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+where act.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% else %}
+where 1=1
 {% endif %}

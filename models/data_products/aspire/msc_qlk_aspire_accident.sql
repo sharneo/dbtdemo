@@ -21,16 +21,17 @@ with cc_claim as (
         claimworkcompid,
         file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
+    where retired = 0
 ),
 
 cc_incident as (
     select
         id,
         claimid,
-        claimincident,
-        retired,
+        subtype,
         mechanismofinjurydesc_icare
     from {{ ref('v_cc_incident_current') }}
+    where retired = 0 and claimincident = 1
 ),
 
 cctl_incident as (
@@ -43,29 +44,29 @@ cctl_incident as (
 cc_policylocation as (
     select
         id,
-        retired,
         addressid
     from {{ ref('v_cc_policylocation_current') }}
+    where retired = 0
 ),
 
 cc_address as (
     select
         id,
-        retired,
         addressline1,
         addressline2,
         addressline3,
         city,
         postalcode
     from {{ ref('v_cc_address_current') }}
+    where retired = 0
 ),
 
 cc_workcomp as (
     select
         id,
-        retired,
         accidentlocationtype_icare
     from {{ ref('v_cc_workcomp_current') }}
+    where retired = 0
 ),
 
 cctl_accidentloctype_icare as (
@@ -119,8 +120,6 @@ from cc_claim clm
 
 inner join cc_incident inc
     on clm.id = inc.claimid
-    and inc.claimincident = 1
-    and inc.retired = 0
 
 inner join cctl_incident cctl_incident
     on cctl_incident.id = inc.subtype
@@ -128,15 +127,12 @@ inner join cctl_incident cctl_incident
 
 left join cc_policylocation polloc
     on clm.locationcodeid = polloc.id
-    and polloc.retired = 0
 
 inner join cc_address pollocaddr
     on polloc.addressid = pollocaddr.id
-    and pollocaddr.retired = 0
 
 left join cc_workcomp wrkcomp
     on clm.claimworkcompid = wrkcomp.id
-    and wrkcomp.retired = 0
 
 inner join cctl_accidentloctype_icare dimacc
     on wrkcomp.accidentlocationtype_icare = dimacc.id
@@ -152,8 +148,8 @@ left join (
 ) subro
     on subro.claimid = clm.id
 
-where clm.retired = 0
-
 {% if is_incremental() %}
-    and clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% else %}
+where 1=1
 {% endif %}
