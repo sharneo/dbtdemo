@@ -137,7 +137,5 @@ left join cctl_exposureclosedoutcometype outc
     on outc.id = exps.closedoutcome
 
 {% if is_incremental() %}
-where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
-{% else %}
-where 1=1
+    where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
 {% endif %}
