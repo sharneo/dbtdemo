@@ -2,10 +2,16 @@
   config(
     materialized='incremental',
     unique_key='claim_payment_sk',
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
   )
 }}
 
+{#
+  Source: 11_CLAIM_PAYMENT_PAYEE.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A11
+  TBL_NM: MSC_QLK_ASPIRE_CLAIM_PAYMENT_PAYEE
+-#}
 
 with cc_check as (
     select
@@ -82,6 +88,7 @@ cc_eftdata as (
 
 select
     md5(concat('GWCC', clm.claimnumber)) as claim_sk,
+    'GWCC' as source_system,
     clm.claimnumber as claim_nbr,
     clm.id as src_claim_id,
     md5(concat('GWCC', chq.publicid)) as claim_payment_sk,

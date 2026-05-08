@@ -2,7 +2,8 @@
   config(
     materialized='incremental',
     unique_key='claim_sk',
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
   )
 }}
 
@@ -10,7 +11,7 @@
   Source: 08_CLAIM_MEDICAL_TREATMENT.sas
   Original SAS Target: ASPIRE.GW_OUTPUT_A08
   TBL_NM: MSC_QLK_ASPIRE_CLAIM_MEDICAL_TREATMENT
-#}
+-#}
 
 with cc_claim as (
     select

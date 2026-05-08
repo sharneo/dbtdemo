@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_claim_medical_treatment
+    description: "Medical treatment details for ASPIRE claims reporting"
+    columns:
+      - name: claim_sk
+        description: "Surrogate key for claim"
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('msc_qlk_aspire_claim')
+                field: claim_sk
+      - name: source_system
+        description: "Source system code"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['GWCC']
+      - name: claim_nbr
+        description: "Claim number"
+        tests:
+          - not_null
+      - name: src_claim_id
+        description: "Source claim ID"
+        tests:
+          - not_null
+      - name: treatment_public_id
+        description: "Treatment public ID"
+      - name: include_on_imp_ind
+        description: "Include on IMP indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: file_ingestion_timestamp
+        description: "Timestamp of file ingestion for incremental processing"
+        tests:
+          - not_null

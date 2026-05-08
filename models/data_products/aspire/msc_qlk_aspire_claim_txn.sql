@@ -2,9 +2,16 @@
   config(
     materialized='incremental',
     unique_key='claim_txn_sk',
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
   )
 }}
+
+{#
+  Source: 14_CLAIM_TXN.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A14
+  TBL_NM: MSC_QLK_ASPIRE_CLAIM_TXN
+-#}
 
 with cc_transaction as (
     select
@@ -128,6 +135,7 @@ cc_user as (
 
 select
     md5(concat('GWCC', trn.publicid)) as claim_txn_sk,
+    'GWCC' as source_system,
     trn.publicid as claim_txn_id,
     trn.id as src_claim_txn_id,
     tset.id as src_claim_txn_set_id,

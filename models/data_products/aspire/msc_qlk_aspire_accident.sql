@@ -2,9 +2,16 @@
   config(
     materialized='incremental',
     unique_key='claim_sk',
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
   )
 }}
+
+{#
+  Source: 01_ACCIDENT.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A01
+  TBL_NM: MSC_QLK_ASPIRE_ACCIDENT
+-#}
 
 with cc_claim as (
     select

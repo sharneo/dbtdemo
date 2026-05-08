@@ -2,10 +2,16 @@
   config(
     materialized='incremental',
     unique_key='src_activity_id',
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
   )
 }}
 
+{#
+  Source: 02_ACTIVITY.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A02
+  TBL_NM: MSC_QLK_ASPIRE_ACTIVITY
+-#}
 
 with cc_activity as (
     select
@@ -96,6 +102,7 @@ cc_group as (
 )
 
 select
+    'GWCC' as source_system,
     clm.claimnumber as claim_nbr,
     act.id as src_activity_id,
     act.publicid as activity_public_id,

@@ -2,9 +2,16 @@
   config(
     materialized='incremental',
     unique_key='claim_sk',
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
   )
 }}
+
+{#
+  Source: 07_CLAIM_FINANCIAL_SUMMARY.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A07
+  TBL_NM: MSC_QLK_ASPIRE_CLAIM_FINANCIAL_SUMMARY
+-#}
 
 with cc_claim as (
     select
@@ -88,6 +95,7 @@ cctl_exposureclosedoutcometype as (
 
 select
     md5(concat('GWCC', clm.claimnumber)) as claim_sk,
+    'GWCC' as source_system,
     clm.claimnumber as claim_nbr,
     clm.id as src_claim_id,
     exprpt.id as src_exp_rpt_id,

@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_activity
+    description: "Activity/action records for ASPIRE claims reporting"
+    columns:
+      - name: source_system
+        description: "Source system code"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['GWCC']
+      - name: claim_nbr
+        description: "Claim number"
+        tests:
+          - not_null
+      - name: src_activity_id
+        description: "Source activity ID"
+        tests:
+          - not_null
+          - unique
+      - name: activity_public_id
+        description: "Activity public ID"
+      - name: activity_subject_desc
+        description: "Activity subject"
+      - name: activity_target_dttm
+        description: "Activity target date/time"
+      - name: activity_target_dt
+        description: "Activity target date"
+      - name: activity_escalation_dttm
+        description: "Activity escalation date/time"
+      - name: activity_assignment_dttm
+        description: "Activity assignment date/time"
+      - name: activity_close_dttm
+        description: "Activity close date/time"
+      - name: activity_close_dt
+        description: "Activity close date"
+      - name: activity_last_view_dttm
+        description: "Activity last view date/time"
+      - name: src_create_dttm
+        description: "Source create date/time"
+      - name: src_create_dt
+        description: "Source create date"
+      - name: priority_desc
+        description: "Priority description"
+      - name: activity_type_desc
+        description: "Activity type description"
+      - name: activity_status_desc
+        description: "Activity status description"
+      - name: activity_pattern_code
+        description: "Activity pattern code"
+      - name: close_user_sk
+        description: "Close user surrogate key"
+      - name: assigned_user_sk
+        description: "Assigned user surrogate key"
+      - name: assigned_team_sk
+        description: "Assigned team surrogate key"
+      - name: approval_issue
+        description: "Approval issue"
+      - name: src_txn_set_id
+        description: "Source transaction set ID"
+      - name: approval_rationale
+        description: "Approval rationale"
+      - name: extract_date
+        description: "Extract date"
+        tests:
+          - not_null
+      - name: file_ingestion_timestamp
+        description: "Timestamp of file ingestion for incremental processing"
+        tests:
+          - not_null

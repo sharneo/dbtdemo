@@ -2,9 +2,16 @@
   config(
     materialized='incremental',
     unique_key='src_claim_id',
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
   )
 }}
+
+{#
+  Source: 12_CLAIM_RISK_FACTOR.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A12
+  TBL_NM: MSC_QLK_ASPIRE_CLAIM_RISK_FACTOR
+-#}
 
 with ccx_triageriskfactor_icare as (
     select
@@ -29,6 +36,7 @@ cctl_riskfactors_icare as (
 )
 
 select
+    'GWCC' as source_system,
     risk.claimid as src_claim_id,
     risk.publicid as risk_factor_id,
     risk.id as src_risk_factor_id,
