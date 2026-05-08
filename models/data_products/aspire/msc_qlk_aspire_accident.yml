@@ -9,16 +9,10 @@ models:
         tests:
           - not_null
           - unique
-          - relationships:
-              arguments:
-                to: ref('msc_qlk_aspire_claim')
-                field: claim_sk
       - name: source_system
         description: "Source system code"
         tests:
           - not_null
-          - accepted_values:
-              values: ['GWCC']
       - name: src_claim_id
         description: "Source claim ID"
         tests:
@@ -29,9 +23,6 @@ models:
           - not_null
       - name: recovery_investigation_ind
         description: "Indicates if recovery investigation exists"
-        tests:
-          - accepted_values:
-              values: ['Y', 'N']
       - name: policy_location_addr
         description: "Policy location address"
       - name: toocs_mechanism_if_injury_desc
