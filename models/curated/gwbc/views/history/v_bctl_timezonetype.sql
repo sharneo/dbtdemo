@@ -3,15 +3,17 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
-2026-01-01      0.0                             Curated SCD2 full history view for bctl_timezonetype.
+2026-01-01      1.7                             Curated SCD2 full history view for bctl_timezonetype.
                                                 Source: {{ ref('bctl_timezonetype_snapshot') }}
-                                                Contains full SCD2 history including dbt_valid_from, dbt_valid_to.
+                                                Contains full SCD2 history including valid_from, valid_to.
+                                                Current record: valid_to open-ended .
+                                                CDA Deletion Flag is 1 
                                                 For current-state-only view, use the current state view.
 -#}
 
 {{ config(
     materialized='view',
-    tags=["curated", "curated_view", "curated_history", "billing_centre", "non_business_critical", "bctl_timezonetype"]
+    tags=["curated_history"]
 ) }}
 
 WITH cte_source_data AS (
@@ -23,8 +25,16 @@ WITH cte_source_data AS (
 cte_transformed AS (
     SELECT
         *,
-        CASE WHEN dbt_valid_to IS NULL THEN 'Y' ELSE 'N' END AS current_record,
-        CASE WHEN dbt_is_deleted = TRUE THEN 'Y' ELSE 'N' END AS is_deleted_record
+        CASE 
+            WHEN valid_to = {{ snapshot_valid_to_current() }}
+            THEN 'Y'
+            ELSE 'N' 
+        END AS current_record,
+        CASE 
+            WHEN COALESCE(gwcbi_operation, 0) = 1 THEN 'Y' 
+            WHEN LOWER(COALESCE(is_deleted, 'false')) = 'true' THEN 'Y'
+            ELSE 'N' 
+        END AS deletion_flag
     FROM cte_source_data
 )
 

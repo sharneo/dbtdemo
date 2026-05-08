@@ -1,45 +1,38 @@
-{#-
-Project: Data Uplift Program
-Project Description/Purpose: Data Uplift Program
+{{
+  config(
+    materialized='incremental',
+    unique_key='claim_sk',
+    incremental_strategy='merge',
+    tags=['business_critical', 'aspire']
+  )
+}}
 
-Date            Version         Author          Description of Change           
-2026-01-01      0.0                             SCD Type 2 snapshot for cc_activitydocument.
-                                                Source: ref('stg_raw_cc_activitydocument')
-                                                unique_key: activitydocument_sk (surrogate on PK 'id')
-                                                check_cols: ['hash_key'] (surrogate on all business cols excl PK)
-                                                hard_deletes: new_record (inserts dbt_is_deleted=True row)
-                                                No code change required when PARQUET CDC goes live.
+{#
+  Source: 01_ACCIDENT.sas
+  Original SAS Target: ASPIRE.GW_OUTPUT_A01
+  TBL_NM: MSC_QLK_ASPIRE_ACCIDENT
 -#}
 
-{{ config(
-    tags=['aspire']
-) }}
-
-with
-
-cc_claim as (
+with cc_claim as (
     select
         id,
         claimnumber,
+        retired,
         locationcodeid,
         claimworkcompid,
-        retired,
-        source_system
+        file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
     where retired = 0
 ),
 
 cc_incident as (
     select
+        id,
         claimid,
-        claimincident,
-        retired,
-        mechanismofinjurydesc_icare,
-        subtype
+        subtype,
+        mechanismofinjurydesc_icare
     from {{ ref('v_cc_incident_current') }}
-    where
-        claimincident = 1
-        and retired = 0
+    where retired = 0 and claimincident = 1
 ),
 
 cctl_incident as (
@@ -47,13 +40,11 @@ cctl_incident as (
         id,
         typecode
     from {{ ref('v_cctl_incident_current') }}
-    where lower(typecode) = 'injuryincident'
 ),
 
 cc_policylocation as (
     select
         id,
-        retired,
         addressid
     from {{ ref('v_cc_policylocation_current') }}
     where retired = 0
@@ -62,7 +53,6 @@ cc_policylocation as (
 cc_address as (
     select
         id,
-        retired,
         addressline1,
         addressline2,
         addressline3,
@@ -75,7 +65,6 @@ cc_address as (
 cc_workcomp as (
     select
         id,
-        retired,
         accidentlocationtype_icare
     from {{ ref('v_cc_workcomp_current') }}
     where retired = 0
@@ -95,71 +84,73 @@ cc_subrogationsummary as (
         claimid,
         retired
     from {{ ref('v_cc_subrogationsummary_current') }}
-    where retired = 0
 ),
 
 cc_subrogation as (
     select
+        id,
         subrogationsummaryid,
         retired
     from {{ ref('v_cc_subrogation_current') }}
-    where retired = 0
-),
-
-subro as (
-    select distinct subrosumm.claimid
-    from cc_subrogationsummary as subrosumm
-    inner join cc_subrogation as subro
-        on subrosumm.id = subro.subrogationsummaryid
-),
-
-final as (
-    select distinct
-        source_system,
-        clm.id as src_claim_id,
-        clm.claimnumber as claim_nbr,
-        inc.mechanismofinjurydesc_icare as toocs_mechanism_if_injury_desc,
-        dimacc.typecode as accident_location_type_cd,
-        dimacc.name as accident_location_type_desc,
-        convert(varchar(32), hashbytes('md5', concat('GWCC', clm.claimnumber)), 2) as claim_sk,
-        case
-            when subro.claimid is not null then 'Y'
-            else 'N'
-        end as recovery_investigation_ind,
-        concat(
-            rtrim(
-                concat(
-                    pollocaddr.addressline1, ' ',
-                    pollocaddr.addressline2, ' ',
-                    pollocaddr.addressline3
-                )
-            ),
-            ' ', pollocaddr.city, ' ',
-            pollocaddr.postalcode
-        ) as policy_location_addr
-
-    from cc_claim as clm
-
-    inner join cc_incident as inc
-        on clm.id = inc.claimid
-
-    inner join cctl_incident as cctl_incident
-        on inc.subtype = cctl_incident.id
-
-    left join cc_policylocation as polloc
-        on clm.locationcodeid = polloc.id
-
-    inner join cc_address as pollocaddr
-        on polloc.addressid = pollocaddr.id
-
-    left join cc_workcomp as wrkcomp
-        on clm.claimworkcompid = wrkcomp.id
-
-    inner join cctl_accidentloctype_icare as dimacc
-        on wrkcomp.accidentlocationtype_icare = dimacc.id
-
-    left join subro
-        on clm.id = subro.claimid
 )
 
-select * from final
+select distinct
+    md5(concat('GWCC', clm.claimnumber)) as claim_sk,
+    'GWCC' as source_system,
+    clm.id as src_claim_id,
+    clm.claimnumber as claim_nbr,
+    case
+        when subro.claimid is not null then 'Y'
+        else 'N'
+    end as recovery_investigation_ind,
+    concat(
+        rtrim(
+            concat(pollocaddr.addressline1, ' ',
+                   pollocaddr.addressline2, ' ',
+                   pollocaddr.addressline3)
+        ),
+        ' ', pollocaddr.city, ' ',
+        pollocaddr.postalcode
+    ) as policy_location_addr,
+    inc.mechanismofinjurydesc_icare as toocs_mechanism_if_injury_desc,
+    dimacc.typecode as accident_location_type_cd,
+    dimacc.name as accident_location_type_desc,
+    clm.file_ingestion_timestamp
+
+from cc_claim clm
+
+inner join cc_incident inc
+    on clm.id = inc.claimid
+
+inner join cctl_incident cctl_incident
+    on cctl_incident.id = inc.subtype
+    and lower(cctl_incident.typecode) = 'injuryincident'
+
+left join cc_policylocation polloc
+    on clm.locationcodeid = polloc.id
+
+inner join cc_address pollocaddr
+    on polloc.addressid = pollocaddr.id
+
+left join cc_workcomp wrkcomp
+    on clm.claimworkcompid = wrkcomp.id
+
+inner join cctl_accidentloctype_icare dimacc
+    on wrkcomp.accidentlocationtype_icare = dimacc.id
+
+left join (
+    select distinct
+        subrosum.claimid
+    from cc_subrogationsummary subrosum
+    inner join cc_subrogation subro
+        on subro.subrogationsummaryid = subrosum.id
+        and subro.retired = 0
+    where subrosum.retired = 0
+) subro
+    on subro.claimid = clm.id
+
+{% if is_incremental() %}
+where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+{% else %}
+where 1=1
+{% endif %}

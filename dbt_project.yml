@@ -1,4 +1,3 @@
-
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
@@ -25,6 +24,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 vars:
   'dbt_date:time_zone': 'Australia/Sydney'
   disable_dbt_artifacts_autoupload: true
+  snapshot_max_date: "to_date('9999-12-31')"
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -37,7 +37,7 @@ models:
     icare_dbt_transformations_fndn:
       +transient: false
       +sql_header: "alter SESSION set QUOTED_IDENTIFIERS_IGNORE_CASE = TRUE;"
-      raw:
+      landing:
         +transient: false
         +enabled: true
         +persist_docs:
