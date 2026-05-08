@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: ms_qlk_aspire_claim_payment
+    description: "Claim payment details for ASPIRE claims reporting"
+    columns:
+      - name: claim_payment_sk
+        description: "Surrogate key for claim payment"
+        tests:
+          - not_null
+          - unique
+      - name: claim_payment_id
+        description: "Claim payment public ID"
+      - name: src_claim_payment_id
+        description: "Source claim payment ID"
+      - name: payment_nbr
+        description: "Payment number"
+      - name: claim_sk
+        description: "Surrogate key for claim"
+      - name: claim_nbr
+        description: "Claim number"
+        tests:
+          - not_null
+      - name: src_claim_id
+        description: "Source claim ID"
+        tests:
+          - not_null
+      - name: auto_payment_ind
+        description: "Auto payment indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: payee_registered_for_gst_ind
+        description: "Payee registered for GST indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: latest_weekly_benefit_ind
+        description: "Latest weekly benefit indicator"
+        tests:
+          - accepted_values:
+              values: ['Y']
+      - name: migrated_pymt_ind
+        description: "Migrated payment indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: digital_payment_ind
+        description: "Digital payment indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: extract_date
+        description: "Extract date"
+        tests:
+          - not_null
+      - name: file_ingestion_timestamp
+        description: "Timestamp of file ingestion for incremental processing"
+        tests:
+          - not_null

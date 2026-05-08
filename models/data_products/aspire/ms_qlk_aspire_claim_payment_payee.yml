@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: ms_qlk_aspire_claim_payment_payee
+    description: "Claim payment payee details for ASPIRE claims reporting"
+    columns:
+      - name: claim_sk
+        description: "Surrogate key for claim"
+        tests:
+          - not_null
+      - name: claim_nbr
+        description: "Claim number"
+        tests:
+          - not_null
+      - name: src_claim_id
+        description: "Source claim ID"
+        tests:
+          - not_null
+      - name: claim_payment_sk
+        description: "Surrogate key for claim payment"
+        tests:
+          - not_null
+          - unique
+      - name: claim_payment_id
+        description: "Claim payment public ID"
+      - name: src_claim_payment_id
+        description: "Source claim payment ID"
+      - name: src_payee_contact_id
+        description: "Source payee contact ID"
+      - name: payee_type_cd
+        description: "Payee type code"
+      - name: payee_type_desc
+        description: "Payee type description"
+      - name: payee_name
+        description: "Payee name"
+      - name: payee_tfn
+        description: "Payee TFN (hashed)"
+      - name: age_18_and_over_ind
+        description: "Age 18 and over indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: contact_prohibited_ind
+        description: "Contact prohibited indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: bank_details_present_ind
+        description: "Bank details present indicator"
+        tests:
+          - accepted_values:
+              values: ['Y', 'N']
+      - name: extract_date
+        description: "Extract date"
+        tests:
+          - not_null
+      - name: file_ingestion_timestamp
+        description: "Timestamp of file ingestion for incremental processing"
+        tests:
+          - not_null
