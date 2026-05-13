@@ -1,3 +1,4 @@
+
 {#-
 
 Project: Data Uplift Program 
@@ -118,3 +119,4 @@ SELECT * FROM cte_transformed
 {% if is_incremental() %}
 WHERE file_ingestion_timestamp > (SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
 {% endif %}
+        

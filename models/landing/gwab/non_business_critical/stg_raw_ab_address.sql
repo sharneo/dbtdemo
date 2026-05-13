@@ -19,7 +19,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["landing", "gwab","contact_manager", "non_business_critical"]
+    tags=["raw_layer", "raw_contact_manager", "contact_manager", "non_business_critical", "ab_address"]
 ) }}
 
 
@@ -74,6 +74,7 @@ WITH cte_source_data AS
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'AVRO' as file_type,
                 'GWAB' as source_system
             FROM {{ source('gwab', 'ab_address') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
@@ -126,6 +127,7 @@ WITH cte_source_data AS
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'PARQUET' file_type
                 'GWAB' as source_system
             FROM {{ source('gwab', 'ab_address') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
@@ -177,7 +179,7 @@ cte_transformed AS (
                         'subtype',
                         'description'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS record_insertion_date
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at
     FROM cte_source_data
 )
 

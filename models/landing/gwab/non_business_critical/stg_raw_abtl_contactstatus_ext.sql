@@ -5,8 +5,8 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program 
 
 Date            Version         Author          Description of Change           
-2026-01-01      0.0                             Incremental staging model for abtl_country.
-                                                country_sk: Entity identity surrogate key on PK ('id')
+2026-01-01      0.0                             Incremental staging model for abtl_contactstatus_ext.
+                                                contactstatus_ext_sk: Entity identity surrogate key on PK ('id')
                                                 hash_key: State change detection surrogate key on all business cols excluding PK
                                                 dbt_updated_at: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
                                                 Uniform across AVRO and PARQUET - no code change when CDC goes live
@@ -19,7 +19,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["landing", "gwab","contact_manager", "non_business_critical"]
+    tags=["raw_layer", "raw_contact_manager", "contact_manager", "non_business_critical", "abtl_contactstatus_ext"]
 ) }}
 
 
@@ -50,8 +50,9 @@ WITH cte_source_data AS
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'AVRO' as file_type,
                 'GWAB' as source_system
-            FROM {{ source('gwab', 'abtl_country') }}
+            FROM {{ source('gwab', 'abtl_contactstatus_ext') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
             UNION ALL 
             SELECT
@@ -78,8 +79,9 @@ WITH cte_source_data AS
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'PARQUET' file_type
                 'GWAB' as source_system
-            FROM {{ source('gwab', 'abtl_country') }}
+            FROM {{ source('gwab', 'abtl_contactstatus_ext') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
             
 ),
@@ -89,7 +91,7 @@ cte_transformed AS (
         *,
         CAST({{ dbt_utils.generate_surrogate_key([
             'id'
-        ]) }} AS VARCHAR(150)) AS country_sk,
+        ]) }} AS VARCHAR(150)) AS contactstatus_ext_sk,
         CAST({{ dbt_utils.generate_surrogate_key([
                         'l_en_us',
                         'priority',
@@ -105,7 +107,7 @@ cte_transformed AS (
                         'description',
                         's_en_au'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS record_insertion_date
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at
     FROM cte_source_data
 )
 

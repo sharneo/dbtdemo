@@ -5,8 +5,8 @@ Project: Data Uplift Program
 Project Description/Purpose: Data Uplift Program 
 
 Date            Version         Author          Description of Change           
-2026-01-01      0.0                             Incremental staging model for ab_abcontactaddress.
-                                                abcontactaddress_sk: Entity identity surrogate key on PK ('id')
+2026-01-01      0.0                             Incremental staging model for ab_history.
+                                                history_sk: Entity identity surrogate key on PK ('id')
                                                 hash_key: State change detection surrogate key on all business cols excluding PK
                                                 dbt_updated_at: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
                                                 Uniform across AVRO and PARQUET - no code change when CDC goes live
@@ -19,7 +19,7 @@ Date            Version         Author          Description of Change
     unique_key='id',
     incremental_strategy='merge',
     on_schema_change='append_new_columns',
-    tags=["landing", "gwab","contact_manager", "non_business_critical"]
+    tags=["raw_layer", "raw_contact_manager", "contact_manager", "non_business_critical", "ab_history"]
 ) }}
 
 
@@ -29,12 +29,20 @@ WITH cte_source_data AS
             SELECT
                 data_payload:LoadCommandID::NUMBER AS loadcommandid,
                 CAST(data_payload:PublicID::TEXT AS VARCHAR(64)) AS publicid,
-                CAST(data_payload:LinkID::TEXT AS VARCHAR(64)) AS linkid,
-                data_payload:BeanVersion::NUMBER AS beanversion,
+                data_payload:UserID::NUMBER AS userid,
                 data_payload:ArchivePartition::NUMBER AS archivepartition,
+                data_payload:BeanVersion::NUMBER AS beanversion,
+                data_payload:CustomType::NUMBER AS customtype,
+                CAST(data_payload:ExternalUpdateApp::TEXT AS VARCHAR(30)) AS externalupdateapp,
+                data_payload:ContactAddressID::NUMBER AS contactaddressid,
+                CAST(data_payload:RuleUID::TEXT AS VARCHAR(255)) AS ruleuid,
+                data_payload:ABContactID::NUMBER AS abcontactid,
+                data_payload:Type::NUMBER AS type,
+                data_payload:Subtype::NUMBER AS subtype,
                 data_payload:ID::NUMBER AS id,
-                data_payload:ContactID::NUMBER AS contactid,
-                data_payload:AddressID::NUMBER AS addressid,
+                CAST(data_payload:Description::TEXT AS VARCHAR(1333)) AS description,
+                TO_TIMESTAMP_TZ(data_payload:EventTimestamp::NUMBER/1000) AS eventtimestamp,
+                CAST(data_payload:ExternalUpdateUser::TEXT AS VARCHAR(255)) AS externalupdateuser,
                 CAST(NULL AS TIMESTAMP_LTZ) as gwcbi_connector_ts_ms,
                 CAST(NULL AS NUMBER) as gwcbi_lsn,
                 CAST(NULL AS NUMBER) as gwcbi_operation,
@@ -44,19 +52,28 @@ WITH cte_source_data AS
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'AVRO' as file_type,
                 'GWAB' as source_system
-            FROM {{ source('gwab', 'ab_abcontactaddress') }}
+            FROM {{ source('gwab', 'ab_history') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
             UNION ALL 
             SELECT
                 $1:loadcommandid::NUMBER AS loadcommandid,
                 CAST($1:publicid::TEXT AS VARCHAR(64)) AS publicid,
-                CAST($1:linkid::TEXT AS VARCHAR(64)) AS linkid,
-                $1:beanversion::NUMBER AS beanversion,
+                $1:userid::NUMBER AS userid,
                 $1:archivepartition::NUMBER AS archivepartition,
+                $1:beanversion::NUMBER AS beanversion,
+                $1:customtype::NUMBER AS customtype,
+                CAST($1:externalupdateapp::TEXT AS VARCHAR(30)) AS externalupdateapp,
+                $1:contactaddressid::NUMBER AS contactaddressid,
+                CAST($1:ruleuid::TEXT AS VARCHAR(255)) AS ruleuid,
+                $1:abcontactid::NUMBER AS abcontactid,
+                $1:type::NUMBER AS type,
+                $1:subtype::NUMBER AS subtype,
                 $1:id::NUMBER AS id,
-                $1:contactid::NUMBER AS contactid,
-                $1:addressid::NUMBER AS addressid,
+                CAST($1:description::TEXT AS VARCHAR(1333)) AS description,
+                $1:eventtimestamp::TIMESTAMP_TZ AS eventtimestamp,
+                CAST($1:externalupdateuser::TEXT AS VARCHAR(255)) AS externalupdateuser,
                 TO_TIMESTAMP($1:gwcbi___connector_ts_ms::NUMBER / 1000) as gwcbi_connector_ts_ms,
                 $1:gwcbi___lsn::NUMBER as gwcbi_lsn,
                 $1:gwcbi___operation::NUMBER as gwcbi_operation,
@@ -66,8 +83,9 @@ WITH cte_source_data AS
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'PARQUET' file_type
                 'GWAB' as source_system
-            FROM {{ source('gwab', 'ab_abcontactaddress') }}
+            FROM {{ source('gwab', 'ab_history') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
             
 ),
@@ -77,17 +95,25 @@ cte_transformed AS (
         *,
         CAST({{ dbt_utils.generate_surrogate_key([
             'id'
-        ]) }} AS VARCHAR(150)) AS abcontactaddress_sk,
+        ]) }} AS VARCHAR(150)) AS history_sk,
         CAST({{ dbt_utils.generate_surrogate_key([
                         'loadcommandid',
                         'publicid',
-                        'linkid',
-                        'beanversion',
+                        'userid',
                         'archivepartition',
-                        'contactid',
-                        'addressid'
+                        'beanversion',
+                        'customtype',
+                        'externalupdateapp',
+                        'contactaddressid',
+                        'ruleuid',
+                        'abcontactid',
+                        'type',
+                        'subtype',
+                        'description',
+                        'eventtimestamp',
+                        'externalupdateuser'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS record_insertion_date
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS dbt_updated_at
     FROM cte_source_data
 )
 
