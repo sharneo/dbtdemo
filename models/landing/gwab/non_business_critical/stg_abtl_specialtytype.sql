@@ -50,6 +50,7 @@ WITH cte_source_data AS
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'AVRO' as file_type,
                 'GWAB' as source_system
             FROM {{ source('gwab', 'abtl_specialtytype') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
@@ -78,6 +79,7 @@ WITH cte_source_data AS
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
+                'PARQUET' as file_type,
                 'GWAB' as source_system
             FROM {{ source('gwab', 'abtl_specialtytype') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
