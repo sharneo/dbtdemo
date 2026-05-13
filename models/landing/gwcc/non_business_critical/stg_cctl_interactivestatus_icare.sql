@@ -49,7 +49,8 @@ WITH cte_source_data AS
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
-                'AVRO' file_type
+                'AVRO' as file_type,
+                'GWCC' as source_system
             FROM {{ source('gwcc', 'cctl_interactivestatus_icare') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'avro'
             UNION ALL 
@@ -77,7 +78,8 @@ WITH cte_source_data AS
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
                 file_ingestion_timestamp,
-                'PARQUET' file_type
+                'PARQUET' as file_type,
+                'GWCC' as source_system
             FROM {{ source('gwcc', 'cctl_interactivestatus_icare') }}
             WHERE REGEXP_SUBSTR(metadata_file_name, '[^.]+$') = 'parquet'
             
