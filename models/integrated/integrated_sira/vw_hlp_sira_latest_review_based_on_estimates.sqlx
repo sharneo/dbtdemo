@@ -1,0 +1,46 @@
+
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a Latest Review Based on Estimates View for SIRA Reporting  
+                                                Please work dbt 
+
+-#}
+
+{{ config(
+    materialized='view',
+    tags=['sira', 'business_critical']
+) }}
+
+
+with submission_period as (
+    select
+        submission_period,
+        submission_period_end_dt
+    from {{ ref('v_sira_submission_period_current') }}
+    where current_submission_flag = 'Y'
+),
+
+estimates as (
+    select
+        claim_sk,
+        sira_claim_nbr,
+        src_create_dttm,
+        transaction_type
+    from {{ ref('v_hlp_gwcc_c_2_6_estimates_current') }}
+    where transaction_type in ('RESERVES', 'RECOVERIES RESERVES')
+)
+
+select
+    e.claim_sk,
+    e.sira_claim_nbr,
+    sp.submission_period,
+    max(e.src_create_dttm) as latestreviewdate
+from estimates as e
+inner join submission_period as sp on e.src_create_dttm <= sp.submission_period_end_dt
+group by
+    e.claim_sk,
+    e.sira_claim_nbr,
+    sp.submission_period

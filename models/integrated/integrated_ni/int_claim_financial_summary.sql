@@ -1,3 +1,15 @@
+{#-
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             Aspire - original table materialization
+2026-04-20      1.0                             Converted to incremental with merge strategy
+
+-#}
+
+
 {{
   config(
     materialized='incremental',
@@ -20,6 +32,9 @@ with cc_claim as (
         source_system,
         file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
+    {% if is_incremental() %}
+        WHERE file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+    {% endif %}
 ),
 
 cc_exposurerpt as (
@@ -90,8 +105,9 @@ cctl_exposureclosedoutcometype as (
         id,
         name
     from {{ ref('v_cctl_exposureclosedoutcometype_current') }}
-)
-
+),
+cte_join AS 
+(
 select
     cast({{ dbt_utils.generate_surrogate_key([
         'clm.source_system',
@@ -110,7 +126,7 @@ select
     exprpt.futurepayments as future_payments,
     exprpt.totalpayments as total_payments_made,
     exprpt.totalrecoveries as total_recoveries,
-    exprpt.updatetime as summary_eff_dttm,
+    CAST(exprpt.updatetime AS TIMESTAMP_NTZ) as summary_eff_dttm,
     pyr.name as worker_payer,
     benacc.totalweekspaid as total_weekly_benefit_paid_wk_count,
     sts.typecode as exp_status_cd,
@@ -119,32 +135,47 @@ select
     outc.name as exp_closed_outcome,
     exps.assigneduserid as assigned_user_id,
     exps.assignedgroupid as assigned_team_id,
-    current_date() as extract_date,
     clm.file_ingestion_timestamp
-
 from cc_claim clm
-
 inner join cc_exposurerpt exprpt
     on clm.id = exprpt.claimid
-
 inner join cc_exposure exps
     on exprpt.exposureid = exps.id
-
 inner join cctl_exposuretype dim_exp
     on exps.exposuretype = dim_exp.id
-
 left join ccx_benefitsaccrual_icare benacc
     on benacc.exposureid = exps.id
-
 left join cctl_workerpayer_icare pyr
     on pyr.id = exps.workerpayer_icare
-
 left join cctl_exposurestate sts
     on sts.id = exps.state
-
 left join cctl_exposureclosedoutcometype outc
     on outc.id = exps.closedoutcome
-
-{% if is_incremental() %}
-where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
-{% endif %}
+)
+select 
+        claim_sk,
+        claim_nbr,
+        src_claim_id,
+        src_exp_rpt_id,
+        src_exp_id,
+        exposure_type_cd,
+        exposure_type_desc,
+        available_reserves,
+        open_reserves,
+        open_recovery_reserves,
+        remaining_reserves,
+        future_payments,
+        total_payments_made,
+        total_recoveries,
+        summary_eff_dttm,
+        worker_payer,
+        total_weekly_benefit_paid_wk_count,
+        exp_status_cd,
+        exp_status_desc,
+        exp_close_dt,
+        exp_closed_outcome,
+        assigned_user_id,
+        assigned_team_id,
+        file_ingestion_timestamp
+FROM
+        cte_join

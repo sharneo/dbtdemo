@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_claim_assignment_detail
+    description: >
+      Integrated claim assignment detail model sourced from GuidewireCC.
+      Contains allocation details for claim assignment rules including segment,
+      managing entity, team, user, and rule status information.
+      Original SAS source: 40_CLAIM_ASSIGNMENT_DETAIL.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_ASSIGNMENT_DETAIL)
+    columns:
+      - name: rule_detail_sk
+        description: Surrogate key for the rule detail (MD5 hash of 'GWCC' + public ID)
+      - name: rule_detail_id
+        description: Public ID of the assignment detail record
+      - name: src_rule_detail_id
+        description: Source ID from ccx_assignmentdetails_icare
+      - name: src_assignment_rule_id
+        description: Foreign key to the parent claim assignment rule
+      - name: allocation_segment_cd
+        description: Allocation segment type code
+      - name: allocation_segment_desc
+        description: Allocation segment type description
+      - name: managing_entity_cd
+        description: Managing entity code
+      - name: managing_entity_group
+        description: Name of the group/team assigned to manage the allocation
+      - name: managing_entity_user
+        description: Full name of the user assigned to the allocation (firstname + middlename + lastname)
+      - name: allocation_rule_cd
+        description: Allocation rule type code
+      - name: allocation_rule_desc
+        description: Allocation rule type description
+      - name: rule_detail_status_cd
+        description: Status type code for the rule detail
+      - name: rule_detail_status_desc
+        description: Status type description for the rule detail
+      - name: allocation_start_dttm
+        description: Start date/time of the allocation period
+      - name: allocation_end_dttm
+        description: End date/time of the allocation period
+      - name: src_create_dttm
+        description: Source system creation timestamp
+      - name: src_update_dttm
+        description: Source system update timestamp
+      - name: extract_date
+        description: Date of data extraction

@@ -1,0 +1,215 @@
+version: 2
+
+snapshots:
+  - name: bseg_snapshot
+    description: |
+      SCD Type 2 history of SAP Accounting Document Segment line items (BSEG).
+      Grain: one row per version of each accounting document line item.
+      Stores granular line-level detail including account type, amounts in local and document currencies, tax codes, payment terms, and clearing information for all sub-ledger accounts.
+    columns:
+      - name: bseg_sk
+        description: Surrogate key for this BSEG record, generated from [bukrs, belnr, gjahr, buzei]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: bukrs
+        description: Company Code (SAP BUKRS). Company code for the line item.
+
+      - name: belnr
+        description: Accounting Document Number (SAP BELNR). Document number for this item.
+
+      - name: gjahr
+        description: Fiscal Year (SAP GJAHR). Fiscal year of the line item.
+
+      - name: buzei
+        description: Line Item Number (SAP BUZEI). Sequential item number within the document.
+
+      - name: buzid
+        description: Line Item Identification. Internal line item identifier.
+
+      - name: augdt
+        description: Clearing Date (SAP AUGDT). Date when the line item was cleared.
+
+      - name: augcp
+        description: Clearing Period. Period in which the item was cleared.
+
+      - name: augbl
+        description: Clearing Document Number. Document number that cleared this item.
+
+      - name: bschl
+        description: Posting Key (SAP BSCHL). Controls posting behaviour and account type for the line item.
+
+      - name: koart
+        description: Account Type (SAP KOART). Identifies the account type (D=Customer, K=Vendor, S=G/L, M=Material, A=Asset).
+
+      - name: umskz
+        description: Special G/L Indicator (SAP UMSKZ). Special G/L transaction code (e.g., down payment, guarantee).
+
+      - name: umsks
+        description: Special G/L Key. Key for special G/L transactions.
+
+      - name: shkzg
+        description: Debit/Credit Indicator (SAP SHKZG). 'S' = Debit, 'H' = Credit.
+
+      - name: gsber
+        description: Business Area (SAP GSBER). Business area for the line item.
+
+      - name: pargb
+        description: Trading Partner Business Area. Business area of the trading partner.
+
+      - name: mwskz
+        description: Tax Code (SAP MWSKZ). Tax code applied to the line item.
+
+      - name: qsskz
+        description: Withholding Tax Code. Withholding tax code for the line item.
+
+      - name: dmbtr
+        description: Amount in Local Currency (SAP DMBTR). Line item amount in company code currency.
+
+      - name: wrbtr
+        description: Amount in Document Currency (SAP WRBTR). Line item amount in document currency.
+
+      - name: kzbtr
+        description: Amount in Second Local Currency. Amount in parallel currency 2.
+
+      - name: pswbt
+        description: Amount in Third Local Currency. Amount in parallel currency 3.
+
+      - name: pswsl
+        description: Third Local Currency Key. Currency key for the third local currency.
+
+      - name: txbhw
+        description: Tax Base Amount in Local Currency. Tax base amount in company code currency.
+
+      - name: txbfw
+        description: Tax Base Amount in Document Currency. Tax base amount in document currency.
+
+      - name: mwsts
+        description: Tax Amount in Local Currency. Tax amount in company code currency.
+
+      - name: wmwst
+        description: Tax Amount in Document Currency. Tax amount in document currency.
+
+      - name: hwbas
+        description: Tax Base Amount in Local Currency 2. Tax base in parallel currency 2.
+
+      - name: fwbas
+        description: Tax Base Amount in Local Currency 3. Tax base in parallel currency 3.
+
+      - name: hwzuz
+        description: Surcharge Amount in Local Currency. Surcharge in company code currency.
+
+      - name: fwzuz
+        description: Surcharge Amount in Document Currency. Surcharge in document currency.
+
+      - name: shzuz
+        description: Debit/Credit Indicator for Surcharge. Debit/credit indicator for surcharges.
+
+      - name: stekz
+        description: Tax Determination Key. Key for automatic tax calculation.
+
+      - name: mwart
+        description: Tax Type. Type of tax applied (input VAT, output VAT, etc.).
+
+      - name: txgrp
+        description: Tax Group. Grouping for tax reporting.
+
+      - name: ktosl
+        description: Transaction Key (SAP KTOSL). Controls account determination.
+
+      - name: qsshb
+        description: Withholding Tax Base Amount. Base amount for withholding tax calculation.
+
+      - name: kursr
+        description: Exchange Rate (SAP KURSR). Exchange rate for foreign currency translation.
+
+      - name: gbetr
+        description: Cash Discount Amount. Cash discount amount available.
+
+      - name: bdiff
+        description: Exchange Rate Difference. Calculated exchange rate difference.
+
+      - name: bdif2
+        description: Exchange Rate Difference 2. Exchange rate difference for parallel currency.
+
+      - name: valut
+        description: Value Date (SAP VALUT). Date used for interest calculations and due date.
+
+      - name: zuonr
+        description: Assignment Number (SAP ZUONR). External assignment or reference number.
+
+      - name: sgtxt
+        description: Line Item Text (SAP SGTXT). Description text for the line item.
+
+      - name: zinkz
+        description: Interest Calculation Indicator. Indicator for interest calculation on overdue items.
+
+      - name: vbund
+        description: Trading Partner (SAP VBUND). Company ID for intercompany transactions.
+
+      - name: bewar
+        description: Movement Type (SAP BEWAR). Movement type for material or asset posting.
+
+      - name: altkt
+        description: Alternative Account Number. Alternative G/L account for this line item.
+
+      - name: vorgn
+        description: CO Business Transaction. Controlling business transaction code.
+
+      - name: fdlev
+        description: Cash Management Forecast Group. Grouping for cash flow forecasting.
+
+      - name: fdgrp
+        description: Cash Management Group. Grouping for cash management.
+
+      - name: fdwbt
+        description: Cash Management Amount. Amount for cash management in local currency.
+
+      - name: fdtag
+        description: Cash Management Date. Due date for cash management purposes.
+
+      - name: fkont
+        description: G/L Account for Cash Management. G/L account for cash management integration.
+
+      - name: kokrs
+        description: Controlling Area (SAP KOKRS). CO area for the line item.
+
+      - name: kostl
+        description: Cost Center (SAP KOSTL). Cost center assignment.
+
+      - name: projn
+        description: WBS Element (SAP PROJN). Work Breakdown Structure element for project accounting.
+
+      - name: aufnr
+        description: Order Number (SAP AUFNR). Internal order assignment.
+
+      - name: vbeln
+        description: Sales Document Number (SAP VBELN). Sales and distribution document reference.
+
+      - name: xsauf
+        description: Order Settlement Active. 'X' = order is settled to this line item.
+
+      - name: agzei
+        description: Item Number for Account Assignment. Account assignment line item number.
+
+      - name: esrre
+        description: ESR Reference Number. Swiss ESR (ISR) reference number for payments.
+
+      - name: h_monat
+        description: Fiscal Period (House Bank). Fiscal period for house bank processing.
+
+      - name: h_budat
+        description: Posting Date (House Bank). Posting date for house bank processing.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

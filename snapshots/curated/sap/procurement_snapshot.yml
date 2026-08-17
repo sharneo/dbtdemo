@@ -1,0 +1,254 @@
+version: 2
+
+snapshots:
+  - name: procurement_snapshot
+    description: |
+      SCD Type 2 history of SAP Procurement / Purchasing Document data (EKKO + EKPO).
+      Grain: one row per version of each purchasing document line item.
+      Tracks purchase orders, contracts, and scheduling agreements with pricing, delivery, and account assignment details.
+    columns:
+      - name: procurement_sk
+        description: Surrogate key for this procurement record, generated from [ebeln, ebelp]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: ebeln
+        description: Purchasing Document Number (SAP EBELN). Unique identifier for the purchasing document header.
+
+      - name: ebelp
+        description: Purchasing Document Line Item (SAP EBELP). Line item number within the purchasing document.
+
+      - name: aedat
+        description: Changed On (SAP AEDAT). Date when the purchasing document was last changed.
+
+      - name: txz01
+        description: Short Text (SAP TXZ01). Material short text or line item description.
+
+      - name: bukrs
+        description: Company Code (SAP BUKRS). Company Code for the purchasing document.
+
+      - name: werks
+        description: Plant (SAP WERKS). Plant for goods receipt.
+
+      - name: matkl
+        description: Material Group (SAP MATKL). Material group classification.
+
+      - name: ktmng
+        description: Target Quantity (SAP KTMNG). Target quantity for the purchasing item.
+
+      - name: menge
+        description: Purchase Order Quantity (SAP MENGE). Ordered quantity.
+
+      - name: meins
+        description: Base Unit of Measure (SAP MEINS). Unit of measure for the order quantity.
+
+      - name: bprme
+        description: Order Price Unit (SAP BPRME). Unit of measure for the price.
+
+      - name: bpumz
+        description: Numerator for Conversion to Base Unit. Numerator for converting price unit to base unit.
+
+      - name: bpumn
+        description: Denominator for Conversion to Base Unit. Denominator for converting price unit to base unit.
+
+      - name: umrez
+        description: Numerator for Conversion to Order Unit. Numerator for unit of measure conversion.
+
+      - name: umren
+        description: Denominator for Conversion to Order Unit. Denominator for unit of measure conversion.
+
+      - name: netpr
+        description: Net Price (SAP NETPR). Net price per purchase order unit.
+
+      - name: peinh
+        description: Price Unit (SAP PEINH). Number of units for the price.
+
+      - name: netwr
+        description: Net Order Value (SAP NETWR). Net value of the purchase order line item.
+
+      - name: brtwr
+        description: Gross Order Value (SAP BRTWR). Gross value of the purchase order line item.
+
+      - name: mwskz
+        description: Tax Code (SAP MWSKZ). Tax code for the purchase order item.
+
+      - name: pstyp
+        description: Item Category (SAP PSTYP). Purchasing item category (standard, consignment, subcontracting, etc.).
+
+      - name: knttp
+        description: Account Assignment Category (SAP KNTT). Account assignment category (cost center, order, project, etc.).
+
+      - name: kzvbr
+        description: Indicator for Unlimited Overdelivery. Controls overdelivery tolerance.
+
+      - name: vrtkz
+        description: Distribution Indicator. Distribution method for multiple account assignments.
+
+      - name: twrkz
+        description: Partial Invoice Indicator. Controls whether partial invoices are allowed.
+
+      - name: wepos
+        description: Goods Receipt Indicator. 'X' = goods receipt expected.
+
+      - name: weunb
+        description: GR Non-Valuated Indicator. 'X' = goods receipt in non-valuated stock.
+
+      - name: repos
+        description: Invoice Receipt Indicator. 'X' = invoice receipt expected.
+
+      - name: prdat
+        description: Price Determination Date. Date used for price determination.
+
+      - name: bstyp
+        description: Purchasing Document Category (SAP BSTYP). Category of purchasing document (purchase order, contract, etc.).
+
+      - name: effwr
+        description: Effective Value. Effective value of the item for statistical purposes.
+
+      - name: xoblr
+        description: Indicator for Non-Cumulative Goods Receipt.
+
+      - name: kzwi1
+        description: Discount Base 1. Base value for first discount or surcharge.
+
+      - name: kzwi2
+        description: Discount Base 2. Base value for second discount or surcharge.
+
+      - name: kzwi3
+        description: Discount Base 3. Base value for third discount or surcharge.
+
+      - name: kzwi4
+        description: Discount Base 4. Base value for fourth discount or surcharge.
+
+      - name: kzwi5
+        description: Discount Base 5. Base value for fifth discount or surcharge.
+
+      - name: kzwi6
+        description: Discount Base 6. Base value for sixth discount or surcharge.
+
+      - name: bonba
+        description: Bonus Buy Indicator. Indicates a promotional or bonus buy item.
+
+      - name: afnam
+        description: Requisitioner Name. Name of the person who requested the purchase.
+
+      - name: tzonrc
+        description: Time Zone of Requisitioner. Time zone for the requisitioner.
+
+      - name: bsart
+        description: Purchasing Document Type (SAP BSART). Type code for the purchasing document.
+
+      - name: bsakz
+        description: Purchasing Document Status. Status indicator for the purchasing document.
+
+      - name: loekz
+        description: Deletion Flag (SAP LOEKZ). 'X' = purchasing document line item is flagged for deletion.
+
+      - name: statu
+        description: Status. Processing status of the purchasing document.
+
+      - name: aedat1
+        description: Changed On (Item Level). Date when the line item was last changed.
+
+      - name: ernam
+        description: Created By (SAP ERNAM). User who created the purchasing document.
+
+      - name: pincr
+        description: Item Number Increment. Increment for automatic item numbering.
+
+      - name: lponr
+        description: Item Number of Previous Item. Reference to a preceding line item.
+
+      - name: lifnr
+        description: Vendor Account Number (SAP LIFNR). Vendor for this purchasing document.
+
+      - name: spras
+        description: Language Key (SAP SPRAS). Language for the purchasing document.
+
+      - name: zterm
+        description: Terms of Payment (SAP ZTERM). Payment terms for this purchase order.
+
+      - name: zbd1t
+        description: 'Payt Terms: Day Limit 1. First day limit for cash discount.'
+
+      - name: zbd2t
+        description: 'Payt Terms: Day Limit 2. Second day limit for cash discount.'
+
+      - name: zbd3t
+        description: 'Payt Terms: Day Limit 3. Third day limit for cash discount.'
+
+      - name: zbd1p
+        description: Cash Discount Percentage 1. First cash discount percentage.
+
+      - name: zbd2p
+        description: Cash Discount Percentage 2. Second cash discount percentage.
+
+      - name: ekorg
+        description: Purchasing Organization (SAP EKORG). Purchasing organization responsible.
+
+      - name: ekgrp
+        description: Purchasing Group (SAP EKGRP). Buyer or purchasing group responsible.
+
+      - name: waers
+        description: Currency Key (SAP WAERS). Currency for the purchasing document.
+
+      - name: wkurs
+        description: Exchange Rate. Exchange rate for the document currency.
+
+      - name: kufix
+        description: Fixed Exchange Rate Indicator. 'X' = exchange rate is fixed.
+
+      - name: bedat
+        description: Purchasing Document Date. Date of the purchasing document.
+
+      - name: ihrez
+        description: Your Reference Number. External reference number for the purchasing document.
+
+      - name: ktwrt
+        description: Target Value. Target value for the purchase order item.
+
+      - name: knumv
+        description: Condition Record Number. Number for pricing conditions.
+
+      - name: kalsm
+        description: Pricing Procedure. Pricing procedure used for this document.
+
+      - name: stafo
+        description: Rebate Group. Grouping for rebate processing.
+
+      - name: lifre
+        description: Different Vendor Indicator. 'X' = different vendor for goods delivery.
+
+      - name: upinc
+        description: Unit Price Indicator. Controls whether unit price changes are tracked.
+
+      - name: lands
+        description: Country of Origin. Country where the goods originate.
+
+      - name: stceg_l
+        description: VAT Registration Number of Vendor. Vendor's VAT registration number.
+
+      - name: stceg
+        description: VAT Registration Number. VAT number for the transaction.
+
+      - name: absgr
+        description: Reason for Ordering. Code indicating the reason for the purchase.
+
+      - name: procstat
+        description: Procurement Status. Current status of the procurement process.
+
+      - name: rlwrt
+        description: Total Value. Total value including all surcharges and discounts.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

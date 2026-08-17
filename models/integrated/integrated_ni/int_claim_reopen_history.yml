@@ -1,0 +1,79 @@
+version: 2
+models:
+-  name: int_claim_reopen_history
+   description: "Integrated claim reopen history model sourced from Guidewire CC. Tracks claim reopen events with dates and managing entity details. Original SAS source: 55_CLAIM_REOPEN_HISTORY.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_REOPEN_HISTORY)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim (source_system + claimnumber) - primary key"
+      tests:
+      -  unique:
+            name: int_claim_reopen_history_claim_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_reopen_history_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: source_system
+      description: "Source system identifier"
+   -  name: managing_entity_id
+      description: "Managing entity ID"
+   -  name: managing_entity_sk
+      description: "Surrogate key for managing entity"
+      tests:
+      -  not_null:
+            name: int_claim_reopen_history_managing_entity_sk_not_null
+            config:
+               severity: warn
+   -  name: managing_entity_cd
+      description: "Managing entity code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_reopen_history_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_reopen_history_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_reopen_history_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: src_claim_hist_id
+      description: "Source claim history ID"
+   -  name: claim_hist_type
+      description: "Claim history type"
+   -  name: claim_hist_desc
+      description: "Claim history description"
+   -  name: reopened_dt
+      description: "Reopened date"
+   -  name: reopened_dttm
+      description: "Reopened datetime"
+   -  name: reopened_mth
+      description: "Reopened month"
+   -  name: reopened_yr
+      description: "Reopened year"
+   -  name: reopened_wk_number
+      description: "Reopened week number"
+   -  name: reopened_unique_yr_ind
+      description: "Reopened unique year indicator"
+   -  name: reopened_unique_monthyr_ind
+      description: "Reopened unique month-year indicator"
+   -  name: reopened_unique_weekyr_ind
+      description: "Reopened unique week-year indicator"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_reopen_history_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

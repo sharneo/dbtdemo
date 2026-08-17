@@ -1,0 +1,73 @@
+version: 2
+models:
+-  name: int_claim_legal_rep
+   description: "Integrated claim legal representation model sourced from Guidewire CC. Tracks applicant/respondent solicitors and law firms per matter. Original SAS source: L03_CLAIM_LEGAL_REP.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_LEGAL_REP)"
+   columns:
+   -  name: claim_legal_rep_sk
+      description: "Surrogate key for claim legal rep (source_system + claimnumber + casenumber) - primary key"
+      tests:
+      -  unique:
+            name: int_claim_legal_rep_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_legal_rep_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_legal_rep_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_legal_rep_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_legal_rep_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_legal_rep_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: matternumber
+      description: "Matter/case number"
+   -  name: applcnt_solctor_contctid
+      description: "Applicant solicitor contact ID"
+   -  name: applicant_solicitor
+      description: "Applicant solicitor name"
+   -  name: applicnt_lawfrm_contctid
+      description: "Applicant law firm contact ID"
+   -  name: applicant_law_firm
+      description: "Applicant law firm name"
+   -  name: rspndt_solctor_contctid
+      description: "Respondent solicitor contact ID"
+   -  name: respondent_solicitor
+      description: "Respondent solicitor name"
+   -  name: rspdnt_lawfrm_contctid
+      description: "Respondent law firm contact ID"
+   -  name: respondent_law_firm
+      description: "Respondent law firm name"
+   -  name: latest_record_ind
+      description: "Latest record indicator (Y/N)"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_legal_rep_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

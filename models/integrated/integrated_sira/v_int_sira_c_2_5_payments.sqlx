@@ -1,0 +1,315 @@
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a Payments View for SIRA Reporting  
+                                                Please work dbt 
+
+-#}
+
+{{ config(
+    materialized='view',
+    tags=['sira', 'business_critical']
+) }}
+
+
+with cc_check as (
+    select
+        id,
+        checksetid,
+        status,
+        issuedate,
+        invoicenumber,
+        checktype,
+        retired,
+        createtime,
+        updatetime
+    from {{ ref('v_cc_check_current') }}
+    where retired = 0
+        and checktype = 1
+        and issuedate is not null
+),
+
+cctl_transactionstatus_check as (
+    select
+        id,
+        name
+    from {{ ref('v_cctl_transactionstatus_current') }}
+    where upper(name) in ('ISSUED', 'VOIDED', 'DENIED', 'CLEARED')
+),
+
+cc_checkpayee as (
+    select
+        checkid,
+        payeetype,
+        payeedenormid
+    from {{ ref('v_cc_checkpayee_current') }}
+),
+
+cctl_contactrole as (
+    select
+        id,
+        typecode
+    from {{ ref('v_cctl_contactrole_current') }}
+),
+
+cc_contact as (
+    select
+        id,
+        abn_icare
+    from {{ ref('v_cc_contact_current') }}
+),
+
+cc_transactionset as (
+    select
+        id,
+        adjustmentpayment_icare
+    from {{ ref('v_cc_transactionset_current') }}
+    where retired = 0
+),
+
+cc_transaction as (
+    select
+        id,
+        transactionsetid,
+        claimid,
+        checkid,
+        subtype,
+        status,
+        createtime
+    from {{ ref('v_cc_transaction_current') }}
+    where retired = 0
+        and subtype = '1'
+),
+
+cctl_transactionstatus_trans as (
+    select
+        id,
+        name
+    from {{ ref('v_cctl_transactionstatus_current') }}
+),
+
+cc_transactionlineitem as (
+    select
+        id,
+        transactionid,
+        transactionamount,
+        datefrom_icare,
+        dateto_icare,
+        hourspaid_icare,
+        hourslost_icare,
+        paycode_icareid,
+        serviceproviderid_icare,
+        dateofservice_icare,
+        weeklybenefitrate_icare,
+        earningse_icare,
+        nonpecuniarybenefitd_icare,
+        gstmethodpel_ext,
+        retired,
+        createtime,
+        updatetime
+    from {{ ref('v_cc_transactionlineitem_current') }}
+    where retired = 0
+),
+
+ccx_paycode_icare as (
+    select
+        id,
+        paycode
+    from {{ ref('v_ccx_paycode_icare_current') }}
+    where retired = 0
+),
+
+cc_claim as (
+    select
+        id,
+        claim_sk,
+        claimnumber,
+        policyid,
+        lodgingagent_icare,
+        claimsagent_icare,
+        lossdate
+    from {{ ref('v_cc_claim_current') }}
+    where retired = 0
+),
+
+cc_policy as (
+    select
+        id,
+        itcpercentagepel,
+        itcaaamountpel
+    from {{ ref('v_cc_policy_current') }}
+    where retired = 0
+),
+
+cctl_claimagent_icare_lag as (
+    select
+        id,
+        typecode
+    from {{ ref('v_cctl_claimagent_icare_current') }}
+),
+
+cctl_claimagent_icare_mag as (
+    select
+        id,
+        typecode
+    from {{ ref('v_cctl_claimagent_icare_current') }}
+),
+
+cctl_gstmethodpel_ext as (
+    select
+        id,
+        name
+    from {{ ref('v_cctl_gstmethodpel_ext_current') }}
+),
+
+cc_employmentdata as (
+    select
+        claimid,
+        hoursworkedweek_icare,
+        numdaysworked
+    from {{ ref('v_cc_employmentdata_current') }}
+    where retired = 0
+),
+
+base as (
+    select
+        tli.id as transactionlineitem_id,
+        cc_claim.claim_sk,
+        cc_claim.claimnumber,
+        cast('GWCC' as varchar(10)) as srcsystemcd,
+        cc_claim.claimnumber || '^' || 'GWCC' as claimbk,
+        cc_claim.claimnumber || coalesce(lag_agent.typecode, '701') as siraclaimnumber,
+        cast(coalesce(mag_agent.typecode, lag_agent.typecode) as varchar(5)) as agentcode,
+        case
+            when upper(cctl_ts_chk.name) = 'VOIDED'
+                and upper(cctl_ts_trans.name) = 'SUBMITTED'
+                and left(to_char(t.createtime, 'YYYYMMDD'), 6) != left(to_char(chk.issuedate, 'YYYYMMDD'), 6)
+                then cast(t.createtime as date)
+            else cast(chk.issuedate as date)
+        end as transactiondate,
+        case when ts.adjustmentpayment_icare = 0 then 'N' else 'Y' end as adjustmentpayment_icare,
+        case
+            when pc.paycode in ('RPE001') then cast(tli.transactionamount as decimal(30, 6)) * -1
+            else cast(tli.transactionamount as decimal(30, 6))
+        end as transactionamount,
+        cast(tli.datefrom_icare as date) as datefrom_icare,
+        cast(tli.dateto_icare as date) as dateto_icare,
+        cast(tli.hourspaid_icare as decimal(5, 2)) as hourspaid_icare,
+        case
+            when pc.paycode not in ('WPT001', 'WPT002', 'WPT003', 'WPT004', 'WPP001', 'WPP002', 'WPP003', 'WPP004', 'WPP005', 'WPP006', 'WPP007', 'WPP008')
+                then cast(0 as decimal(5, 2))
+            when cast(coalesce(tli.hourspaid_icare, 0) as decimal(5, 2)) > cast(coalesce(ed.hoursworkedweek_icare, 0) as decimal(5, 2))
+                then cast(0 as decimal(5, 2))
+            when pc.paycode in ('WPT001', 'WPT002', 'WPT003', 'WPT004', 'WPP001', 'WPP002', 'WPP003', 'WPP004', 'WPP005', 'WPP006', 'WPP007', 'WPP008')
+                and (datediff(day, tli.datefrom_icare, tli.dateto_icare) + 1) < 7
+                then cast(
+                    ((datediff(day, tli.datefrom_icare, tli.dateto_icare) + 1) /
+                    case when ed.numdaysworked = 0 then 5 else coalesce(ed.numdaysworked, 5) end)
+                    * (cast(coalesce(ed.hoursworkedweek_icare, 0) as decimal(5, 2)) - cast(coalesce(tli.hourspaid_icare, 0) as decimal(5, 2)))
+                as decimal(8, 2))
+            when pc.paycode in ('WPT001', 'WPT002', 'WPT003', 'WPT004', 'WPP001', 'WPP002', 'WPP003', 'WPP004', 'WPP005', 'WPP006', 'WPP007', 'WPP008')
+                and (datediff(day, tli.datefrom_icare, tli.dateto_icare) + 1) = 7
+                then cast(coalesce(ed.hoursworkedweek_icare, 0) as decimal(5, 2)) - cast(coalesce(tli.hourspaid_icare, 0) as decimal(5, 2))
+            else cast(0 as decimal(5, 2))
+        end as hourslost_icare,
+        ctct.abn_icare,
+        pc.paycode,
+        tli.serviceproviderid_icare,
+        cast(tli.dateofservice_icare as date) as dateofservice_icare,
+        cast(tli.weeklybenefitrate_icare as decimal(10, 2)) as weeklybenefitrate_icare,
+        chk.invoicenumber,
+        cast(tli.earningse_icare as decimal(10, 2)) as earningse_icare,
+        cast(tli.nonpecuniarybenefitd_icare as decimal(10, 2)) as nonpecuniarybenefitd_icare,
+        chk.status as statuscd,
+        cr.typecode as payeetype,
+        cctl_ts_chk.name as statusname,
+        cctl_ts_trans.name as t_statusname,
+        t.subtype,
+        chk.retired,
+        coalesce(tli.createtime, chk.createtime) as createtime,
+        coalesce(tli.updatetime, chk.updatetime) as updatetime,
+        coalesce(gstm.name, '') as gstmethodname,
+        case
+            when (coalesce(pol.itcpercentagepel, 0) = 100 and coalesce(gstm.name, '') = 'DAM')
+                or (cc_claim.lossdate < '2000-07-01' and coalesce(gstm.name, '') = 'DAM')
+                then 0
+            else coalesce(pol.itcaaamountpel, 0)
+        end as itcaaamountpel,
+        coalesce(pol.itcaaamountpel, 0) as itcaaamountpel_orig,
+        pol.itcpercentagepel,
+        cc_claim.lossdate,
+        cc_claim.id as claimid,
+        chk.id as checkid
+    from cc_check as chk
+    left join cctl_transactionstatus_check as cctl_ts_chk on chk.status = cctl_ts_chk.id
+    left join cc_checkpayee as cp on cp.checkid = chk.id
+    left join cctl_contactrole as cr on cr.id = cp.payeetype
+    left join cc_contact as ctct on ctct.id = cp.payeedenormid
+    left join cc_transactionset as ts on chk.checksetid = ts.id
+    left join cc_transaction as t on t.transactionsetid = ts.id and t.checkid = chk.id
+    left join cc_transactionlineitem as tli on tli.transactionid = t.id
+    left join ccx_paycode_icare as pc on tli.paycode_icareid = pc.id
+    inner join cc_claim on t.claimid = cc_claim.id
+    left join cc_policy as pol on pol.id = cc_claim.policyid
+    left join cctl_claimagent_icare_lag as lag_agent on cc_claim.lodgingagent_icare = lag_agent.id
+    left join cctl_claimagent_icare_mag as mag_agent on cc_claim.claimsagent_icare = mag_agent.id
+    left join cctl_transactionstatus_trans as cctl_ts_trans on t.status = cctl_ts_trans.id
+    left join cctl_gstmethodpel_ext as gstm on gstm.id = tli.gstmethodpel_ext
+    left join cc_employmentdata as ed on ed.claimid = t.claimid
+    where cctl_ts_chk.id is not null
+)
+
+select distinct
+    cast(
+        ltrim(rtrim(siraclaimnumber)) || '^' ||
+        ltrim(rtrim(to_char(transactiondate, 'YYYYMMDD'))) || '^' ||
+        ltrim(rtrim(coalesce(invoicenumber, ''))) || '^' ||
+        ltrim(rtrim(coalesce(serviceproviderid_icare, ''))) || '^' ||
+        ltrim(rtrim(coalesce(to_char(datefrom_icare, 'YYYYMMDD'), ''))) || '^' ||
+        ltrim(rtrim(coalesce(abn_icare, ''))) || '^' ||
+        ltrim(rtrim(coalesce(paycode, ''))) || '^' ||
+        ltrim(rtrim(coalesce(to_char(dateofservice_icare, 'YYYYMMDD'), ''))) || '^' ||
+        ltrim(rtrim(cast(transactionlineitem_id as varchar))) || '^' ||
+        ltrim(rtrim(cast(checkid as varchar)))
+    as varchar(200)) as pymt_hlp_key,
+    claim_sk,
+    claimnumber,
+    srcsystemcd,
+    claimbk,
+    siraclaimnumber,
+    agentcode,
+    transactiondate,
+    adjustmentpayment_icare,
+    transactionamount,
+    datefrom_icare,
+    dateto_icare,
+    hourspaid_icare,
+    hourslost_icare,
+    abn_icare,
+    paycode,
+    serviceproviderid_icare,
+    dateofservice_icare,
+    weeklybenefitrate_icare,
+    invoicenumber,
+    earningse_icare,
+    nonpecuniarybenefitd_icare,
+    statuscd,
+    payeetype,
+    statusname,
+    t_statusname,
+    subtype,
+    retired,
+    createtime,
+    updatetime,
+    gstmethodname,
+    itcaaamountpel,
+    itcaaamountpel_orig,
+    itcpercentagepel,
+    lossdate,
+    claimid,
+    transactionlineitem_id,
+    checkid
+from base
+where hourslost_icare > -999

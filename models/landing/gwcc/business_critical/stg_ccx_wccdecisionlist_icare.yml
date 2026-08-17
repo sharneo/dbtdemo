@@ -1,0 +1,86 @@
+version: 2
+models:
+-  name: stg_ccx_wccdecisionlist_icare
+   description: "Incremental staging model for Guidewire Claim Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: loadcommandid
+      description: ""
+   -  name: createuserid
+      description: ""
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wccdecisionlist_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: archivepartition
+      description: ""
+   -  name: beanversion
+      description: ""
+   -  name: retired
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wccdecisionlist_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wccdecisionlist_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: ""
+   -  name: wccdecision
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wccdecisionlist_icare_wccdecision_not_null
+            config:
+               severity: warn
+   -  name: decisionoutcome
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wccdecisionlist_icare_decisionoutcome_not_null
+            config:
+               severity: warn
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wccdecisionlist_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_ccx_wccdecisionlist_icare_id_not_null
+            config:
+               severity: warn
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

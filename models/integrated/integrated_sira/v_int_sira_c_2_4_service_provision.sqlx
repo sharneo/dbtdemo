@@ -1,0 +1,288 @@
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a Service Provision View for SIRA Reporting  
+
+-#}
+
+{{ config(
+    materialized='view',
+    tags=['sira', 'business_critical']
+) }}
+
+
+with cc_servicerequest as (
+    select
+        id,
+        claimid,
+        servicerequestnumber,
+        daterequested_icare,
+        expectedservicecompletiondate,
+        nulldate_icare,
+        progress,
+        siraaccredrehabprovider_icare,
+        createtime,
+        updatetime
+    from {{ ref('v_cc_servicerequest_current') }}
+),
+
+cc_servicerequestinstruction as (
+    select
+        id,
+        servicerequestid
+    from {{ ref('v_cc_servicerequestinstruction_current') }}
+),
+
+cc_servicereqinstructionsvc as (
+    select
+        id,
+        servicerequestinstructionid,
+        specialistserviceid,
+        hostabn_icare,
+        createtime,
+        updatetime,
+        omd_cdc_operation
+    from {{ ref('v_cc_servicereqinstructionsvc_current') }}
+),
+
+cc_specialistservice as (
+    select
+        id,
+        code,
+        name
+    from {{ ref('v_cc_specialistservice_current') }}
+    where retired = 0
+),
+
+cc_spclstsvcparent as (
+    select
+        ownerid,
+        foreignentityid
+    from {{ ref('v_cc_spclstsvcparent_current') }}
+),
+
+cc_specialistservice_parent as (
+    select
+        id,
+        code,
+        name
+    from {{ ref('v_cc_specialistservice_current') }}
+    where retired = 0
+        and code in ('workplacerehab', 'vocationalrehab')
+),
+
+cc_claim as (
+    select
+        id,
+        claim_sk,
+        claimnumber,
+        closedate_icare,
+        lodgingagent_icare,
+        claimsagent_icare,
+        reimbschagrmnt_icare
+    from {{ ref('v_cc_claim_current') }}
+    where retired = 0
+),
+
+cctl_claimagent_icare_lag as (
+    select
+        id,
+        typecode
+    from {{ ref('v_cctl_claimagent_icare_current') }}
+),
+
+cctl_claimagent_icare_mag as (
+    select
+        id,
+        typecode
+    from {{ ref('v_cctl_claimagent_icare_current') }}
+),
+
+ccx_siraaccredservprov_icare as (
+    select
+        id,
+        providernumber
+    from {{ ref('v_ccx_siraaccredservprov_icare_current') }}
+    where retired = 0
+),
+
+cctl_servicerequestprogress as (
+    select
+        id,
+        typecode
+    from {{ ref('v_cctl_servicerequestprogress_current') }}
+    where typecode in ('inprogress', 'nulled', 'workcomplete', 'closed')
+),
+
+service_request_base as (
+    select
+        cc_claim.claim_sk,
+        cc_claim.claimnumber,
+        cc_claim.closedate_icare,
+        coalesce(lag_agent.typecode, '701') as lodgingagentcode,
+        mag_agent.typecode as managingagentcode,
+        sr.servicerequestnumber,
+        sris.id as serreqinstsrv_id,
+        sasp.providernumber,
+        cast(sr.daterequested_icare as date) as datefrom_icare,
+        cast(sr.expectedservicecompletiondate as date) as dateto_icare,
+        srp.typecode as serreqstatus,
+        case
+            when sps.code = 'workplacerehab' then '01'
+            when sps.code = 'vocationalrehab' then '02'
+            else '00'
+        end as service_provision_type_code,
+        sps.name as service_provision_type_name,
+        case
+            when ss.code = 'worktrial' then '01'
+            when ss.code = 'retraining' then '02'
+            when ss.code = 'equipment' then '03'
+            when ss.code = 'jobcoverplacementprogram' then '04'
+            when ss.code = 'transitiontowork' then '05'
+            when ss.code = 'recoveratworkassist' then '06'
+            when ss.code = '07Connect2Work' then '07'
+            when ss.code = '08JobCover6' then '08'
+            else '00'
+        end as service_provision_subtype_code,
+        ss.name as service_provision_subtype_name,
+        cast(sr.nulldate_icare as date) as nulldate_icare,
+        sris.hostabn_icare,
+        sr.createtime,
+        sr.updatetime,
+        sris.createtime as serreqinstsrv_createtime,
+        sris.updatetime as serreqinstsrv_updatetime,
+        sris.omd_cdc_operation
+    from cc_servicerequest as sr
+    left join cc_servicerequestinstruction as sri
+        on sri.servicerequestid = sr.id
+    left join cc_servicereqinstructionsvc as sris
+        on sris.servicerequestinstructionid = sri.id
+    left join cc_specialistservice as ss
+        on ss.id = sris.specialistserviceid
+    left join cc_spclstsvcparent as ssp
+        on ssp.ownerid = ss.id
+    left join cc_specialistservice_parent as sps
+        on sps.id = ssp.foreignentityid
+    left join cc_claim
+        on cc_claim.id = sr.claimid
+    left join cctl_claimagent_icare_lag as lag_agent
+        on cc_claim.lodgingagent_icare = lag_agent.id
+    left join cctl_claimagent_icare_mag as mag_agent
+        on cc_claim.claimsagent_icare = mag_agent.id
+    left join ccx_siraaccredservprov_icare as sasp
+        on sasp.id = sr.siraaccredrehabprovider_icare
+    left join cctl_servicerequestprogress as srp
+        on sr.progress = srp.id
+    where sps.code in ('workplacerehab', 'vocationalrehab')
+        and srp.typecode in ('inprogress', 'nulled', 'workcomplete', 'closed')
+),
+
+base as (
+    select
+        cast(
+            ltrim(rtrim(srb.claimnumber || srb.lodgingagentcode)) || '^' ||
+            ltrim(rtrim(srb.servicerequestnumber)) || '^' ||
+            ltrim(rtrim(cast(srb.serreqinstsrv_id as varchar))) || '^' ||
+            ltrim(rtrim(srb.providernumber)) || '^' ||
+            ltrim(rtrim(cast(srb.datefrom_icare as varchar))) || '^' ||
+            ltrim(rtrim(srb.service_provision_type_code)) || '^' ||
+            ltrim(rtrim(srb.service_provision_subtype_code))
+        as varchar(100)) as sp_hlp_key,
+        srb.claim_sk,
+        srb.claimnumber,
+        cast('GWCC' as varchar(10)) as srcsystemcd,
+        srb.claimnumber || '^' || 'GWCC' as claimbk,
+        srb.claimnumber || srb.lodgingagentcode as siraclaimnumber,
+        srb.managingagentcode as agentcode,
+        srb.servicerequestnumber,
+        srb.providernumber,
+        srb.datefrom_icare,
+        srb.dateto_icare,
+        srb.service_provision_type_code,
+        srb.service_provision_type_name,
+        srb.service_provision_subtype_code,
+        srb.service_provision_subtype_name,
+        srb.nulldate_icare,
+        srb.hostabn_icare,
+        srb.createtime,
+        srb.updatetime,
+        srb.omd_cdc_operation,
+        row_number() over (
+            partition by srb.servicerequestnumber
+            order by srb.omd_cdc_operation desc
+        ) as omd_cdc_operation_rn,
+        srb.closedate_icare,
+        row_number() over (
+            partition by srb.claimnumber || srb.lodgingagentcode, srb.servicerequestnumber
+            order by srb.serreqinstsrv_updatetime desc, srb.serreqinstsrv_createtime desc, srb.serreqinstsrv_id desc
+        ) as rownum
+    from service_request_base as srb
+),
+
+base_with_status as (
+    select
+        sp_hlp_key,
+        claim_sk,
+        claimnumber,
+        srcsystemcd,
+        claimbk,
+        siraclaimnumber,
+        agentcode,
+        servicerequestnumber,
+        providernumber,
+        datefrom_icare,
+        dateto_icare,
+        service_provision_type_code,
+        service_provision_type_name,
+        service_provision_subtype_code,
+        service_provision_subtype_name,
+        nulldate_icare,
+        hostabn_icare,
+        createtime,
+        updatetime,
+        case when rownum = 1 then '0' else '1' end as retired,
+        omd_cdc_operation_rn,
+        case
+            when omd_cdc_operation_rn = 1 and omd_cdc_operation = 'D' then 'D'
+            when omd_cdc_operation = 'U' then 'I'
+            else omd_cdc_operation
+        end as insrt_svc_status_1,
+        omd_cdc_operation,
+        closedate_icare,
+        rownum
+    from base
+)
+
+select
+    sp_hlp_key,
+    claim_sk,
+    claimnumber,
+    srcsystemcd,
+    claimbk,
+    siraclaimnumber,
+    agentcode,
+    servicerequestnumber,
+    providernumber,
+    datefrom_icare,
+    dateto_icare,
+    service_provision_type_code,
+    service_provision_type_name,
+    service_provision_subtype_code,
+    service_provision_subtype_name,
+    nulldate_icare,
+    hostabn_icare,
+    createtime,
+    updatetime,
+    retired,
+    omd_cdc_operation_rn,
+    insrt_svc_status_1,
+    omd_cdc_operation,
+    closedate_icare,
+    rownum,
+    first_value(insrt_svc_status_1) over (
+        partition by servicerequestnumber
+        order by omd_cdc_operation_rn asc
+    ) as insrt_svc_status
+from base_with_status

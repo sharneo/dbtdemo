@@ -1,0 +1,77 @@
+version: 2
+models:
+-  name: int_claim_assignment_detail
+   description: "Integrated claim assignment detail model sourced from Guidewire CC. Contains allocation segment, managing entity, team, user, and rule details for claim assignments. Original SAS source: 40_CLAIM_ASSIGNMENT_DETAIL.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_ASSIGNMENT_DETAIL)"
+   columns:
+   -  name: rule_detail_sk
+      description: "Surrogate key for the assignment detail (source_system + publicid)"
+      tests:
+      -  not_null:
+            name: int_claim_assignment_detail_rule_detail_sk_not_null
+            config:
+               severity: warn
+   -  name: rule_detail_id
+      description: "Public ID of the assignment detail"
+   -  name: src_rule_detail_id
+      description: "Source rule detail ID - primary key"
+      tests:
+      -  unique:
+            name: int_claim_assignment_detail_src_rule_detail_id_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_assignment_detail_src_rule_detail_id_not_null
+            config:
+               severity: warn
+   -  name: src_assignment_rule_id
+      description: "Source assignment rule ID - foreign key to int_claim_assignment_rule"
+      tests:
+      -  not_null:
+            name: int_claim_assignment_detail_src_assignment_rule_id_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_assignment_detail_src_assignment_rule_id_fk
+            arguments:
+               to: ref('int_claim_assignment_rule')
+               field: src_assignment_rule_id
+            config:
+               severity: warn
+   -  name: allocation_segment_cd
+      description: "Allocation segment typecode"
+   -  name: allocation_segment_desc
+      description: "Allocation segment description"
+   -  name: managing_entity_cd
+      description: "Managing entity code"
+   -  name: managing_entity_group
+      description: "Managing entity group name"
+   -  name: managing_entity_user
+      description: "Managing entity user full name"
+   -  name: allocation_rule_cd
+      description: "Allocation rule typecode"
+   -  name: allocation_rule_desc
+      description: "Allocation rule description"
+   -  name: rule_detail_status_cd
+      description: "Rule detail status typecode"
+   -  name: rule_detail_status_desc
+      description: "Rule detail status description"
+   -  name: allocation_start_dttm
+      description: "Allocation start datetime"
+   -  name: allocation_end_dttm
+      description: "Allocation end datetime"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_claim_assignment_detail_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: src_update_dttm
+      description: "Source system update timestamp"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_assignment_detail_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

@@ -2,7 +2,7 @@ version: 2
 sources:
 - name: gwcc
   description: 'Data Lake Curated Data'
-  database: DEV_RAW_DB
+  database: DEV_LANDING_DB
   schema: gwcc
   tables:
     - name: cc_activity
@@ -1195,3 +1195,18 @@ sources:
     - name: ccx_dmservicerequestchnge_ext
     - name: ccx_wcdmeritrevlistwrap_icare
     - name: ccx_sec52reasndecisionrev_ext
+    - name: cctl_excesslegislationtype_ext
+    - name: cctl_pirsclasstype_ext
+    - name: cctl_psychologicaltype_ext
+    - name: cctl_psychrelevantevents_ext
+    - name: cctl_salegislationtype_ext
+    - name: cctl_thresholdinjurytype_ext
+    - name: cctl_wpidocassmtoutcome_ext
+    - name: cctl_wpidocassmttype_ext
+    - name: ccx_assessedpirsscore_ext
+    - name: ccx_recoveryinvoice_ext
+    - name: ccx_wbthresholdrefdata_ext
+    - name: ccx_psychrelevtwrap_ext
+    - name: cctl_wpisubtype_ext
+    - name: ccx_transactionsetuser_ext
+

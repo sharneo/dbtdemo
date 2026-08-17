@@ -1,0 +1,109 @@
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a Reporter View for SIRA Reporting  
+                                                Please work dbt 
+
+-#}
+
+{{ config(
+    materialized='view',
+    tags=['sira', 'business_critical']
+) }}
+
+
+with cc_claimcontact as (
+    select
+        id,
+        claimid,
+        contactid
+    from {{ ref('v_cc_claimcontact_current') }}
+    where retired = 0
+),
+
+cc_contact as (
+    select
+        id,
+        homephone,
+        emailaddress1,
+        workphone,
+        cellphone,
+        gender,
+        dateofbirth,
+        firstname,
+        lastname,
+        middlename,
+        prefix,
+        primaryphone
+    from {{ ref('v_cc_contact_current') }}
+    where retired = 0
+),
+
+cc_claimcontactrole as (
+    select
+        claimcontactid,
+        role,
+        exposureid
+    from {{ ref('v_cc_claimcontactrole_current') }}
+    where retired = 0
+        and policyid is null
+        and evaluationid is null
+        and exposureid is null
+        and incidentid is null
+        and matterid is null
+        and negotiationid is null
+),
+
+cctl_contactrole as (
+    select
+        id
+    from {{ ref('v_cctl_contactrole_current') }}
+    where typecode = 'Reporter'
+),
+
+base as (
+    select
+        coalesce(clmctct.claimid, '') as claimid,
+        ctct.homephone,
+        ctct.emailaddress1,
+        ctct.workphone,
+        ctct.cellphone as mobilephone,
+        ctct.gender,
+        ctct.dateofbirth,
+        ctct.firstname,
+        ctct.lastname,
+        ctct.middlename,
+        ctct.prefix,
+        replace(
+            coalesce(ctct.lastname, '') || ' ' || coalesce(ctct.firstname, '') || coalesce(ctct.middlename, ''),
+            '  ', ' '
+        ) as fullname,
+        clmctctrole.exposureid,
+        'N' as sira_processing_ind,
+        ctct.primaryphone
+    from cc_claimcontact as clmctct
+    left join cc_contact as ctct on ctct.id = clmctct.contactid
+    left join cc_claimcontactrole as clmctctrole on clmctctrole.claimcontactid = clmctct.id
+    left join cctl_contactrole as contactrole on contactrole.id = clmctctrole.role
+    where contactrole.id is not null
+)
+
+select
+    claimid,
+    homephone,
+    emailaddress1,
+    workphone,
+    mobilephone,
+    gender,
+    dateofbirth,
+    firstname,
+    lastname,
+    middlename,
+    prefix,
+    fullname,
+    exposureid,
+    sira_processing_ind,
+    primaryphone
+from base

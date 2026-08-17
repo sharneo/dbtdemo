@@ -1,0 +1,96 @@
+version: 2
+models:
+-  name: int_claim_txn_document
+   description: "Integrated claim transaction document model sourced from Guidewire CC. Tracks documents linked to transactions including invoices and digital payment documents. Original SAS source: 16_CLAIM_TXN_DOCUMENT.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_TXN_DOCUMENT)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_txn_document_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_txn_document_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_txn_document_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_txn_document_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: src_txn_set_id
+      description: "Source transaction set ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_txn_document_src_txn_set_id_not_null
+            config:
+               severity: warn
+   -  name: src_doc_id
+      description: "Source document ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_txn_document_src_doc_id_not_null
+            config:
+               severity: warn
+   -  name: doc_type_cd
+      description: "Document type code"
+   -  name: doc_type_desc
+      description: "Document type description"
+   -  name: doc_section_cd
+      description: "Document section code"
+   -  name: doc_section_desc
+      description: "Document section description"
+   -  name: doc_sub_section_cd
+      description: "Document sub-section code"
+   -  name: doc_sub_section_desc
+      description: "Document sub-section description"
+   -  name: doc_status_cd
+      description: "Document status code"
+   -  name: doc_status_desc
+      description: "Document status description"
+   -  name: doc_sent_received_dttm
+      description: "Document sent/received datetime"
+   -  name: doc_channel_cd
+      description: "Document channel code"
+   -  name: doc_channel_desc
+      description: "Document channel description"
+   -  name: doc_name
+      description: "Document name"
+   -  name: doc_workcapacity_link_id
+      description: "Document work capacity link ID"
+   -  name: doc_lob_id
+      description: "Document LOB ID"
+   -  name: doc_inbound_ind
+      description: "Document inbound indicator"
+   -  name: doc_schemeagent_id
+      description: "Document scheme agent ID"
+   -  name: doc_create_dttm
+      description: "Document creation datetime"
+   -  name: doc_update_dttm
+      description: "Document update datetime"
+   -  name: earliest_invoice_doc_ind
+      description: "Earliest invoice document indicator"
+   -  name: digital_pymt_invoice_ind
+      description: "Digital payment invoice indicator"
+   -  name: extract_date
+      description: "Extract date"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_txn_document_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

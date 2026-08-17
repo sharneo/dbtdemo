@@ -1,0 +1,137 @@
+version: 2
+
+snapshots:
+  - name: internal_order_snapshot
+    description: |
+      SCD Type 2 history of SAP Internal Order master data (AUFK).
+      Grain: one row per version of each internal order.
+      Tracks orders used for cost monitoring and controlling of specific tasks, projects, or events.
+    columns:
+      - name: internal_order_sk
+        description: Surrogate key for this internal order record, generated from [aufnr]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: aufnr
+        description: Order Number (SAP AUFNR). Unique identifier for the internal order.
+
+      - name: auart
+        description: Order Type (SAP AUART). Categorizes the order type (e.g., production, overhead, investment).
+
+      - name: autyp
+        description: Order Category (SAP AUTYP). Classifies the order (internal order, production order, etc.).
+
+      - name: refnr
+        description: Reference Order Number. Reference to a higher-level order or project.
+
+      - name: ernam
+        description: Created By (SAP ERNAM). User who created the order.
+
+      - name: erdat
+        description: Created On (SAP ERDAT). Date when the order was created.
+
+      - name: aenam
+        description: Changed By (SAP AENAM). User who last changed the order.
+
+      - name: aedat
+        description: Changed On (SAP AEDAT). Date when the order was last changed.
+
+      - name: ktext
+        description: Order Short Text. Short description of the internal order.
+
+      - name: ltext
+        description: Order Long Text. Detailed description of the internal order.
+
+      - name: bukrs
+        description: Company Code (SAP BUKRS). Company Code responsible for the order.
+
+      - name: werks
+        description: Plant (SAP WERKS). Plant associated with the order.
+
+      - name: gsber
+        description: Business Area (SAP GSBER). Business area associated with the order.
+
+      - name: kokrs
+        description: Controlling Area (SAP KOKRS). CO area for the order.
+
+      - name: cckey
+        description: Cost Center Key. Cost center for default settlement.
+
+      - name: kostv
+        description: Responsible Cost Center. Cost center of the person responsible.
+
+      - name: waers
+        description: Currency Key (SAP WAERS). Currency for the order.
+
+      - name: astnr
+        description: Asset Number. Asset number associated with the order (for investment orders).
+
+      - name: estnr
+        description: Statistical Key Figure. Statistical key figure for settlement.
+
+      - name: phas1
+        description: Milestone 1 (Planned Start). Planned start date for the order.
+
+      - name: idat1
+        description: Milestone 2 (Planned End). Planned end date for the order.
+
+      - name: objid
+        description: Object ID. Object identifier within the order.
+
+      - name: kvewe
+        description: Application for CO Fields. Application indicator for CO fields.
+
+      - name: kappl
+        description: Application. Application area for the order.
+
+      - name: abkrs
+        description: Payroll Area. HR payroll area if the order is HR-related.
+
+      - name: seqnr
+        description: Sequence Number. Sequence number for multiple records.
+
+      - name: user0
+        description: User Field 0. User-defined field for additional classification.
+
+      - name: user4
+        description: User Field 4. User-defined field for additional classification.
+
+      - name: objnr
+        description: Object Number (SAP OBJNR). Internal object number for CO integration.
+
+      - name: prctr
+        description: Profit Center (SAP PRCTR). Default profit center for this order.
+
+      - name: pspel
+        description: WBS Element (SAP PSPEL). Work Breakdown Structure element for project integration.
+
+      - name: scope
+        description: Scope Indicator. Controls the scope of data for reporting.
+
+      - name: plint
+        description: Planning Integration. Planning integration type for the order.
+
+      - name: kdpos
+        description: Customer Down Payment Item. Indicates a down payment request item.
+
+      - name: aufex
+        description: External Order Number. External reference number for the order.
+
+      - name: erfzeit
+        description: Entry Time. Time when the order was created.
+
+      - name: aezeit
+        description: Change Time. Time when the order was last changed.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

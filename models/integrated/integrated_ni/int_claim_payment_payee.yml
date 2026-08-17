@@ -1,0 +1,54 @@
+version: 2
+models:
+-  name: int_claim_payment_payee
+   description: "Integrated claim payment payee model sourced from Guidewire CC. Links payments to payees with contact details. Original SAS source: 11_CLAIM_PAYMENT_PAYEE.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_PAYMENT_PAYEE)"
+   columns:
+   -  name: src_claim_payment_id
+      description: "Source claim payment ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_payment_payee_src_claim_payment_id_not_null
+            config:
+               severity: warn
+   -  name: src_payee_contact_id
+      description: "Source payee contact ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_payment_payee_src_payee_contact_id_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_payment_payee_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_payment_payee_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_payment_payee_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_payment_payee_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_payment_payee_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

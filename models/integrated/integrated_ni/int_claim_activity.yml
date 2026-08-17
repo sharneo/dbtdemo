@@ -1,0 +1,96 @@
+version: 2
+models:
+-  name: int_claim_activity
+   description: "Integrated claim activity model sourced from Guidewire CC. Captures claim-related activities including assignments, escalations, approvals, and closures with associated user and team references. Original SAS source: 02_ACTIVITY.sas (TBL_NM: MSC_QLK_ASPIRE_ACTIVITY)"
+   columns:
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_activity_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_activity_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_activity_id
+      description: "Source activity ID from CC_ACTIVITY - primary key"
+      tests:
+      -  unique:
+            name: int_claim_activity_src_activity_id_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_activity_src_activity_id_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_activity_src_activity_id_fk
+            arguments:
+               to: ref('v_cc_activity_current')
+               field: id
+            config:
+               severity: warn
+   -  name: activity_public_id
+      description: "Public ID of the activity"
+      tests:
+      -  not_null:
+            name: int_claim_activity_activity_public_id_not_null
+            config:
+               severity: warn
+   -  name: activity_subject_desc
+      description: "Subject/description of the activity"
+   -  name: activity_target_dttm
+      description: "Target date and time for the activity"
+   -  name: activity_target_dt
+      description: "Target date for the activity (date only)"
+   -  name: activity_escalation_dttm
+      description: "Date and time the activity was escalated"
+   -  name: activity_assignment_dttm
+      description: "Date and time the activity was assigned"
+   -  name: activity_close_dttm
+      description: "Date and time the activity was closed"
+   -  name: activity_close_dt
+      description: "Date the activity was closed (date only)"
+   -  name: activity_last_view_dttm
+      description: "Date and time the activity was last viewed"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_claim_activity_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: src_create_dt
+      description: "Source system creation date"
+   -  name: priority_desc
+      description: "Priority description of the activity"
+   -  name: activity_type_desc
+      description: "Activity type description"
+   -  name: activity_status_desc
+      description: "Activity status description"
+   -  name: activity_pattern_code
+      description: "Activity pattern code from CC_ACTIVITYPATTERN"
+   -  name: close_user_sk
+      description: "Surrogate key for the user who closed the activity"
+   -  name: assigned_user_sk
+      description: "Surrogate key for the user assigned to the activity"
+   -  name: assigned_team_sk
+      description: "Surrogate key for the team assigned to the activity"
+   -  name: approval_issue
+      description: "Approval issue text"
+   -  name: src_txn_set_id
+      description: "Source transaction set ID"
+   -  name: approval_rationale
+      description: "Approval rationale text"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_activity_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

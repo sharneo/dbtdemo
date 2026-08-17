@@ -1,0 +1,84 @@
+version: 2
+models:
+-  name: int_claim_benefit_cessation
+   description: "Integrated claim benefit cessation model sourced from Guidewire CC. Tracks MBCD dates, notice periods, and claim lifecycle for benefit cessation reporting. Original SAS source: CB01_CLAIM_BENEFIT_CESSATION.sas (TBL_NM: MSC_QLK_ASPIRE_CB01_CLAIM_BENEFIT_CESSATION)"
+   columns:
+   -  name: claim_benefit_cessation_sk
+      description: "Surrogate key for claim benefit cessation (source_system + claimnumber + exposure_id) - primary key"
+      tests:
+      -  unique:
+            name: int_claim_benefit_cessation_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_benefit_cessation_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_benefit_cessation_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: managing_entity_id
+      description: "Managing entity ID"
+   -  name: managing_entity_sk
+      description: "Surrogate key for managing entity"
+      tests:
+      -  not_null:
+            name: int_claim_benefit_cessation_managing_entity_sk_not_null
+            config:
+               severity: warn
+   -  name: managing_entity_cd
+      description: "Managing entity code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_benefit_cessation_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_benefit_cessation_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_benefit_cessation_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: segment
+      description: "Claim segment"
+   -  name: team
+      description: "Assigned team name"
+   -  name: case_owner_name
+      description: "Case owner full name"
+   -  name: report_dt
+      description: "Report date"
+   -  name: medical_benefit_cessation_dt
+      description: "Medical benefit cessation date (MBCD)"
+   -  name: six_month_notice_dt
+      description: "Six month notice date"
+   -  name: thirteen_weeks_notice_dt
+      description: "Thirteen weeks notice date"
+   -  name: close_dt
+      description: "Claim close date"
+   -  name: reopen_dt
+      description: "Claim reopen date"
+   -  name: doi
+      description: "Date of injury"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_benefit_cessation_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

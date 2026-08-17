@@ -1,0 +1,59 @@
+version: 2
+
+snapshots:
+  - name: costcenter_manual_budget_snapshot
+    description: |
+      SCD Type 2 history of manually entered Cost Center budget amounts.
+      Grain: one row per version of each manual budget entry, identified by [profitcentre, costcentre, company, accountno, fiscyear, fiscperiod, sourceofdata, accyear, flag, category].
+      Captures budget adjustments entered outside of the standard planning process.
+    columns:
+      - name: costcenter_manual_budget_sk
+        description: Surrogate key for this manual budget record, generated from [profitcentre, costcentre, company, accountno, fiscyear, fiscperiod, sourceofdata, accyear, flag, category]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: profitcentre
+        description: Profit Centre identifier for the budget assignment.
+
+      - name: costcentre
+        description: Cost Centre identifier for the budget assignment.
+
+      - name: company
+        description: Company Code for the budget assignment.
+
+      - name: accountno
+        description: G/L Account Number for the budget line item.
+
+      - name: fiscyear
+        description: Fiscal Year for the budget period.
+
+      - name: fiscperiod
+        description: Fiscal Period for the budget entry.
+
+      - name: sourceofdata
+        description: Source system or process that originated the budget entry.
+
+      - name: accyear
+        description: Accounting Year for the budget entry.
+
+      - name: flag
+        description: Status flag for the budget entry (e.g., active, draft, locked).
+
+      - name: category
+        description: Budget category classification.
+
+      - name: amount
+        description: Budget amount in the relevant currency.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

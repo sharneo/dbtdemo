@@ -1,0 +1,69 @@
+version: 2
+models:
+-  name: int_claim_litigation_details
+   description: "Integrated claim litigation details model sourced from Guidewire CC. Contains matter-level litigation information including court type, key issues, and strategy. Original SAS source: L02_CLAIM_LITIGATION_DETAILS.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_LITIG_DET)"
+   columns:
+   -  name: claim_litigation_sk
+      description: "Surrogate key for claim litigation (source_system + claimnumber + casenumber) - primary key"
+      tests:
+      -  unique:
+            name: int_claim_litigation_details_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_litigation_details_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_litigation_details_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_litigation_details_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_litigation_details_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_litigation_details_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: matternumber
+      description: "Matter/case number"
+   -  name: court_type_cd
+      description: "Court type code"
+   -  name: court_type
+      description: "Court type description"
+   -  name: significant_litigation
+      description: "Significant litigation description"
+   -  name: key_issues
+      description: "Key issues text"
+   -  name: litigation_strategy
+      description: "Litigation strategy text"
+   -  name: litigation_notes
+      description: "Litigation notes text"
+   -  name: latest_record_ind
+      description: "Latest record indicator (Y/N)"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_litigation_details_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

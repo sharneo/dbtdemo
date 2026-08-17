@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_managing_entity
+    description: >
+      Integrated managing entity reference model sourced from GuidewireCC.
+      Contains managing entity details including organisation, role, contact
+      information, portal display name, and retired status.
+      Original SAS source: 35_MANAGING_ENTITY.sas (TBL_NM: MSC_QLK_ASPIRE_MANAGING_ENTITY)
+    columns:
+      - name: managing_entity_sk
+        description: Surrogate key for the managing entity (MD5 hash of 'GWCC' + public ID)
+      - name: src_system_cd
+        description: Source system identifier (GWCC)
+      - name: managing_entity_id
+        description: Source ID from ccx_managingentity_icare
+      - name: portal_display_name
+        description: Display name shown on the portal for this managing entity
+      - name: retired_ind
+        description: Y/N indicator whether the managing entity has been retired
+      - name: src_create_dttm
+        description: Source system creation timestamp
+      - name: managing_entity_name
+        description: Name of the managing entity
+      - name: managing_entity_cd
+        description: Code identifier for the managing entity
+      - name: contact_phone
+        description: Contact phone number for the managing entity
+      - name: managing_entity_role
+        description: Role description of the managing entity
+      - name: managing_entity_organisation
+        description: Organisation name the managing entity belongs to
+      - name: managing_entity_website
+        description: Website URL for the managing entity
+      - name: managing_entity_email
+        description: Contact email address for the managing entity
+      - name: managing_entity_postal_address
+        description: Postal address for the managing entity
+      - name: extract_date
+        description: Date of data extraction
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion, used as incremental filter

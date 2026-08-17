@@ -1,0 +1,189 @@
+version: 2
+models:
+-  name: stg_ccx_piawe_icare
+   description: "Incremental staging model for Guidewire Claim Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: uncappedpiawepre52
+      description: ""
+   -  name: totaloeleaveweeks
+      description: ""
+   -  name: deflatedpiawepre52
+      description: ""
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_piawe_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: ordinaryearnings_icare
+      description: ""
+   -  name: totalshiftotallowanceweekrp
+      description: ""
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_piawe_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: piawecomment
+      description: "Comments on a PAIWE"
+   -  name: partialpiawelinkid
+      description: "Link to used PIAWE Form document"
+   -  name: totalovertimeleaveamount
+      description: ""
+   -  name: piawetype_icare
+      description: "Type of PIAWE value"
+   -  name: rpenddate
+      description: ""
+   -  name: totaloeweekrp
+      description: ""
+   -  name: piawelater52_icare
+      description: ""
+   -  name: schedule3item
+      description: ""
+   -  name: effectivedate_icare
+      description: "Effective Date of PIAWE generated"
+   -  name: totalshiftleaveamount
+      description: ""
+   -  name: rpstartdate
+      description: ""
+   -  name: overtimeallowance_icare
+      description: ""
+   -  name: piawedeactivated_icare
+      description: ""
+   -  name: piawereason_icare
+      description: ""
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_piawe_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: leavewagerecordsrecd
+      description: ""
+   -  name: totalovertimeweek
+      description: ""
+   -  name: deflatedpiawepost52
+      description: ""
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_piawe_icare_id_not_null
+            config:
+               severity: warn
+   -  name: schedule3applicable
+      description: ""
+   -  name: relevantperiod
+      description: ""
+   -  name: totaloeweekoverrp
+      description: ""
+   -  name: draft
+      description: "True if PIAWE is in DRAFT state"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_piawe_icare_draft_not_null
+            config:
+               severity: warn
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: exposureid
+      description: ""
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_piawe_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: totalleaveweeksrp
+      description: ""
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: employmentdataid
+      description: ""
+   -  name: totalshiftweek
+      description: ""
+   -  name: piawefirst52_icare
+      description: ""
+   -  name: comments
+      description: ""
+   -  name: totaloeleaveamount
+      description: ""
+   -  name: uncappedpiawepost52
+      description: ""
+   -  name: statminapplied
+      description: ""
+   -  name: hoursworked
+      description: ""
+   -  name: noteid
+      description: ""
+   -  name: relevantperiodlegreforms2018
+      description: ""
+   -  name: agreementreceiveddate
+      description: ""
+   -  name: agreementapproved
+      description: ""
+   -  name: agreementwithdrawdate
+      description: ""
+   -  name: documentlinkableid
+      description: ""
+   -  name: autocreated
+      description: ""
+   -  name: agreementapproveddate
+      description: ""
+   -  name: needpiaweworksheet
+      description: ""
+   -  name: initialpiawe
+      description: ""
+   -  name: workcaprefid
+      description: ""
+   -  name: isdocumentusedforpiawe_ext
+      description: ""
+   -  name: reason_ext
+      description: ""
+   -  name: isindexationdecronreopen
+      description: ""
+   -  name: legacycreatetime
+      description: ""
+   -  name: legacyupdatetime
+      description: ""
+   -  name: piaweindexationid
+      description: ""
+   -  name: isinjuredworkerbelow21
+      description: ""
+   -  name: isinjuredworkerapprentice
+      description: ""
+   -  name: wcdpiaweamount
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

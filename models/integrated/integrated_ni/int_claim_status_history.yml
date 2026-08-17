@@ -1,0 +1,86 @@
+version: 2
+models:
+-  name: int_claim_status_history
+   description: "Integrated claim status history model sourced from Guidewire CC. Tracks claim open/close events with dates, reopen reasons, and S59A validity. Original SAS source: 58_CLAIM_STATUS_HISTORY.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_STATUS_HISTORY)"
+   columns:
+   -  name: claim_status_history_sk
+      description: "Surrogate key for claim status history - primary key"
+      tests:
+      -  unique:
+            name: int_claim_status_history_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_status_history_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_status_history_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: managing_entity_id
+      description: "Managing entity ID"
+   -  name: managing_entity_sk
+      description: "Surrogate key for managing entity"
+      tests:
+      -  not_null:
+            name: int_claim_status_history_managing_entity_sk_not_null
+            config:
+               severity: warn
+   -  name: managing_entity_cd
+      description: "Managing entity code"
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_status_history_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_status_history_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_status_history_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: open_dttm
+      description: "Claim open datetime"
+   -  name: open_dt
+      description: "Claim open date"
+   -  name: close_dttm
+      description: "Claim close datetime"
+   -  name: close_dt
+      description: "Claim close date"
+   -  name: event_desc
+      description: "Event description"
+   -  name: reopen_reason_cd
+      description: "Reopen reason code"
+   -  name: reopen_reason_desc
+      description: "Reopen reason description"
+   -  name: s59a_valid_open_ind
+      description: "S59A valid open indicator"
+   -  name: changed_by_user_name
+      description: "Changed by user name"
+   -  name: earliest_history_rank
+      description: "Earliest history rank"
+   -  name: latest_history_rank
+      description: "Latest history rank"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_status_history_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

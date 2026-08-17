@@ -1,0 +1,124 @@
+version: 2
+models:
+-  name: stg_pc_producercode
+   description: "Incremental staging model for Guidewire Policy Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: createuserid
+      description: "User ID of the user that created this record. Foreign key to PC_USER."
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_publicid_not_null
+            config:
+               severity: warn
+   -  name: producerstatus
+      description: "The status of this producer code. "
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_producerstatus_not_null
+            config:
+               severity: warn
+   -  name: preferredunderwriterid
+      description: "The preferred underwriter for a producer code"
+   -  name: beanversion
+      description: "Internal technical GW field to manage object versions."
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_createtime_not_null
+            config:
+               severity: warn
+   -  name: retired
+      description: "Indicator in GW signifying the record has been soft deleted."
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_retired_not_null
+            config:
+               severity: warn
+   -  name: codedenorm
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_codedenorm_not_null
+            config:
+               severity: warn
+   -  name: code
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_code_not_null
+            config:
+               severity: warn
+   -  name: appointmentdate
+      description: ""
+   -  name: organizationid
+      description: "Foreign key to PC_ORGANIZATION to understand what organisation the distribution partner may roll up into."
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_organizationid_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User ID of the user that updated this record. Foreign key to PC_USER."
+   -  name: addressid
+      description: ""
+   -  name: terminationdate
+      description: ""
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_updatetime_not_null
+            config:
+               severity: warn
+   -  name: descriptiondenorm
+      description: ""
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_producercode_id_not_null
+            config:
+               severity: warn
+   -  name: description
+      description: ""
+   -  name: branchid
+      description: "Foreign key to PC_GROUP - Groups and related attributes. Attributes include security and visibility zones, parent group, group type and name, branch code (if applicable) and supervisor."
+   -  name: emailaddress_icare
+      description: "Email address for the Distribution Partner"
+   -  name: comunicatnprfrnce_icare
+      description: ""
+   -  name: totalbtp_icare
+      description: ""
+   -  name: policycount_icare
+      description: ""
+   -  name: addresspublicid
+      description: ""
+   -  name: stopcorrespondence_ext
+      description: ""
+   -  name: stopbccorrespondence_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

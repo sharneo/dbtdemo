@@ -1,0 +1,113 @@
+version: 2
+models:
+-  name: int_claim_medical_treatment
+   description: "Integrated claim medical treatment model sourced from Guidewire CC. Tracks treatment requests including provider, approval status, costs, and IMP inclusion. Original SAS source: 08_CLAIM_MEDICAL_TREATMENT.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_MEDICAL_TREATMENT)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim (source_system + claimnumber)"
+      tests:
+      -  not_null:
+            name: int_claim_medical_treatment_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: source_system
+      description: "Source system identifier"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_medical_treatment_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_medical_treatment_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_medical_treatment_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: treatment_public_id
+      description: "Treatment public ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_medical_treatment_treatment_public_id_not_null
+            config:
+               severity: warn
+   -  name: treatment_group_cd
+      description: "Treatment group code"
+   -  name: treatment_group_desc
+      description: "Treatment group description"
+   -  name: treatment_type
+      description: "Treatment type"
+   -  name: treatment_category_cd
+      description: "Treatment category code"
+   -  name: treatment_category_desc
+      description: "Treatment category description"
+   -  name: treatment_pay_cd
+      description: "Treatment pay code"
+   -  name: treatment_pay_desc
+      description: "Treatment pay description"
+   -  name: treatment_request_dt
+      description: "Treatment request date"
+   -  name: treatment_provider_name
+      description: "Treatment provider name"
+   -  name: treatment_start_dt
+      description: "Treatment start date"
+   -  name: treatment_end_dt
+      description: "Treatment end date"
+   -  name: treatment_sessions_requested
+      description: "Number of treatment sessions requested"
+   -  name: treatment_description
+      description: "Treatment description"
+   -  name: treatment_icd
+      description: "Treatment ICD code"
+   -  name: odg_flag_cd
+      description: "ODG flag code"
+   -  name: odg_flag_desc
+      description: "ODG flag description"
+   -  name: odg_max
+      description: "ODG maximum"
+   -  name: treatment_approval_status
+      description: "Treatment approval status"
+   -  name: treatment_sessions_approved
+      description: "Number of treatment sessions approved"
+   -  name: treatment_approved_dttm
+      description: "Treatment approved datetime"
+   -  name: treatment_approved_dt
+      description: "Treatment approved date"
+   -  name: domestic_personal_care_frequenc1
+      description: "Domestic/personal care frequency name"
+   -  name: domestic_personal_care_frequenc2
+      description: "Domestic/personal care frequency count"
+   -  name: treatment_unit_cost
+      description: "Treatment unit cost"
+   -  name: treatment_hourly_cost
+      description: "Treatment hourly cost"
+   -  name: treatment_hours
+      description: "Treatment hours"
+   -  name: treatment_total_cost
+      description: "Treatment total cost"
+   -  name: include_on_imp_ind
+      description: "Include on IMP indicator (Y/N)"
+   -  name: treatment_request_create_dttm
+      description: "Treatment request creation datetime"
+   -  name: treatment_request_create_dt
+      description: "Treatment request creation date"
+   -  name: treatment_request_update_dttm
+      description: "Treatment request update datetime"
+   -  name: treatment_request_update_dt
+      description: "Treatment request update date"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_medical_treatment_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

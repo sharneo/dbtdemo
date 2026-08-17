@@ -1,0 +1,34 @@
+version: 2
+models:
+  - name: int_profit_center
+    description: >
+      Incremental model for Profit Centre reference data sourced from SAP ACDOCA.
+      Contains profit centre master data including controlling area, hierarchy area,
+      validity dates, and responsible person details.
+    columns:
+      - name: profit_center_sk
+        description: Surrogate key for the profit centre record
+      - name: profit_center
+        description: Profit centre code (PRCTR)
+      - name: valid_to
+        description: Validity end date for the profit centre record (DATBI)
+      - name: controlling_area
+        description: Controlling area the profit centre belongs to (KOKRS)
+      - name: valid_from
+        description: Validity start date for the profit centre record (DATAB)
+      - name: created_on
+        description: Date the record was created in SAP (ERSDA)
+      - name: changed_by_the_user
+        description: User who last changed the record (USNAM)
+      - name: person_resp_for_pc
+        description: Person responsible for the profit centre (VERAK)
+      - name: hierarchy_area
+        description: Hierarchy area assignment for the profit centre (KHINR)
+      - name: name
+        description: Short name/description of the profit centre (KTEXT)
+      - name: long_text
+        description: Long text description of the profit centre (LTEXT)
+      - name: metadata_file_name
+        description: Source metadata file name
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion, used as incremental filter

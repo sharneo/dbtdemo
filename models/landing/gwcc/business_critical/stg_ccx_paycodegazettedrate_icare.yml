@@ -1,0 +1,100 @@
+version: 2
+models:
+-  name: stg_ccx_paycodegazettedrate_icare
+   description: "Incremental staging model for Guidewire Claim Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: rate
+      description: "Gazetted rate"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_rate_not_null
+            config:
+               severity: warn
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: policytype
+      description: "Type of policy"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_policytype_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: paycode
+      description: "Link to Paycode"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_paycode_not_null
+            config:
+               severity: warn
+   -  name: effectivedate
+      description: "Effective date of this row."
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_effectivedate_not_null
+            config:
+               severity: warn
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_ccx_paycodegazettedrate_icare_id_not_null
+            config:
+               severity: warn
+   -  name: expirationdate
+      description: "Expiration date of this row or NULL in the database if this row never expires."
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

@@ -31,6 +31,9 @@ with ccx_liabilitystatushist_icare as (
         file_ingestion_timestamp
     from {{ ref('v_ccx_liabilitystatushist_icare_current') }}
     where retired = 0
+    {% if is_incremental() %}
+        and file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+    {% endif %}
 ),
 
 cctl_compensabilitydecision as (
@@ -79,8 +82,9 @@ cctl_liabilitystatnotper_icare as (
         id,
         name
     from {{ ref('v_cctl_liabilitystatnotper_icare_current') }}
-)
-
+),
+cte_join as
+(
 select
     cast({{ dbt_utils.generate_surrogate_key([
         'clm.source_system',
@@ -140,7 +144,33 @@ inner join cc_user usr
 
 left join cctl_liabilitystatnotper_icare notp
     on notp.id = libl.noticeperiod
+)
 
-{% if is_incremental() %}
-where libl.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
-{% endif %}
+select 
+    claim_sk,
+    source_system,
+    claim_nbr,
+    src_claim_id,
+    src_liability_status_hist_id,
+    claim_public_id,
+    claim_liability_status_id,
+    claim_liability_status_cd,
+    claim_liability_status_desc,
+    reasonable_excuse_cd,
+    reasonable_excuse_desc,
+    CAST(src_create_dttm AS TIMESTAMP_NTZ) as src_create_dttm,
+    src_create_dt,
+    CAST(claim_liability_status_eff_dttm AS TIMESTAMP_NTZ) as claim_liability_status_eff_dttm,
+    claim_liability_status_eff_dt,
+    CAST(claim_liability_status_ent_dttm AS TIMESTAMP_NTZ) as claim_liability_status_ent_dttm,
+    claim_liability_status_ent_dt,
+    provisional_liab_appr_weeks_qty,
+    liability_wkly_benf_end_dt,
+    notice_period,
+    mbed,
+    liability_status_create_user_sk,
+    latest_liab_status_record_rank,
+    earlst_liab_status_record_rank,
+    file_ingestion_timestamp
+from
+    cte_join

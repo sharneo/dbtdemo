@@ -1,0 +1,175 @@
+version: 2
+
+snapshots:
+  - name: mon_bal_snapshot
+    description: |
+      SCD Type 2 history of SAP Monthly Balance data (MONBAL).
+      Grain: one row per version of each monthly balance record, capturing period totals (1-16) across multiple dimensions (cost center, profit center, account, etc.) in transaction and local currencies.
+      Used for financial reporting and analysis of period activity without scanning line-item tables.
+    columns:
+      - name: mon_bal_sk
+        description: Surrogate key for this monthly balance record, generated from [ryear, drcrk, activ, rmvct, rtcur, runit, awtyp, rldnr, rrcty, rvers, racct, rcntr, prctr, scntr, pprctr, rassc, tslvt, hslvt]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: ryear
+        description: Fiscal Year. Fiscal year for the monthly balance.
+
+      - name: drcrk
+        description: Debit/Credit Indicator. 'S' = Debit, 'H' = Credit.
+
+      - name: activ
+        description: Activity. Activity type or indicator for the balance record.
+
+      - name: rmvct
+        description: Transaction Type (SAP RMVCT). Classifies the transaction type.
+
+      - name: rtcur
+        description: Transaction Currency. Currency of the transaction.
+
+      - name: runit
+        description: Base Unit of Measure. Unit for quantity-based balances.
+
+      - name: awtyp
+        description: Reference Transaction (SAP AWTYP). Originating business transaction type.
+
+      - name: rldnr
+        description: Ledger (SAP RLDNR). General ledger identifier.
+
+      - name: rrcty
+        description: Record Type. Record type classification for the balance.
+
+      - name: rvers
+        description: Version. Version of the balance data.
+
+      - name: racct
+        description: G/L Account Number (SAP RACCT). G/L account for the balance.
+
+      - name: rcntr
+        description: Cost Center (SAP RCNTR). Cost center for the balance.
+
+      - name: prctr
+        description: Profit Center (SAP PRCTR). Profit center for the balance.
+
+      - name: scntr
+        description: Sender Cost Center. Sender cost center for allocations.
+
+      - name: pprctr
+        description: Partner Profit Center. Partner profit center for intercompany balances.
+
+      - name: rassc
+        description: Partner Company Code. Partner company code.
+
+      - name: tslvt
+        description: Total in Transaction Currency (Previous Periods). Carried-forward total in transaction currency.
+
+      - name: hslvt
+        description: Total in Local Currency (Previous Periods). Carried-forward total in local currency.
+
+      - name: rpmax
+        description: Maximum Period. Number of periods with data.
+
+      - name: cost_elem
+        description: Cost Element. Cost element associated with the balance.
+
+      - name: rbukrs
+        description: Company Code (SAP RBUKRS). Company code for the balance.
+
+      - name: rfarea
+        description: Functional Area (SAP RFAREA). Functional area for the balance.
+
+      - name: rbusa
+        description: Business Area (SAP RBUSA). Business area for the balance.
+
+      - name: kokrs
+        description: Controlling Area (SAP KOKRS). CO area.
+
+      - name: segment
+        description: Segment. Segment for segment reporting.
+
+      - name: sfarea
+        description: Partner Functional Area. Partner functional area.
+
+      - name: sbusa
+        description: Partner Business Area. Partner business area.
+
+      - name: psegment
+        description: Partner Segment. Partner segment for segment reporting.
+
+      - name: tsl01
+        description: Amount in Transaction Currency (Period 1). Total for period 1 in transaction currency.
+      - name: tsl02
+        description: Amount in Transaction Currency (Period 2). Total for period 2 in transaction currency.
+      - name: tsl03
+        description: Amount in Transaction Currency (Period 3). Total for period 3 in transaction currency.
+      - name: tsl04
+        description: Amount in Transaction Currency (Period 4). Total for period 4 in transaction currency.
+      - name: tsl05
+        description: Amount in Transaction Currency (Period 5). Total for period 5 in transaction currency.
+      - name: tsl06
+        description: Amount in Transaction Currency (Period 6). Total for period 6 in transaction currency.
+      - name: tsl07
+        description: Amount in Transaction Currency (Period 7). Total for period 7 in transaction currency.
+      - name: tsl08
+        description: Amount in Transaction Currency (Period 8). Total for period 8 in transaction currency.
+      - name: tsl09
+        description: Amount in Transaction Currency (Period 9). Total for period 9 in transaction currency.
+      - name: tsl10
+        description: Amount in Transaction Currency (Period 10). Total for period 10 in transaction currency.
+      - name: tsl11
+        description: Amount in Transaction Currency (Period 11). Total for period 11 in transaction currency.
+      - name: tsl12
+        description: Amount in Transaction Currency (Period 12). Total for period 12 in transaction currency.
+      - name: tsl13
+        description: Amount in Transaction Currency (Period 13). Total for period 13 in transaction currency.
+      - name: tsl14
+        description: Amount in Transaction Currency (Period 14). Total for period 14 in transaction currency.
+      - name: tsl15
+        description: Amount in Transaction Currency (Period 15). Total for period 15 in transaction currency.
+      - name: tsl16
+        description: Amount in Transaction Currency (Period 16). Total for period 16 in transaction currency.
+      - name: hsl01
+        description: Amount in Local Currency (Period 1). Total for period 1 in company code currency.
+      - name: hsl02
+        description: Amount in Local Currency (Period 2). Total for period 2 in company code currency.
+      - name: hsl03
+        description: Amount in Local Currency (Period 3). Total for period 3 in company code currency.
+      - name: hsl04
+        description: Amount in Local Currency (Period 4). Total for period 4 in company code currency.
+      - name: hsl05
+        description: Amount in Local Currency (Period 5). Total for period 5 in company code currency.
+      - name: hsl06
+        description: Amount in Local Currency (Period 6). Total for period 6 in company code currency.
+      - name: hsl07
+        description: Amount in Local Currency (Period 7). Total for period 7 in company code currency.
+      - name: hsl08
+        description: Amount in Local Currency (Period 8). Total for period 8 in company code currency.
+      - name: hsl09
+        description: Amount in Local Currency (Period 9). Total for period 9 in company code currency.
+      - name: hsl10
+        description: Amount in Local Currency (Period 10). Total for period 10 in company code currency.
+      - name: hsl11
+        description: Amount in Local Currency (Period 11). Total for period 11 in company code currency.
+      - name: hsl12
+        description: Amount in Local Currency (Period 12). Total for period 12 in company code currency.
+      - name: hsl13
+        description: Amount in Local Currency (Period 13). Total for period 13 in company code currency.
+      - name: hsl14
+        description: Amount in Local Currency (Period 14). Total for period 14 in company code currency.
+      - name: hsl15
+        description: Amount in Local Currency (Period 15). Total for period 15 in company code currency.
+      - name: hsl16
+        description: Amount in Local Currency (Period 16). Total for period 16 in company code currency.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

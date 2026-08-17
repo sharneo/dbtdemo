@@ -1,0 +1,241 @@
+version: 2
+models:
+-  name: stg_pc_job
+   description: "Incremental staging model for Guidewire Policy Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: nottakennotifdate
+      description: ""
+   -  name: archivestate
+      description: "Internal technical GW field to manage archiving."
+   -  name: archiveschemainfo
+      description: "Internal technical GW field to manage archiving."
+   -  name: quoteddate_icare
+      description: "The date when a job transitions into a quoted state i.e. when the transaction is essentially in Draft mode. This can be on any job i.e. submission job which transitions from Temporary -> New -> Draft -> Quoting -> Quoted -> Bound; or renewal job which transitions from Draft -> Quoting -> Quoted -> Bound or vairations to this i.e. Withdrawn etc. "
+   -  name: updatetime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_updatetime_not_null
+            config:
+               severity: warn
+   -  name: notificationdate
+      description: ""
+   -  name: id
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_id_not_null
+            config:
+               severity: warn
+   -  name: source
+      description: ""
+   -  name: excludereason
+      description: ""
+   -  name: nextpurgecheckdate
+      description: ""
+   -  name: createuserid
+      description: "User ID of the user that created this record. Foreign key to PC_USER."
+   -  name: archivefailureid
+      description: "Internal technical GW field to manage archiving."
+   -  name: rejectreason
+      description: ""
+   -  name: closedate
+      description: ""
+   -  name: beanversion
+      description: "Internal technical GW field to manage object versions."
+   -  name: retired
+      description: "Flag indicating if the reference data is no longer used"
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_retired_not_null
+            config:
+               severity: warn
+   -  name: cancelreasoncode
+      description: "Cancellation reason codes. Not used by icare, customised field PC_JOB.ReasoncodeForCancel_icare used instead"
+   -  name: changepolicynumber
+      description: "Whether or not a new policy number should be generated for the rewritten policy upon issuance. Internal GW flag to issue a new policy number on rewrite. Not used by icare as at Nov-17, and EDW does not require this flag. It will pick up the new policy/term if it is generated."
+   -  name: updateuserid
+      description: "User ID of the user that updated this record. Foreign key to PC_USER."
+   -  name: primaryinsurednamedenorm
+      description: ""
+   -  name: nonrenewalnotifdate
+      description: ""
+   -  name: primaryinsuredname
+      description: ""
+   -  name: quotetype
+      description: ""
+   -  name: datequoteneeded
+      description: "Return DateQuoteNeeded for submission jobs. Internal GW field for submission job scheduling. Not used by icare as at Nov-17"
+   -  name: publicid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_publicid_not_null
+            config:
+               severity: warn
+   -  name: sidebyside
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_sidebyside_not_null
+            config:
+               severity: warn
+   -  name: jobnumber
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_jobnumber_not_null
+            config:
+               severity: warn
+   -  name: rewritetype
+      description: ""
+   -  name: createtime
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_createtime_not_null
+            config:
+               severity: warn
+   -  name: auditinformationid
+      description: "Internal technical GW field to manage audits"
+   -  name: policyid
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_policyid_not_null
+            config:
+               severity: warn
+   -  name: excludedfromarchive
+      description: "Internal technical GW field to manage archiving."
+   -  name: rejectreasontext
+      description: "Freetext reason"
+   -  name: archivefailuredetailsid
+      description: "Internal technical GW field to manage archiving."
+   -  name: rescindnotificationdate
+      description: ""
+   -  name: purgestatus
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_purgestatus_not_null
+            config:
+               severity: warn
+   -  name: initialnotificationdate
+      description: ""
+   -  name: lastnotifiedcancellationdate
+      description: ""
+   -  name: jobgroup
+      description: ""
+   -  name: cancelprocessdate
+      description: ""
+   -  name: renewalcode
+      description: ""
+   -  name: escalateafterholdreleased
+      description: "Indicates whether a renewal job should be escalated if a policy hold no longer affects it. If true, creates an activity for the producer to re-examine the renewal. If false, the previously-held renewal is dropped back into automated processing. Policy hold function is not used by icare as at Nov-17, and this is used as an indicator to drive front-end functionality. "
+   -  name: renewalnotifdate
+      description: ""
+   -  name: reinstatecode
+      description: ""
+   -  name: paymentreceived
+      description: "Related to the audit job - technical field"
+   -  name: archivepartition
+      description: "Internal technical GW field to manage archiving."
+   -  name: paymentreceived_cur
+      description: "Related to the audit job - technical field"
+   -  name: notificationackdate
+      description: ""
+   -  name: archivedate
+      description: "Internal technical GW field to manage archiving."
+   -  name: bindoption
+      description: ""
+   -  name: nonrenewalcode
+      description: ""
+   -  name: subtype
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_subtype_not_null
+            config:
+               severity: warn
+   -  name: submissiondate
+      description: ""
+   -  name: description
+      description: ""
+   -  name: contributedtonigroup_icare
+      description: "Did this policy/job contribute to the group calculation. This is used by GW internally, but EDW will determine if a policy term is part of the group or not via other tables pc_jobspaningroup"
+   -  name: isabnchanged_icare
+      description: "Internal GW field that triggers front-end actions. Can derive this through other tables and EDW deltas/CDC."
+   -  name: prioranonymous_icare
+      description: ""
+   -  name: policychangereason_icare
+      description: ""
+   -  name: schemeagentchange_icare
+      description: "Bulk producer change"
+   -  name: forecast_icare
+      description: "Indicate if this is a forecast transaction. This may be a policy change forecast or a renewal forecast for example"
+   -  name: producerchangesource_ext
+      description: "Bulk producer change"
+   -  name: changetype_icare
+      description: "Resembles the type of policy change that has initiated on the policy term e.g. Hindsight adjustment, Cancel on expiry, Forecast for next term"
+   -  name: forecastcalculation_icare
+      description: "The forecast calculation method i.e. estimated or final, so that the premium figure is understood to be estimated or final"
+   -  name: reasoncodeforcancel_icare
+      description: ""
+   -  name: requestedby_icare
+      description: "Who requested the cancellation"
+   -  name: cancelonexpiryreason_icare
+      description: "Reason when cancelling on expiry of policy term"
+   -  name: suppressdocuments_icare
+      description: "Indicator to supress documents as part of this job"
+   -  name: isgroupstructurechanged_icare
+      description: "Internal GW field that triggers front-end actions. Can derive this through other tables and EDW deltas/CDC."
+   -  name: gotbussinlast12mons_icare
+      description: ""
+   -  name: isloadingapplied_icare
+      description: ""
+   -  name: policyterm
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_policyterm_not_null
+            config:
+               severity: warn
+   -  name: jobnumberdenorm
+      description: ""
+      tests:
+      -  not_null:
+            name: gwpc_pc_job_jobnumberdenorm_not_null
+            config:
+               severity: warn
+   -  name: iscssportal_ext
+      description: ""
+   -  name: iscrifreminderemailsent_ext
+      description: ""
+   -  name: wageaudittype_ext
+      description: ""
+   -  name: isbulkpolicycancel_ext
+      description: ""
+   -  name: isselectedfromgroup_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

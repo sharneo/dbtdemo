@@ -1,0 +1,81 @@
+version: 2
+models:
+-  name: int_claim_deductible
+   description: "Integrated claim deductible model sourced from Guidewire CC. Tracks excess/deductible amounts, waiver status, payment status, and invoice details. Original SAS source: 42_CLAIM_DEDUCTIBLE.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_DEDUCTIBLE)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim (source_system + claimnumber)"
+      tests:
+      -  not_null:
+            name: int_claim_deductible_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_deductible_sk
+      description: "Surrogate key for the deductible (source_system + publicid)"
+      tests:
+      -  not_null:
+            name: int_claim_deductible_claim_deductible_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_deductible_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_deductible_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_deductible_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: src_deductible_id
+      description: "Source deductible ID - primary key"
+      tests:
+      -  unique:
+            name: int_claim_deductible_src_deductible_id_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_deductible_src_deductible_id_not_null
+            config:
+               severity: warn
+   -  name: excess_amount
+      description: "Excess/deductible amount"
+   -  name: excess_waived_ind
+      description: "Excess waived indicator (Y/N)"
+   -  name: excess_paid_ind
+      description: "Excess paid indicator (Y/N)"
+   -  name: excess_modified_ind
+      description: "Excess modified/overridden indicator (Y/N)"
+   -  name: excess_edit_reason
+      description: "Excess edit reason"
+   -  name: excess_invoice_nbr
+      description: "Excess invoice number"
+   -  name: account_nbr
+      description: "Account number"
+   -  name: invoice_amt_sent_to_bc
+      description: "Invoice amount sent to billing centre"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_claim_deductible_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_deductible_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

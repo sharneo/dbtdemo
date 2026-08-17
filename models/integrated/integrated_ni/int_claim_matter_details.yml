@@ -1,0 +1,12 @@
+version: 2
+models:
+-  name: int_claim_matter_details
+   description: "Integrated claim matter details model sourced from Guidewire CC."
+   columns:
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_matter_details_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

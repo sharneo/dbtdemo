@@ -1,0 +1,107 @@
+version: 2
+
+snapshots:
+  - name: cost_center_snapshot
+    description: |
+      SCD Type 2 history of SAP Cost Center master data (CSKS).
+      Grain: one row per version of each cost center.
+      Tracks organizational units where costs are incurred, with validity periods and responsible users.
+    columns:
+      - name: cost_center_sk
+        description: Surrogate key for this cost center record, generated from [kokrs, kostl, datbi]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: kokrs
+        description: Controlling Area (SAP KOKRS). Identifies the CO area this cost center belongs to.
+
+      - name: kostl
+        description: Cost Center (SAP KOSTL). Alphanumeric identifier for the cost center.
+
+      - name: datbi
+        description: Valid To Date (SAP DATBI). End date of the cost center's validity period.
+
+      - name: datab
+        description: Valid From Date (SAP DATAB). Start date of the cost center's validity period.
+
+      - name: bkzkp
+        description: Lock Indicator for Primary Cost Postings (SAP BKZKP). Controls whether primary costs can be posted to this cost center.
+
+      - name: pkzkp
+        description: Lock Indicator for Secondary Cost Postings (SAP PKZKP). Controls whether secondary costs can be posted.
+
+      - name: bukrs
+        description: Company Code (SAP BUKRS). Company code associated with this cost center.
+
+      - name: gsber
+        description: Business Area (SAP GSBER). Business area assignment for the cost center.
+
+      - name: kosar
+        description: Cost Center Category (SAP KOSAR). Classifies the cost center (e.g., administration, production, sales).
+
+      - name: verak
+        description: Person Responsible (SAP VERAK). User or position responsible for the cost center.
+
+      - name: verak_user
+        description: Responsible User ID. User ID of the person responsible for the cost center.
+
+      - name: waers
+        description: Currency Key (SAP WAERS). Currency for the cost center.
+
+      - name: prctr
+        description: Profit Center (SAP PRCTR). Default profit center assignment for this cost center.
+
+      - name: ersda
+        description: Created On (SAP ERSDA). Date when the cost center was created in the system.
+
+      - name: usnam
+        description: User Name (SAP USNAM). User who last changed the cost center master record.
+
+      - name: bkzks
+        description: Lock Indicator for Incoming Statistical Postings.
+
+      - name: bkzer
+        description: Lock Indicator for Incoming Earmarked Funds.
+
+      - name: bkzob
+        description: Lock Indicator for Incoming Commitment Postings.
+
+      - name: pkzks
+        description: Lock Indicator for Outgoing Statistical Postings.
+
+      - name: pkzer
+        description: Lock Indicator for Outgoing Earmarked Funds.
+
+      - name: vmeth
+        description: Distribution Method for Statistical Key Figures.
+
+      - name: abtei
+        description: Department (SAP ABTEI). Department responsible for this cost center.
+
+      - name: khinr
+        description: Cost Center Hierarchy Area (SAP KHINR). Standard hierarchy assignment for reporting.
+
+      - name: kompl
+        description: Complete Indicator. Indicates whether cost center master data setup is complete.
+
+      - name: ktext
+        description: Cost Center Short Text. Short description of the cost center.
+
+      - name: ltext
+        description: Cost Center Long Text. Detailed description of the cost center.
+
+      - name: mctxt
+        description: Search Term. Alternative search term for the cost center.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

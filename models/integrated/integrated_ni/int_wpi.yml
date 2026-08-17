@@ -1,0 +1,77 @@
+version: 2
+models:
+-  name: int_wpi
+   description: "Integrated WPI (Whole Person Impairment) model sourced from Guidewire CC. Tracks WPI assessments with percentages, status, and medical review details. Original SAS source: 32_WPI.sas (TBL_NM: MSC_QLK_ASPIRE_WPI)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_wpi_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_wpi_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_wpi_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_wpi_assess_record_id
+      description: "Source WPI assessment record ID"
+      tests:
+      -  not_null:
+            name: int_wpi_src_wpi_assess_record_id_not_null
+            config:
+               severity: warn
+   -  name: wpi_claim_type
+      description: "WPI claim type"
+   -  name: wpi_status
+      description: "WPI status"
+   -  name: wpi_result_pct
+      description: "WPI result percentage"
+   -  name: wpi_claimed_pct
+      description: "WPI claimed percentage"
+   -  name: wpi_offered_pct
+      description: "WPI offered percentage"
+   -  name: wpi_assessed_pct
+      description: "WPI assessed percentage"
+   -  name: s66_received_dt
+      description: "S66 received date"
+   -  name: binaural_hearing_loss_pct
+      description: "Binaural hearing loss percentage"
+   -  name: med_assess_src_review_user_id
+      description: "Medical assessment source review user ID"
+   -  name: latest_med_assess_review_ind
+      description: "Latest medical assessment review indicator"
+   -  name: latest_wpi_record_ind
+      description: "Latest WPI record indicator"
+   -  name: multiple_wpi_ind
+      description: "Multiple WPI indicator"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_wpi_file_ingestion_timestamp_not_null
+            config:
+               severity: warn
+   -  name: claim_wpi_sk
+      description: "Surrogate key for claim WPI - primary key"
+      tests:
+      -  unique:
+            name: int_wpi_claim_wpi_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_wpi_claim_wpi_sk_not_null
+            config:
+               severity: warn

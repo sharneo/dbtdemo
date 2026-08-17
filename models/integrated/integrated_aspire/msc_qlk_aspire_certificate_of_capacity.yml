@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_certificate_of_capacity
+    description: >
+      Integrated certificate of capacity model sourced from GuidewireCC.
+      Tracks worker fitness assessments and capacity certificates per claim,
+      including hours worked per week and validity status.
+      Only includes records where CoC status is NULL or 'valid'.
+      Original SAS source: 04_CERTIFICATE_OF_CAPACITY.sas (TBL_NM: MSC_QLK_ASPIRE_CERTIFICATE_OF_CAPACITY)
+    columns:
+      - name: claim_sk
+        description: Surrogate key for the claim (MD5 hash of source_system + claim number)
+      - name: source_system
+        description: Source system identifier (e.g. GWCC)
+      - name: src_claim_id
+        description: Source claim ID from CC_CLAIM
+      - name: claim_nbr
+        description: Claim number from GuidewireCC
+      - name: fitness_cd
+        description: Fitness typecode indicating worker capacity level
+      - name: fitness_desc
+        description: Fitness description (e.g. Fit, Unfit, Fit for selected duties)
+      - name: certificate_of_capacity_start_dt
+        description: Start date of the certificate of capacity period
+      - name: certificate_of_capacity_end_dt
+        description: End date of the certificate of capacity period
+      - name: certificate_of_capacity_hours_worked_per_week
+        description: Total hours per week the worker is certified to work
+      - name: src_create_dttm
+        description: Source system creation timestamp of the capacity record
+      - name: latest_certificate_of_capacity_record_rank
+        description: >
+          Row number ranking certificates per claim, ordered by retired status,
+          start date desc, end date desc, create time desc. Rank 1 = latest valid record.
+      - name: retired_ind
+        description: Y/N indicator whether the capacity record has been retired
+      - name: certificate_of_capacity_status
+        description: Certificate of capacity status (blank if NULL, otherwise the status name)
+      - name: extract_date
+        description: Date of data extraction
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion, used as incremental filter

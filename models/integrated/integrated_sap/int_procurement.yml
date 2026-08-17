@@ -1,0 +1,253 @@
+version: 2
+
+models:
+  - name: int_procurement
+    description: >
+      Incremental model for Procurement data. Sources from procurement_snapshot,
+      filtering to current valid records and applying merge strategy on procurement_sk.
+    columns:
+      - name: procurement_sk
+        description: Surrogate key for the procurement record.
+        tests:
+          - not_null
+          - unique
+
+      - name: purchasing_document
+        description: Purchasing document number (EBELN).
+        tests:
+          - not_null
+
+      - name: item
+        description: Purchasing document item number (EBELP).
+        tests:
+          - not_null
+
+      - name: created_on
+        description: Date record was created (AEDAT).
+
+      - name: short_text
+        description: Short text description of the item (TXZ01).
+
+      - name: company_code
+        description: Company code (BUKRS).
+
+      - name: plant
+        description: Plant code (WERKS).
+
+      - name: material_group
+        description: Material group (MATKL).
+
+      - name: target_quantity
+        description: Target quantity (KTMNG).
+
+      - name: quantity
+        description: Purchase order quantity (MENGE).
+
+      - name: order_unit
+        description: Order unit of measure (MEINS).
+
+      - name: order_price_unit
+        description: Order price unit (BPRME).
+
+      - name: quantity_conversion_numerator
+        description: Numerator for quantity conversion (BPUMZ).
+
+      - name: quantity_conversion_denominator_denomin
+        description: Denominator for quantity conversion (BPUMN).
+
+      - name: equal_to
+        description: Numerator for conversion to base UOM (UMREZ).
+
+      - name: denominator
+        description: Denominator for conversion to base UOM (UMREN).
+
+      - name: net_price_in_purchasing_document
+        description: Net price in purchasing document currency (NETPR).
+
+      - name: price_unit
+        description: Price unit (PEINH).
+
+      - name: net_order_value_in_po_currency
+        description: Net order value in PO currency (NETWR).
+
+      - name: gross_order_value_in_po_currency
+        description: Gross order value in PO currency (BRTWR).
+
+      - name: tax_code
+        description: Tax code (MWSKZ).
+
+      - name: item_category_in_purchasing_document
+        description: Item category in purchasing document (PSTYP).
+
+      - name: account_assignment_category
+        description: Account assignment category (KNTTP).
+
+      - name: consumption
+        description: Consumption posting indicator (KZVBR).
+
+      - name: distribut_indicator
+        description: Distribution indicator (VRTKZ).
+
+      - name: partial_invoice
+        description: Partial invoice indicator (TWRKZ).
+
+      - name: goods_receiptweposwepos
+        description: Goods receipt indicator (WEPOS).
+
+      - name: goods_receipt
+        description: Goods receipt non-valuated indicator (WEUNB).
+
+      - name: invoice_receipt
+        description: Invoice receipt indicator (REPOS).
+
+      - name: price_date
+        description: Date of price determination (PRDAT).
+
+      - name: purch_doc_category
+        description: Purchasing document category (BSTYP).
+
+      - name: effective_value_of_item
+        description: Effective value of item (EFFWR).
+
+      - name: affects_commitments
+        description: Indicator for commitment relevance (XOBLR).
+
+      - name: subtotal_1
+        description: Subtotal 1 from pricing procedure (KZWI1).
+
+      - name: subtotal_2
+        description: Subtotal 2 from pricing procedure (KZWI2).
+
+      - name: subtotal_3
+        description: Subtotal 3 from pricing procedure (KZWI3).
+
+      - name: subtotal_4
+        description: Subtotal 4 from pricing procedure (KZWI4).
+
+      - name: subtotal_5
+        description: Subtotal 5 from pricing procedure (KZWI5).
+
+      - name: subtotal_6
+        description: Subtotal 6 from pricing procedure (KZWI6).
+
+      - name: rebate_basis_1
+        description: Rebate basis 1 (BONBA).
+
+      - name: requisitioner
+        description: Name of requisitioner (AFNAM).
+
+      - name: time_zone_of_recipient_location
+        description: Time zone of recipient location (TZONR).
+
+      - name: purchasing_doc_type
+        description: Purchasing document type (BSART).
+
+      - name: control_indicator
+        description: Control indicator for purchasing document type (BSAKZ).
+
+      - name: deletion_indicator
+        description: Deletion indicator (LOEKZ).
+
+      - name: status
+        description: Status of purchasing document (STATU).
+
+      - name: purchasing_document_item_change_date
+        description: Change date of purchasing document item (AEDAT).
+
+      - name: created_by
+        description: Name of person who created the record (ERNAM).
+
+      - name: item_number_interval
+        description: Item number interval (PINCR).
+
+      - name: last_item
+        description: Last item number (LPONR).
+
+      - name: vendor
+        description: Vendor account number (LIFNR).
+
+      - name: language_key
+        description: Language key (SPRAS).
+
+      - name: terms_of_payment
+        description: Terms of payment key (ZTERM).
+
+      - name: payment_in
+        description: Cash discount days 1 (ZBD1T).
+
+      - name: payment_in_2
+        description: Cash discount days 2 (ZBD2T).
+
+      - name: payment_in_3
+        description: Cash discount days 3 (ZBD3T).
+
+      - name: disc_percent_1
+        description: Cash discount percentage 1 (ZBD1P).
+
+      - name: disc_percent_2
+        description: Cash discount percentage 2 (ZBD2P).
+
+      - name: purch_organization
+        description: Purchasing organization (EKORG).
+
+      - name: purchasing_group
+        description: Purchasing group (EKGRP).
+
+      - name: currency
+        description: Currency key (WAERS).
+
+      - name: exchange_rate
+        description: Exchange rate (WKURS).
+
+      - name: exchange_rate_fixed
+        description: Fixed exchange rate indicator (KUFIX).
+
+      - name: document_date
+        description: Purchasing document date (BEDAT).
+
+      - name: your_reference
+        description: Your reference (IHREZ).
+
+      - name: target_value
+        description: Target value for header area per distribution (KTWRT).
+
+      - name: doc_condition_no
+        description: Number of the document condition (KNUMV).
+
+      - name: pricing_procedure
+        description: Procedure for pricing/conditions (KALSM).
+
+      - name: update_group_stats
+        description: Update group for statistics (STAFO).
+
+      - name: invoicing_party
+        description: Invoicing party (LIFRE).
+
+      - name: subitem_interval
+        description: Sub-item interval (UPINC).
+
+      - name: cntry_for_tax_return
+        description: Country for tax return (LANDS).
+
+      - name: country_sls_tax_no
+        description: Country of sales tax ID number (STCEG truncated to 3 chars).
+
+      - name: vat_registration_no
+        description: VAT registration number (STCEG).
+
+      - name: reason_for_canc
+        description: Reason for cancellation (ABSGR).
+
+      - name: purch_doc_proc_state
+        description: Purchasing document processing state (PROCS).
+
+      - name: total_val_upon_release
+        description: Total value at time of release (RLWRT).
+
+      - name: metadata_file_name
+        description: Source file name from ingestion metadata.
+
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion.
+        tests:
+          - not_null

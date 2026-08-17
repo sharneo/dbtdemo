@@ -2,7 +2,7 @@ version: 2
 sources:
 - name: gwab
   description: 'Data Lake Curated Data'
-  database: DEV_RAW_DB
+  database: DEV_LANDING_DB
   schema: gwab
   tables:
     - name: ab_abcontact
@@ -31,3 +31,5 @@ sources:
     - name: abtl_contactstatus_ext
     - name: abtl_banktype_icare
     - name: abtl_paymentmethod_icare
+    - name: sira_submission_period
+    - name: insurer_control

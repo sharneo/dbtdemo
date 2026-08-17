@@ -1,0 +1,84 @@
+version: 2
+
+models:
+  - name: int_supplier
+    description: >
+      Incremental model for Supplier reference data. Sources from profit_center_snapshot,
+      filtering to current valid records and applying merge strategy on supplier_sk.
+    columns:
+      - name: supplier_sk
+        description: Surrogate key for the supplier record.
+        tests:
+          - not_null
+          - unique
+
+      - name: vendor
+        description: Vendor number (LIFNR).
+        tests:
+          - not_null
+
+      - name: country_key
+        description: Country key (LAND1).
+
+      - name: name
+        description: Supplier name line 1 (NAME1).
+
+      - name: name_2
+        description: Supplier name line 2 (NAME2).
+
+      - name: name_3
+        description: Supplier name line 3 (NAME3).
+
+      - name: name_4
+        description: Supplier name line 4 (NAME4).
+
+      - name: city
+        description: City (ORT01).
+
+      - name: postal_code
+        description: Postal code (PSTLZ).
+
+      - name: region
+        description: Region code (REGIO).
+
+      - name: search_term
+        description: Search term (SORTL).
+
+      - name: street
+        description: Street address (STRAS).
+
+      - name: account_group
+        description: Vendor account group (KTOKK).
+
+      - name: telephone_1
+        description: Primary telephone number (TELF1).
+
+      - name: telephone_2
+        description: Secondary telephone number (TELF2).
+
+      - name: fax_number
+        description: Fax number (TELFX).
+
+      - name: trading_partner
+        description: Trading partner identifier (VBUND).
+
+      - name: vat_registration_no
+        description: VAT registration number (STCEG).
+
+      - name: valid_from
+        description: Record validity start date (from dbt snapshot).
+        tests:
+          - not_null
+
+      - name: valid_to
+        description: Record validity end date. Defaults to 9999-12-31 for current records.
+        tests:
+          - not_null
+
+      - name: metadata_file_name
+        description: Source file name from ingestion metadata.
+
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion.
+        tests:
+          - not_null

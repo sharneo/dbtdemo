@@ -2,7 +2,7 @@ version: 2
 sources:
 - name: gwpc
   description: 'Data Lake Curated Data'
-  database: DEV_RAW_DB
+  database: DEV_LANDING_DB
   schema: gwpc
   tables:
     - name: pcx_wctransaction_icare
@@ -848,3 +848,7 @@ sources:
     - name: pctl_windtype
     - name: pctl_emptheftblanket
     - name: pc_policy_cda
+    - name: pcx_paymentinstrument_icare
+    - name: pcx_polpmtinstrument_icare
+    - name: pcx_crifpolicydm_icare
+    - name: pcx_lprplusadjustment_ext

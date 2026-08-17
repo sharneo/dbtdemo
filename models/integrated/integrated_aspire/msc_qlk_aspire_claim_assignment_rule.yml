@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_claim_assignment_rule
+
+    description: >
+      Integrated claim assignment rule model sourced from GuidewireCC.
+      Contains policy-level assignment rules including policy number, group,
+      status, commencement and expiry dates.
+      Original SAS source: 39_CLAIM_ASSIGNMENT_RULE.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_ASSIGNMENT_RULE)
+    columns:
+      - name: assignment_rule_sk
+        description: Surrogate key for the assignment rule (MD5 hash of 'GWCC' + public ID)
+      - name: assignment_rule_id
+        description: Public ID of the assignment rule record
+      - name: src_assignment_rule_id
+        description: Source ID from ccx_clmassignmentrules_icare
+      - name: policy_nbr
+        description: Policy number associated with the assignment rule
+      - name: policy_name
+        description: Policy name associated with the assignment rule
+      - name: policy_group_nbr
+        description: Policy group number
+      - name: policy_group_name
+        description: Policy group name
+      - name: policy_status_cd
+        description: Policy status type code
+      - name: policy_status_desc
+        description: Policy status type description
+      - name: commencement_dttm
+        description: Commencement date/time of the assignment rule
+      - name: term_start_dttm
+        description: Effective/term start date/time of the assignment rule
+      - name: term_end_dttm
+        description: Expiry/term end date/time of the assignment rule
+      - name: src_create_dttm
+        description: Source system creation timestamp
+      - name: src_update_dttm
+        description: Source system update timestamp
+      - name: extract_date
+        description: Date of data extraction
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion, used as incremental filter

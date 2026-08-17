@@ -1,43 +1,70 @@
 version: 2
-
 models:
-  - name: int_certificate_of_capacity
-    description: >
-      Integrated certificate of capacity model sourced from GuidewireCC.
-      Tracks worker fitness assessments and capacity certificates per claim,
-      including hours worked per week and validity status.
-      Only includes records where CoC status is NULL or 'valid'.
-      Original SAS source: 04_CERTIFICATE_OF_CAPACITY.sas (TBL_NM: MSC_QLK_ASPIRE_CERTIFICATE_OF_CAPACITY)
-    columns:
-      - name: claim_sk
-        description: Surrogate key for the claim (MD5 hash of source_system + claim number)
-      - name: source_system
-        description: Source system identifier (e.g. GWCC)
-      - name: src_claim_id
-        description: Source claim ID from CC_CLAIM
-      - name: claim_nbr
-        description: Claim number from GuidewireCC
-      - name: fitness_cd
-        description: Fitness typecode indicating worker capacity level
-      - name: fitness_desc
-        description: Fitness description (e.g. Fit, Unfit, Fit for selected duties)
-      - name: certificate_of_capacity_start_dt
-        description: Start date of the certificate of capacity period
-      - name: certificate_of_capacity_end_dt
-        description: End date of the certificate of capacity period
-      - name: certificate_of_capacity_hours_worked_per_week
-        description: Total hours per week the worker is certified to work
-      - name: src_create_dttm
-        description: Source system creation timestamp of the capacity record
-      - name: latest_certificate_of_capacity_record_rank
-        description: >
-          Row number ranking certificates per claim, ordered by retired status,
-          start date desc, end date desc, create time desc. Rank 1 = latest valid record.
-      - name: retired_ind
-        description: Y/N indicator whether the capacity record has been retired
-      - name: certificate_of_capacity_status
-        description: Certificate of capacity status (blank if NULL, otherwise the status name)
-      - name: extract_date
-        description: Date of data extraction
-      - name: file_ingestion_timestamp
-        description: Timestamp of file ingestion, used as incremental filter
+-  name: int_certificate_of_capacity
+   description: "Integrated certificate of capacity model sourced from Guidewire CC. Captures employment capacity assessments including fitness status, hours worked, and certification dates. Original SAS source: 04_CERTIFICATE_OF_CAPACITY.sas (TBL_NM: MSC_QLK_ASPIRE_CERTIFICATE_OF_CAPACITY)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim (source_system + claimnumber)"
+      tests:
+      -  not_null:
+            name: int_certificate_of_capacity_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: source_system
+      description: "Source system identifier"
+   -  name: src_claim_id
+      description: "Source claim ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_certificate_of_capacity_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_certificate_of_capacity_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_certificate_of_capacity_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: fitness_cd
+      description: "Fitness typecode from certificate of capacity"
+   -  name: fitness_desc
+      description: "Fitness description"
+   -  name: certificate_of_capacity_start_dt
+      description: "Certificate of capacity start date"
+   -  name: certificate_of_capacity_end_dt
+      description: "Certificate of capacity end date"
+   -  name: certificate_of_capacity_hours_worked_per_week
+      description: "Total hours per week from certificate of capacity"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_certificate_of_capacity_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_certificate_of_capacity_file_ingestion_timestamp_not_null
+            config:
+               severity: warn
+   -  name: latest_certificate_of_capacity_record_rank
+      description: "Row rank for latest certificate of capacity record - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_certificate_of_capacity_latest_rank_not_null
+            config:
+               severity: warn
+   -  name: retired_ind
+      description: "Retired indicator (Y/N)"
+   -  name: certificate_of_capacity_status
+      description: "Certificate of capacity status"

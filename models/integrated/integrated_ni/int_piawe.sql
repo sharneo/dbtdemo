@@ -1,3 +1,13 @@
+{#-
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             Incremental staging model for overpayment reimbursement.
+
+-#}   
+
 {{
   config(
     materialized='incremental',
@@ -20,6 +30,9 @@ with cc_claim as (
         source_system,
         file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
+    {% if is_incremental() %}
+    WHERE file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+    {% endif %}
 ),
 
 cc_exposure as (
@@ -92,8 +105,10 @@ piawe_with_expiry as (
         ) as expirydate
     from piawe_deduped p
     where p.row_num = 1
-)
+),
 
+cte_join as 
+(
 select
     cast({{ dbt_utils.generate_surrogate_key([
         'clm.source_system',
@@ -102,11 +117,11 @@ select
     clm.source_system as source_system,
     clm.claimnumber as claim_nbr,
     clm.id as src_claim_id,
-    piawe.effectivedate_icare as piawe_effective_dt,
-    coalesce(piawe.expirydate, current_timestamp()) as piawe_expiry_dt,
+    CAST(piawe.effectivedate_icare AS TIMESTAMP_NTZ) AS  piawe_effective_dt,
+    CAST(coalesce(piawe.expirydate, current_timestamp()) as TIMESTAMP_NTZ) as piawe_expiry_dt,
     piawe.piawe_type,
     piawe.piawe_type_desc,
-    piawe.createtime as src_create_dttm,
+    CAST(piawe.createtime as TIMESTAMP_NTZ) as src_create_dttm,
     case
         when piawe.piawe_type = 'manual_icare' and coalesce(bacc.totalweekspaid, 0) > 52
         then piawe.piawelater52_icare
@@ -118,18 +133,26 @@ select
     ) as latest_piawe_rank,
     current_date() as extract_date,
     clm.file_ingestion_timestamp
-
 from cc_claim clm
-
 inner join cc_exposure exp
     on clm.id = exp.claimid
-
 inner join piawe_with_expiry piawe
     on exp.id = piawe.exposureid
-
 left join ccx_benefitsaccrual_icare bacc
     on bacc.exposureid = exp.id
-
-{% if is_incremental() %}
-where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
-{% endif %}
+)
+select 
+    claim_sk,
+    source_system,
+    claim_nbr,
+    src_claim_id,
+    piawe_effective_dt,
+    piawe_expiry_dt,
+    piawe_type,
+    piawe_type_desc,
+    src_create_dttm,
+    piawe_amount,
+    latest_piawe_rank,
+    file_ingestion_timestamp
+from
+    cte_join

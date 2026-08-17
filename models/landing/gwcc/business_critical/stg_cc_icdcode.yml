@@ -1,0 +1,99 @@
+version: 2
+models:
+-  name: stg_cc_icdcode
+   description: "Incremental staging model for Guidewire Claim Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: expirydate
+      description: "The date this code expires"
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_publicid_not_null
+            config:
+               severity: warn
+   -  name: chronic
+      description: "Is the condition chronic"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: availabilitydate
+      description: "The date this code becomes available"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_createtime_not_null
+            config:
+               severity: warn
+   -  name: code
+      description: "ICD 9 or 10 Code"
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_code_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: bodysystem
+      description: "Broad classification of diagnosis types"
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_bodysystem_not_null
+            config:
+               severity: warn
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_updatetime_not_null
+            config:
+               severity: warn
+   -  name: odgmeddiagnosis
+      description: "ODG (Official Disability Guidelines) Result for the ICD (Injury Code Description)"
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_id_not_null
+            config:
+               severity: warn
+   -  name: codedesc
+      description: "ICD code description"
+      tests:
+      -  not_null:
+            name: gwcc_cc_icdcode_codedesc_not_null
+            config:
+               severity: warn
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

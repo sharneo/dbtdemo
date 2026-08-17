@@ -5,20 +5,17 @@ Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
 2026-01-01      0.0                             Incremental staging model for pc_address.
-                                                address_sk: Entity identity surrogate key on PK ('id')
                                                 hash_key: State change detection surrogate key on all business cols excluding PK
-                                                dbt_updated_at: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
-                                                Uniform across AVRO and PARQUET - no code change when CDC goes live
+                                                record_insertion_date: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
+                                                Uniform across AVRO and PARQUET - no code change when CDA goes live
                                                 UNION ALL for BackFill of Data i.e. Incase of Rebuild of Upstream Model 
 -#}   
 
 {{ config(
     materialized='incremental',
-    transient=True,
-    unique_key='id',
-    incremental_strategy='merge',
+    incremental_strategy='append',
     on_schema_change='append_new_columns',
-    tags=["landing", "gwpc", "policy_centre", "business_critical", "pc_address"]
+    tags=["landing", "gwpc", "policy_centre", "business_critical"]
 ) }}
 
 
@@ -37,7 +34,6 @@ WITH cte_source_data AS
                 CAST(data_payload:County::TEXT AS VARCHAR(500)) AS county,
                 CAST(data_payload:AddressLine3::TEXT AS VARCHAR(60)) AS addressline3,
                 CAST(data_payload:CityKanji::TEXT AS VARCHAR(60)) AS citykanji,
-                CAST(data_payload:SpatialPoint::TEXT AS VARCHAR(16777216)) AS spatialpoint,
                 CAST(data_payload:AddressLine2Kanji::TEXT AS VARCHAR(60)) AS addressline2kanji,
                 CAST(data_payload:PhoneExtension::TEXT AS VARCHAR(60)) AS phoneextension,
                 data_payload:State::NUMBER AS state,
@@ -75,14 +71,16 @@ WITH cte_source_data AS
                 data_payload:NonSpecific::BOOLEAN AS nonspecific,
                 data_payload:ObfuscatedInternal::BOOLEAN AS obfuscatedinternal,
                 data_payload:ArchivePartition::NUMBER AS archivepartition,
+                CAST(data_payload:SpatialPoint::TEXT AS VARCHAR(16777216)) AS spatialpoint,
                 CAST(NULL AS TIMESTAMP_LTZ) as gwcbi_connector_ts_ms,
                 CAST(NULL AS NUMBER) as gwcbi_lsn,
                 CAST(NULL AS NUMBER) as gwcbi_operation,
                 CAST(NULL AS TIMESTAMP_LTZ) as gwcbi_payload_ts_ms,
                 CAST(NULL AS NUMBER) as gwcbi_seqval,
-                CAST(NULL AS STRING) as gwcbi_seqval_hex,
+                CAST(NULL AS VARCHAR(300)) as gwcbi_seqval_hex,
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
+                metadata_row_number,
                 file_ingestion_timestamp,
                 'AVRO' as file_type,
                 'GWPC' as source_system
@@ -101,7 +99,6 @@ WITH cte_source_data AS
                 CAST($1:county::TEXT AS VARCHAR(500)) AS county,
                 CAST($1:addressline3::TEXT AS VARCHAR(60)) AS addressline3,
                 CAST($1:citykanji::TEXT AS VARCHAR(60)) AS citykanji,
-                CAST($1:spatialpoint::TEXT AS VARCHAR(16777216)) AS spatialpoint,
                 CAST($1:addressline2kanji::TEXT AS VARCHAR(60)) AS addressline2kanji,
                 CAST($1:phoneextension::TEXT AS VARCHAR(60)) AS phoneextension,
                 $1:state::NUMBER AS state,
@@ -139,14 +136,16 @@ WITH cte_source_data AS
                 $1:nonspecific::BOOLEAN AS nonspecific,
                 $1:obfuscatedinternal::BOOLEAN AS obfuscatedinternal,
                 $1:archivepartition::NUMBER AS archivepartition,
+                CAST($1:spatialpoint::TEXT AS VARCHAR(16777216)) AS spatialpoint,
                 TO_TIMESTAMP($1:gwcbi___connector_ts_ms::NUMBER / 1000) as gwcbi_connector_ts_ms,
                 $1:gwcbi___lsn::NUMBER as gwcbi_lsn,
                 $1:gwcbi___operation::NUMBER as gwcbi_operation,
                 TO_TIMESTAMP($1:gwcbi___payload_ts_ms::NUMBER / 1000) as gwcbi_payload_ts_ms,
                 $1:gwcbi___seqval::NUMBER as gwcbi_seqval,
-                $1:gwcbi___seqval_hex::STRING as gwcbi_seqval_hex,
+                $1:gwcbi___seqval_hex::VARCHAR(300) as gwcbi_seqval_hex,
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
+                metadata_row_number,
                 file_ingestion_timestamp,
                 'PARQUET' as file_type,
                 'GWPC' as source_system
@@ -173,7 +172,6 @@ cte_transformed AS (
                         'county',
                         'addressline3',
                         'citykanji',
-                        'spatialpoint',
                         'addressline2kanji',
                         'phoneextension',
                         'state',
@@ -209,13 +207,15 @@ cte_transformed AS (
                         'temporarylastupdatetime',
                         'nonspecific',
                         'obfuscatedinternal',
-                        'archivepartition'
+                        'archivepartition',
+                        'spatialpoint'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) as record_insertion_date
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS record_insertion_date
     FROM cte_source_data
 )
 
 SELECT * FROM cte_transformed
 {% if is_incremental() %}
-WHERE file_ingestion_timestamp > (SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
+    WHERE file_ingestion_timestamp > (SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
 {% endif %}
+    ORDER BY record_insertion_date

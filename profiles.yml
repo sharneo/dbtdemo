@@ -1,12 +1,13 @@
-icare_dbt_transformations_fndn:
-  target: dev
+dbtdemo:
   outputs:
     dev:
-      type: snowflake
-      account: qcb41218
-      user: AFSHIN
-      role: SFG_DEV_DATA_ENGINEER
-      database: DEV_RAW_DB
-      warehouse: ICARE_DEV_ANALYTICS_WH
-      schema: GWCC
+      account: qhrbbxp-qub80682
+      database: DEV_LANDING_DB
+      password: "{{ env_var('SNOWFLAKE_KEY_PASS') }}"
+      role: SF_DEV_DATA_ENGINEER
+      schema: GWPC
       threads: 8
+      type: snowflake
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      warehouse: DEV_LOAD_WH
+  target: dev

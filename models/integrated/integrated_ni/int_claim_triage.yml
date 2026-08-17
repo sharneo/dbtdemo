@@ -1,0 +1,94 @@
+version: 2
+models:
+-  name: int_claim_triage
+   description: "Integrated claim triage model sourced from Guidewire CC. Tracks triage history with segments, risk scores, and review outcomes. Original SAS source: 13_CLAIM_TRIAGE.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_TRIAGE)"
+   columns:
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_triage_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_triage_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_triage_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: triage_history_id
+      description: "Triage history public ID"
+   -  name: src_triage_history_id
+      description: "Source triage history ID"
+   -  name: src_create_dttm
+      description: "Source creation datetime"
+   -  name: src_create_dt
+      description: "Source creation date"
+   -  name: src_eff_dttm
+      description: "Source effective datetime"
+   -  name: src_eff_dt
+      description: "Source effective date"
+   -  name: triage_dttm
+      description: "Triage datetime"
+   -  name: triage_dt
+      description: "Triage date"
+   -  name: triage_review_dttm
+      description: "Triage review datetime"
+   -  name: triage_review_dt
+      description: "Triage review date"
+   -  name: proposed_segment_cd
+      description: "Proposed segment code"
+   -  name: proposed_segment_name
+      description: "Proposed segment name"
+   -  name: current_segment_cd
+      description: "Current segment code"
+   -  name: current_segment_name
+      description: "Current segment name"
+   -  name: accepted_segment_cd
+      description: "Accepted segment code"
+   -  name: accepted_segment_name
+      description: "Accepted segment name"
+   -  name: triage_source_cd
+      description: "Triage source code"
+   -  name: triage_source_name
+      description: "Triage source name"
+   -  name: segment_reason_cd
+      description: "Segment reason code"
+   -  name: segment_reason_name
+      description: "Segment reason name"
+   -  name: triage_review_outcome_cd
+      description: "Triage review outcome code"
+   -  name: triage_review_outcome_name
+      description: "Triage review outcome name"
+   -  name: location_of_injury_toocs_txt
+      description: "Location of injury TOOCS text"
+   -  name: nature_of_injury_toocs_txt
+      description: "Nature of injury TOOCS text"
+   -  name: risk_score
+      description: "Risk score"
+   -  name: triage_comments_txt
+      description: "Triage comments text"
+   -  name: icd_code_txt
+      description: "ICD code text"
+   -  name: inj_icd_code_txt
+      description: "Injury ICD code text"
+   -  name: valid_triage_ind
+      description: "Valid triage indicator"
+   -  name: first_triage_ind
+      description: "First triage indicator"
+   -  name: latest_triage_ind
+      description: "Latest triage indicator"
+   -  name: re_triage_ind
+      description: "Re-triage indicator"
+   -  name: first_proposed_triage_ind
+      description: "First proposed triage indicator"
+   -  name: reviewer
+      description: "Reviewer name"

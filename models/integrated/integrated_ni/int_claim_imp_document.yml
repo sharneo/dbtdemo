@@ -1,0 +1,89 @@
+version: 2
+models:
+-  name: int_claim_imp_document
+   description: "Integrated claim IMP document model sourced from Guidewire CC. Tracks IMP (Injury Management Plan) documents with type, section, status, and ranking by date. Original SAS source: 33_CLAIM_IMP_DOCUMENT.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_IMP_DOCUMENT)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim (source_system + claimnumber)"
+      tests:
+      -  not_null:
+            name: int_claim_imp_document_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_imp_document_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_imp_document_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_imp_document_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: src_doc_id
+      description: "Source document ID (docuid) - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_imp_document_src_doc_id_not_null
+            config:
+               severity: warn
+   -  name: doc_type_cd
+      description: "Document type code"
+   -  name: doc_type_desc
+      description: "Document type description"
+   -  name: doc_section_cd
+      description: "Document section code"
+   -  name: doc_section_desc
+      description: "Document section description"
+   -  name: doc_sub_section_cd
+      description: "Document sub-section code"
+   -  name: doc_sub_section_desc
+      description: "Document sub-section description"
+   -  name: doc_status_cd
+      description: "Document status code"
+   -  name: doc_status_desc
+      description: "Document status description"
+   -  name: doc_description
+      description: "Document description"
+   -  name: doc_author
+      description: "Document author"
+   -  name: doc_recipient
+      description: "Document recipient"
+   -  name: doc_pack_identifier
+      description: "Document pack identifier"
+   -  name: doc_document_pack_id
+      description: "Document pack ID"
+   -  name: doc_inbound_ind
+      description: "Document inbound indicator (Y/N)"
+   -  name: doc_sent_received_dttm
+      description: "Document sent/received datetime"
+   -  name: doc_sent_received_dt
+      description: "Document sent/received date"
+   -  name: doc_create_dttm
+      description: "Document creation datetime"
+   -  name: doc_create_dt
+      description: "Document creation date"
+   -  name: doc_update_dttm
+      description: "Document update datetime"
+   -  name: latest_date_sent_recd_rank
+      description: "Latest date sent/received rank"
+   -  name: earliest_date_sent_recd_rank
+      description: "Earliest date sent/received rank"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_imp_document_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

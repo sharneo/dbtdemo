@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: int_trading_partner
+    description: >
+      Incremental model for Trading Partner reference data sourced from SAP.
+      Contains trading partner master data including company code and company name.
+    columns:
+      - name: trading_partner_sk
+        description: Surrogate key for the trading partner record
+        tests:
+          - not_null
+          - unique
+      - name: company
+        description: Trading partner company code (RCOMP)
+        tests:
+          - not_null
+      - name: name_of_the_company
+        description: Name of the trading partner company (NAME1)
+      - name: metadata_file_name
+        description: Source metadata file name
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion, used as incremental filter

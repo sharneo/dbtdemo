@@ -1,0 +1,71 @@
+version: 2
+
+snapshots:
+  - name: comp_code_snapshot
+    description: |
+      SCD Type 2 history of SAP Company Code master data (T001).
+      Grain: one row per version of each company code.
+      Defines legal entity configurations including currency, chart of accounts, and fiscal year variant.
+    columns:
+      - name: comp_code_sk
+        description: Surrogate key for this company code record, generated from [bukrs]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: bukrs
+        description: Company Code (SAP BUKRS). Unique identifier for a legal entity within the corporate group.
+
+      - name: butxt
+        description: Company Code Name. Descriptive name of the company code.
+
+      - name: ort01
+        description: City (SAP ORT01). City where the company code is registered.
+
+      - name: land1
+        description: Country Key (SAP LAND1). Country of the company code's legal registration.
+
+      - name: waers
+        description: Currency Key (SAP WAERS). Local currency for the company code.
+
+      - name: ktopl
+        description: Chart of Accounts (SAP KTOPL). Chart of accounts assigned to this company code.
+
+      - name: waabw
+        description: Currency Translation Factor (SAP WAABW). Translation factor from local currency to group currency.
+
+      - name: periv
+        description: Fiscal Year Variant (SAP PERIV). Defines the fiscal year structure (periods, year start).
+
+      - name: kokfi
+        description: Controlling Active Flag. Indicates whether Controlling (CO) is active for this company code.
+
+      - name: rcomp
+        description: Company ID (SAP RCOMP). Identifies the company for intercompany and consolidation processing.
+
+      - name: stceg
+        description: VAT Registration Number (SAP STCEG). Tax registration number for the company code.
+
+      - name: xfdis
+        description: Cash Management Active Flag. Indicates whether cash management is active.
+
+      - name: kkber
+        description: Credit Control Area (SAP KKBER). Credit control area assigned to the company code.
+
+      - name: mwskv
+        description: Input Tax Code (SAP MWSKV). Default tax code for input VAT.
+
+      - name: mwska
+        description: Output Tax Code (SAP MWSKA). Default tax code for output VAT.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

@@ -2,7 +2,7 @@ version: 2
 sources:
 - name: gwbc
   description: 'Raw Database for GWBC'
-  database: DEV_RAW_DB
+  database: DEV_LANDING_DB
   schema: gwbc
   tables:
     - name: bc_lineitem
@@ -502,3 +502,8 @@ sources:
     - name: bctl_notetype
     - name: bctl_prodcorrespondencetype
     - name: bctl_resourcecontext
+    - name: bc_writeoff
+    - name: bc_hold
+    - name: bc_holdtypeentry
+    - name: bc_modifiedfrompmr
+    - name: bc_group

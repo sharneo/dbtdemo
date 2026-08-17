@@ -1,11 +1,11 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'icare_dbt_transformations_fndn'
+name: 'dbtdemo'
 version: '1.0.0'
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'icare_dbt_transformations_fndn'
+profile: 'dbtdemo'
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -34,7 +34,7 @@ vars:
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-    icare_dbt_transformations_fndn:
+    dbtdemo:
       +transient: false
       +sql_header: "alter SESSION set QUOTED_IDENTIFIERS_IGNORE_CASE = TRUE;"
       landing:
@@ -44,7 +44,7 @@ models:
           relation: true
           columns: true
         +materialized: view
-        +database: DEV_RAW_DB
+        +database: DEV_LANDING_DB
         gwpc:
          +schema: gwpc 
         gwcc:
@@ -71,6 +71,14 @@ models:
          +schema: gwab
         gwbc:
          +schema: gwbc
+      integrated:
+        +database: DEV_CURATED_DB
+        +transient: false
+        +persist_docs:
+          relation: true
+          columns: true
+        integrated_ni:
+          +schema: integrated_ni
       reporting:
         +database: DEV_REPORTING_DB
         +transient: false
@@ -85,19 +93,19 @@ models:
         aspire:
          +schema: sira 
     dbt_artifacts:
-      +database: DEV_RAW_DB # optional, default is your target database
+      +database: DEV_LANDING_DB # optional, default is your target database
       +schema: ELT_UTILS # optional, default is your target schema
       staging:
-        +database: DEV_RAW_DB # optional, default is your target database
+        +database: DEV_LANDING_DB # optional, default is your target database
         +schema: ELT_UTILS # optional, default is your target schema
       sources:
-        +database: DEV_RAW_DB # optional, default is your target database
+        +database: DEV_LANDING_DB # optional, default is your target database
         +schema: ELT_UTILS # optional, default is your target schema
     elementary:
-      +database: DEV_RAW_DB
+      +database: DEV_LANDING_DB
       +schema: "elementary"
 snapshots:
-  icare_dbt_transformations_fndn:   # folder where all your snapshots live
+  dbtdemo:   # folder where all your snapshots live
     +target_database: DEV_CURATED_DB
     +persist_docs:
       relation: true

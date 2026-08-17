@@ -1,0 +1,108 @@
+version: 2
+models:
+-  name: int_claim_txn
+   description: "Integrated claim transaction model sourced from Guidewire CC. Contains transaction details including status, cost types, payment types, and approval information. Original SAS source: 14_CLAIM_TXN.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_TXN)"
+   columns:
+   -  name: claim_txn_sk
+      description: "Surrogate key for claim transaction - primary key"
+      tests:
+      -  unique:
+            name: int_claim_txn_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_txn_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_txn_id
+      description: "Claim transaction public ID"
+   -  name: src_claim_txn_id
+      description: "Source claim transaction ID"
+      tests:
+      -  not_null:
+            name: int_claim_txn_src_claim_txn_id_not_null
+            config:
+               severity: warn
+   -  name: src_claim_txn_set_id
+      description: "Source claim transaction set ID"
+   -  name: src_claim_payment_id
+      description: "Source claim payment ID"
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_txn_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_txn_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_txn_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_txn_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: txn_submitted_dt
+      description: "Transaction submitted date"
+   -  name: txn_approval_dttm
+      description: "Transaction approval datetime"
+   -  name: txn_approval_dt
+      description: "Transaction approval date"
+   -  name: txn_approval_status_cd
+      description: "Transaction approval status code"
+   -  name: txn_approval_status_desc
+      description: "Transaction approval status description"
+   -  name: txn_status_cd
+      description: "Transaction status code"
+   -  name: txn_status_desc
+      description: "Transaction status description"
+   -  name: txn_lifecycle_state_cd
+      description: "Transaction lifecycle state code"
+   -  name: txn_lifecycle_state_desc
+      description: "Transaction lifecycle state description"
+   -  name: txn_subtype_cd
+      description: "Transaction subtype code"
+   -  name: txn_subtype_desc
+      description: "Transaction subtype description"
+   -  name: txn_cost_cat_cd
+      description: "Transaction cost category code"
+   -  name: txn_cost_cat_desc
+      description: "Transaction cost category description"
+   -  name: txn_cost_type_cd
+      description: "Transaction cost type code"
+   -  name: txn_cost_type_desc
+      description: "Transaction cost type description"
+   -  name: payment_type_cd
+      description: "Payment type code"
+   -  name: payment_type_desc
+      description: "Payment type description"
+   -  name: payment_category_cd
+      description: "Payment category code"
+   -  name: payment_category_desc
+      description: "Payment category description"
+   -  name: adj_payment_ind
+      description: "Adjusted payment indicator"
+   -  name: payment_requester_user_sk
+      description: "Surrogate key for payment requester user"
+   -  name: migrated_txn_ind
+      description: "Migrated transaction indicator"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_txn_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

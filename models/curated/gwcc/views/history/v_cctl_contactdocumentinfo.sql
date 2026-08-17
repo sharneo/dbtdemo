@@ -1,41 +1,58 @@
 {#-
-Project: Data Uplift Program
-Project Description/Purpose: Data Uplift Program
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
 
 Date            Version         Author          Description of Change           
-2026-01-01      1.7                             Curated SCD2 full history view for cctl_contactdocumentinfo.
-                                                Source: {{ ref('cctl_contactdocumentinfo_snapshot') }}
-                                                Contains full SCD2 history including valid_from, valid_to.
-                                                Current record: valid_to open-ended .
-                                                CDA Deletion Flag is 1 
-                                                For current-state-only view, use the current state view.
--#}
+2026-01-01      0.5                             SCD Type II view over cctl_contactdocumentinfo.
+                                                Deduplicates by ID + timestamp, computes VALID_FROM,
+                                                VALID_TO, and IS_CURRENT via window functions.
+                                                Filters: Excludes Guidewire Cloud Program delete Flag
+                                                i.e. CDA Deletion is 1 Page 23 of the Manual
+-#}   
 
 {{ config(
     materialized='view',
     tags=["curated_history"]
 ) }}
 
-WITH cte_source_data AS (
+WITH cte_source_data AS 
+(
     SELECT
-        {{ dbt_utils.star(from=ref('cctl_contactdocumentinfo_snapshot')) }}
-    FROM {{ ref('cctl_contactdocumentinfo_snapshot') }}
+        {{ dbt_utils.star(from=ref('cctl_contactdocumentinfo')) }}
+    FROM {{ ref('cctl_contactdocumentinfo') }}
+    WHERE coalesce(gwcbi_operation, 5) <> 1
 ),
 
-cte_transformed AS (
+cte_deduplicated AS 
+(
     SELECT
         *,
-        CASE 
-            WHEN valid_to = {{ snapshot_valid_to_current() }}
-            THEN 'Y'
-            ELSE 'N' 
-        END AS current_record,
-        CASE 
-            WHEN COALESCE(gwcbi_operation, 0) = 1 THEN 'Y' 
-            WHEN LOWER(COALESCE(is_deleted, 'false')) = 'true' THEN 'Y'
-            ELSE 'N' 
-        END AS deletion_flag
+        coalesce(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS VALID_FROM
     FROM cte_source_data
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY ID, coalesce(gwcbi_payload_ts_ms, file_ingestion_timestamp)
+        ORDER BY coalesce(gwcbi_seqval,0) DESC
+    ) = 1
+),
+
+cte_scd2 AS 
+(
+    SELECT
+        *,
+        lead(valid_from) over (
+            partition by id
+            order by valid_from
+        ) as _next_valid_from
+    FROM cte_deduplicated
 )
 
-SELECT * FROM cte_transformed
+SELECT
+    {{ dbt_utils.star(from=ref('cctl_contactdocumentinfo')) }},
+    valid_from,
+    coalesce(DATEADD('millisecond', -1, _next_valid_from), '9999-12-31'::TIMESTAMP_TZ) AS valid_to,
+    CASE
+         WHEN _next_valid_from IS NULL THEN TRUE
+         ELSE FALSE
+    END                           AS is_current
+FROM cte_scd2

@@ -1,0 +1,87 @@
+version: 2
+models:
+-  name: int_claim_medical_diagnosis
+   description: "Integrated claim medical diagnosis model sourced from Guidewire CC. Tracks injury diagnoses with ICD codes, severity, and payability status. Original SAS source: 59_CLAIM_MEDICAL_DIAGNOSIS.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_MEDICAL_DIAGNOSIS)"
+   columns:
+   -  name: claim_medical_diagnosis_sk
+      description: "Surrogate key for claim medical diagnosis (source_system + claimnumber + diagnosis_id) - primary key"
+      tests:
+      -  unique:
+            name: int_claim_medical_diagnosis_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_medical_diagnosis_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_medical_diagnosis_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_medical_diagnosis_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_medical_diagnosis_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_incident_id
+      description: "Source incident ID"
+   -  name: src_injury_diagnosis_id
+      description: "Source injury diagnosis ID"
+      tests:
+      -  not_null:
+            name: int_claim_medical_diagnosis_src_injury_diagnosis_id_not_null
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_medical_diagnosis_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: icd_cd
+      description: "ICD code"
+   -  name: icd_desc
+      description: "ICD code description"
+   -  name: diagnosis_start_dttm
+      description: "Diagnosis start datetime"
+   -  name: diagnosis_end_dttm
+      description: "Diagnosis end datetime"
+   -  name: diagnosis_severity_cd
+      description: "Diagnosis severity code"
+   -  name: diagnosis_severity_desc
+      description: "Diagnosis severity description"
+   -  name: payable_ind
+      description: "Payable indicator (Y/N)"
+   -  name: primary_diagnosis_ind
+      description: "Primary diagnosis indicator (Y/N)"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_claim_medical_diagnosis_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: src_create_dt
+      description: "Source system creation date"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_medical_diagnosis_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

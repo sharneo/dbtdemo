@@ -1,0 +1,53 @@
+version: 2
+models:
+-  name: int_claim_me_transfer
+   description: "Integrated claim managing entity transfer model sourced from Guidewire CC. Tracks transfers between managing entities with from/to entity codes. Original SAS source: 37_CLAIM_ME_TRANSFER.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_ME_TRANSFER)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim (source_system + claimnumber)"
+      tests:
+      -  not_null:
+            name: int_claim_me_transfer_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_me_transfer_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_me_transfer_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_me_transfer_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: from_managing_entity
+      description: "From managing entity code"
+   -  name: to_managing_entity
+      description: "To managing entity code"
+   -  name: transfer_dttm
+      description: "Transfer datetime - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_claim_me_transfer_transfer_dttm_not_null
+            config:
+               severity: warn
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_me_transfer_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

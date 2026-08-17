@@ -1,3 +1,14 @@
+{#-
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
+
+Date            Version         Author          Description of Change           
+2026-01-01      0.0                             Aspire - original table materialization
+2026-04-20      1.0                             Converted to incremental with merge strategy
+
+-#}
+
 {{
   config(
     materialized='incremental',
@@ -20,6 +31,9 @@ with cc_claim as (
         source_system,
         file_ingestion_timestamp
     from {{ ref('v_cc_claim_current') }}
+    {% if is_incremental() %}
+        WHERE file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+    {% endif %}
 ),
 
 ccx_medpersontreatment_icare as (
@@ -120,8 +134,10 @@ cctl_frequency_icare as (
         id,
         name
     from {{ ref('v_cctl_frequency_icare_current') }}
-)
+),
 
+cte_join AS 
+(
 select
     cast({{ dbt_utils.generate_surrogate_key([
         'clm.source_system',
@@ -153,7 +169,7 @@ select
     med.odgmax as odg_max,
     dim_approval.name as treatment_approval_status,
     med.treatmentquantityapproved as treatment_sessions_approved,
-    med.dateapproved as treatment_approved_dttm,
+    CAST(med.dateapproved AS TIMESTAMP_NTZ) as treatment_approved_dttm,
     cast(med.dateapproved as date) as treatment_approved_dt,
     dim_freq.name as domestic_personal_care_frequenc1,
     med.frequencycount as domestic_personal_care_frequenc2,
@@ -166,42 +182,69 @@ select
         when med.impinclude = 0 then 'N'
         else null
     end as include_on_imp_ind,
-    med.createtime as treatment_request_create_dttm,
-    cast(med.createtime as date) as treatment_request_create_dt,
-    med.updatetime as treatment_request_update_dttm,
-    cast(med.updatetime as date) as treatment_request_update_dt,
-    current_date() as extract_date,
+    CAST(med.createtime AS TIMESTAMP_NTZ) as treatment_request_create_dttm,
+    cast(med.createtime AS date) as treatment_request_create_dt,
+    CAST(med.updatetime AS TIMESTAMP_NTZ) as treatment_request_update_dttm,
+    cast(med.updatetime AS date) as treatment_request_update_dt,
     clm.file_ingestion_timestamp
-
 from cc_claim clm
-
 left join ccx_medpersontreatment_icare med
     on clm.id = med.claimid
-
 left join cctl_medentitytreatment_icare dim_med
     on med.subtype = dim_med.id
-
 left join cctl_medtreatsubserv_icare dim_medcat
     on med.category = dim_medcat.id
-
 left join ccx_paycode_icare pay
     on med.paycodeid = pay.id
-
 left join cc_contact con
     on med.contactid = con.id
-
 left join cc_icdcode icd
     on med.icd1id = icd.id
-
 left join cctl_odgflag_icare odgflag
     on med.odgflag = odgflag.id
-
 left join cctl_approvalstatus_icare dim_approval
     on med.approvalstatus = dim_approval.id
-
 left join cctl_frequency_icare dim_freq
     on med.frequency = dim_freq.id
-
-{% if is_incremental() %}
-where clm.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
-{% endif %}
+)
+select 
+    claim_sk,
+    source_system,
+    claim_nbr,
+    src_claim_id,
+    treatment_public_id,
+    treatment_group_cd,
+    treatment_group_desc,
+    treatment_type,
+    treatment_category_cd,
+    treatment_category_desc,
+    treatment_pay_cd,
+    treatment_pay_desc,
+    treatment_request_dt,
+    treatment_provider_name,
+    treatment_start_dt,
+    treatment_end_dt,
+    treatment_sessions_requested,
+    treatment_description,
+    treatment_icd,
+    odg_flag_cd,
+    odg_flag_desc,
+    odg_max,
+    treatment_approval_status,
+    treatment_sessions_approved,
+    treatment_approved_dttm,
+    treatment_approved_dt,
+    domestic_personal_care_frequenc1,
+    domestic_personal_care_frequenc2,
+    treatment_unit_cost,
+    treatment_hourly_cost,
+    treatment_hours,
+    treatment_total_cost,
+    include_on_imp_ind,
+    treatment_request_create_dttm,
+    treatment_request_create_dt,
+    treatment_request_update_dttm,
+    treatment_request_update_dt,
+    file_ingestion_timestamp
+from
+    cte_join

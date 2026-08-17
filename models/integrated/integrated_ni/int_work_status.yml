@@ -1,0 +1,105 @@
+version: 2
+models:
+-  name: int_work_status
+   description: "Integrated work status model sourced from Guidewire CC. Tracks employment work status with hours, wages, pay periods, and termination details. Original SAS source: 31_WORK_STATUS.sas (TBL_NM: MSC_QLK_ASPIRE_WORK_STATUS)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_work_status_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_work_status_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_work_status_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_work_status_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: work_status_id
+      description: "Work status public ID"
+   -  name: src_work_status_id
+      description: "Source work status ID - primary key"
+      tests:
+      -  unique:
+            name: int_work_status_src_work_status_id_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_work_status_src_work_status_id_not_null
+            config:
+               severity: warn
+   -  name: work_status_comments_txt
+      description: "Work status comments"
+   -  name: hours_worked_per_wk_nbr
+      description: "Hours worked per week"
+   -  name: days_worked_per_wk_nbr
+      description: "Days worked per week"
+   -  name: work_status_start_dt
+      description: "Work status start date"
+   -  name: work_status_end_dt
+      description: "Work status end date"
+   -  name: wage_loss_ind
+      description: "Wage loss indicator"
+   -  name: work_status_cd
+      description: "Work status code"
+   -  name: work_status_desc
+      description: "Work status description"
+   -  name: avg_wkly_wage_at_lodgement
+      description: "Average weekly wage at lodgement"
+   -  name: pay_period_cd
+      description: "Pay period code"
+   -  name: pay_period_desc
+      description: "Pay period description"
+   -  name: first_day_of_pay_cycle
+      description: "First day of pay cycle"
+   -  name: payments_align_to_paycycle_ind
+      description: "Payments align to pay cycle indicator"
+   -  name: most_recent_work_status_record_rank
+      description: "Most recent work status record rank"
+   -  name: current_work_status_record_ind
+      description: "Current work status record indicator"
+   -  name: forecasted_daily_payments
+      description: "Forecasted daily payments"
+   -  name: termination_dt
+      description: "Termination date"
+   -  name: termination_reason_cd
+      description: "Termination reason code"
+   -  name: termination_reason_desc
+      description: "Termination reason description"
+   -  name: src_create_dttm
+      description: "Source creation datetime"
+   -  name: src_update_dttm
+      description: "Source update datetime"
+   -  name: anzsic
+      description: "ANZSIC code"
+   -  name: anzsic_group_desc
+      description: "ANZSIC group description"
+   -  name: anzsic_industry_desc
+      description: "ANZSIC industry description"
+   -  name: retired_ind
+      description: "Retired indicator"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_work_status_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

@@ -1,0 +1,51 @@
+version: 2
+models:
+-  name: int_claim_payment
+   description: "Integrated claim payment model sourced from Guidewire CC. Contains payment details including amounts, dates, status, methods, and payee information. Original SAS source: 09_CLAIM_PAYMENT.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_PAYMENT)"
+   columns:
+   -  name: src_claim_payment_id
+      description: "Source claim payment ID - primary key"
+      tests:
+      -  unique:
+            name: int_claim_payment_src_claim_payment_id_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_payment_src_claim_payment_id_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_payment_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_payment_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_payment_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_payment_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_payment_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

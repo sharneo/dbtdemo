@@ -1,0 +1,123 @@
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a Matter View for SIRA Reporting  
+
+-#}
+
+{{ config(
+    materialized='view',
+    tags=['sira', 'business_critical']
+) }}
+
+
+with cc_matter as (
+    select
+        id,
+        claimid,
+        mattertype,
+        mattercasenumber,
+        resolution,
+        outcome_icare,
+        wccmatternumber_icare,
+        casenumber,
+        commonlawid,
+        ctmresolutiontype,
+        createtime
+    from {{ ref('v_cc_matter_current') }}
+    where retired = 0
+),
+
+cctl_mattertype as (
+    select
+        id,
+        typecode,
+        name
+    from {{ ref('v_cctl_mattertype_current') }}
+    where id in (10010, 10005, 10007)
+),
+
+ccx_commutation_icare as (
+    select
+        claim_icareid
+    from {{ ref('v_ccx_commutation_icare_current') }}
+    where retired = 0
+),
+
+ccx_commonlaw_icare as (
+    select
+        id,
+        prefilingdatereceived_icare,
+        statementofclaimdaterec_icare,
+        updatetime
+    from {{ ref('v_ccx_commonlaw_icare_current') }}
+    where retired = 0
+),
+
+ccx_mattersubtype_icare as (
+    select
+        matter_icareid,
+        mattersubtype_icare
+    from {{ ref('v_ccx_mattersubtype_icare_current') }}
+    where retired = 0
+),
+
+cctl_mattersubtype_icare as (
+    select
+        id,
+        typecode,
+        name
+    from {{ ref('v_cctl_mattersubtype_icare_current') }}
+),
+
+base as (
+    select
+        mt.id,
+        mt.claimid,
+        case when mtt.id = 10005 then 1 else 0 end as iswid,
+        mtt.id as mattertypeid,
+        mtt.typecode as mattertypecode,
+        mtt.name as mattertypename,
+        sub.typecode as subtypecode,
+        sub.name as subtypename,
+        mt.mattercasenumber,
+        mt.resolution,
+        mt.outcome_icare,
+        mt.wccmatternumber_icare,
+        mt.casenumber,
+        mt.commonlawid,
+        mt.ctmresolutiontype,
+        case
+            when mtt.id = 10005
+                then clc.prefilingdatereceived_icare
+            else clc.statementofclaimdaterec_icare
+        end as commonlawactiondate
+    from cc_matter as mt
+    left join cctl_mattertype as mtt on mtt.id = mt.mattertype
+    left join ccx_commutation_icare as com on com.claim_icareid = mt.claimid
+    left join ccx_commonlaw_icare as clc on mt.commonlawid = clc.id
+    left join ccx_mattersubtype_icare as m2m on m2m.matter_icareid = mt.id
+    left join cctl_mattersubtype_icare as sub on sub.id = m2m.mattersubtype_icare
+    where mtt.id is not null
+)
+
+select
+    id,
+    claimid,
+    iswid,
+    mattertypeid,
+    mattertypecode,
+    mattertypename,
+    subtypecode,
+    subtypename,
+    mattercasenumber,
+    resolution,
+    outcome_icare,
+    wccmatternumber_icare,
+    casenumber,
+    commonlawid,
+    ctmresolutiontype,
+    commonlawactiondate
+from base

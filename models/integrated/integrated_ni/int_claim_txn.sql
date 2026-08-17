@@ -31,6 +31,9 @@ with cc_transaction as (
         file_ingestion_timestamp
     from {{ ref('v_cc_transaction_current') }}
     where retired = 0
+    {% if is_incremental() %}
+        and file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
+    {% endif %}
 ),
 
 cc_claim as (
@@ -123,8 +126,9 @@ cc_user as (
         id,
         publicid
     from {{ ref('v_cc_user_current') }}
-)
-
+),
+cte_join as 
+(
 select
     cast({{ dbt_utils.generate_surrogate_key([
         'clm.source_system',
@@ -141,7 +145,7 @@ select
     clm.claimnumber as claim_nbr,
     clm.id as src_claim_id,
     trn.submitdate as txn_submitted_dt,
-    tset.approvaldate as txn_approval_dttm,
+    CAST(tset.approvaldate as TIMESTAMP_NTZ) AS  txn_approval_dttm,
     cast(tset.approvaldate as date) as txn_approval_dt,
     apprstus.typecode as txn_approval_status_cd,
     apprstus.name as txn_approval_status_desc,
@@ -181,7 +185,7 @@ inner join cc_claim clm
 
 inner join cctl_transaction dimtrn
     on dimtrn.id = trn.subtype
-    and dimtrn.typecode = 'payment'
+    and dimtrn.typecode = 'Payment'
 
 inner join cc_transactionset tset
     on tset.id = trn.transactionsetid
@@ -209,7 +213,38 @@ left join cctl_paymenttype_icare dimpycat
 
 left join cc_user usr
     on tset.requestinguserid = usr.id
-
-{% if is_incremental() %}
-where trn.file_ingestion_timestamp >= (select max(file_ingestion_timestamp) from {{ this }})
-{% endif %}
+)
+select 
+    claim_txn_sk,
+    claim_txn_id,
+    src_claim_txn_id,
+    src_claim_txn_set_id,
+    src_claim_payment_id,
+    claim_sk,
+    claim_nbr,
+    src_claim_id,
+    txn_submitted_dt,
+    txn_approval_dttm,
+    txn_approval_dt,
+    txn_approval_status_cd,
+    txn_approval_status_desc,
+    txn_status_cd,
+    txn_status_desc,
+    txn_lifecycle_state_cd,
+    txn_lifecycle_state_desc,
+    txn_subtype_cd,
+    txn_subtype_desc,
+    txn_cost_cat_cd,
+    txn_cost_cat_desc,
+    txn_cost_type_cd,
+    txn_cost_type_desc,
+    payment_type_cd,
+    payment_type_desc,
+    payment_category_cd,
+    payment_category_desc,
+    adj_payment_ind,
+    payment_requester_user_sk,
+    migrated_txn_ind,
+    file_ingestion_timestamp
+from
+    cte_join

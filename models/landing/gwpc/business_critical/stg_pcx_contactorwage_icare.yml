@@ -1,0 +1,110 @@
+version: 2
+models:
+-  name: stg_pcx_contactorwage_icare
+   description: "Incremental staging model for Guidewire Policy Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: loadcommandid
+      description: ""
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_contactorwage_icare_publicid_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp indicating when the record was created in the GW table"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_contactorwage_icare_createtime_not_null
+            config:
+               severity: warn
+   -  name: noofcontractworkers
+      description: "icare specific field for number of contract workers"
+   -  name: contracttype
+      description: "icare specific field for contract type"
+   -  name: directwage_icare
+      description: "icare specific entity to hold Wage details"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_contactorwage_icare_directwage_icare_not_null
+            config:
+               severity: warn
+   -  name: percent1
+      description: "icare specific field for percent"
+   -  name: fixedid
+      description: "Unique ID for this object across all branches and periods"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_contactorwage_icare_fixedid_not_null
+            config:
+               severity: warn
+   -  name: wic
+      description: ""
+   -  name: effectivedate
+      description: "Effective date of this row. A value of NULL in the database indicates that this rows effective date is equal to the Period Start."
+   -  name: totalvalueofcontract
+      description: "icare specific field for total value of contract"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_contactorwage_icare_updatetime_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key.  Provides traceability back to PCX_CONTACTORWAGE_ICARE when Wage Type = CONTRACTOR"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_contactorwage_icare_id_not_null
+            config:
+               severity: warn
+   -  name: expirationdate
+      description: "Expiration date of this row. A value of NULL in the database indicates that this rows expiration date is equal to the Period End."
+   -  name: createuserid
+      description: "User ID of the user that created this record. Foreign key to PC_USER"
+   -  name: ratepercent
+      description: "icare specific field for RatePercent"
+   -  name: beanversion
+      description: "Internal technical GW field to manage object versions."
+   -  name: archivepartition
+      description: "Internal technical GW field to manage archiving"
+   -  name: changetype
+      description: "Type of change made to this row"
+   -  name: basedonid
+      description: "Link to the row on which this row is based; or null if new to branch"
+   -  name: updateuserid
+      description: "User ID of the user that updated this record. Foreign key to PC_USER."
+   -  name: description
+      description: "icare specific field for Description"
+   -  name: branchid
+      description: "Link to root of effdated tree.  Foreign key to PC_POLICYPERIOD in GW (Policy Period = EDW Policy Term)"
+      tests:
+      -  not_null:
+            name: gwpc_pcx_contactorwage_icare_branchid_not_null
+            config:
+               severity: warn
+   -  name: labourcomponent
+      description: "icare specific field for Labour Component"
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

@@ -1,32 +1,27 @@
 {#-
-Project: Data Uplift Program
+
+Project: Data Uplift Program 
+Project Description/Purpose: Data Uplift Program 
+
 Date            Version         Author          Description of Change           
 2026-01-01      0.5                             Curated current-state view for pctl_riskassessmenterrortype.
-                                                Filters: current SCD2 via {{ snapshot_valid_to_current() }}
-                                                         excludes Guidewire Cloud Program delete Flag i.e. CDA Deletion is 1 and snapshot hard deletes
--#}
+                                                Based on Dynamic Table only show IS_CURRENT=TRUE
+                                                Filters: Excludes Guidewire Cloud Program delete Flag
+                                                i.e. CDA Deletion Flag for ROW is 1 Page 23 of the CDA Manual
+-#}   
 
 {{ config(
     materialized='view',
     tags=["current_view"]
 ) }}
 
-with source as (
-
-    select * from {{ ref('pctl_riskassessmenterrortype_snapshot') }}
-
-),
-
-filtered as (
-
-    select
-        source.*,
-        'Y' as current_record
-    from source
-    where valid_to = {{ snapshot_valid_to_current() }}
-      and coalesce(gwcbi_operation, 0) <> 1
-      and lower(is_deleted) = 'false'
-
+WITH cte_source_data AS 
+(
+    SELECT
+        {{ dbt_utils.star(from=ref('dt_pctl_riskassessmenterrortype_current')) }}
+    FROM {{ ref('dt_pctl_riskassessmenterrortype_current') }}
+    WHERE coalesce(gwcbi_operation, 5) <> 1
+      AND IS_CURRENT = TRUE
 )
 
-select * from filtered
+SELECT * FROM cte_source_data

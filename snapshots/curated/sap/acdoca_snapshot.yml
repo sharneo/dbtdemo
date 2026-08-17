@@ -1,0 +1,419 @@
+version: 2
+
+snapshots:
+  - name: acdoca_snapshot
+    description: |
+      SCD Type 2 history of SAP Universal Journal Entry Line Items (ACDOCA).
+      Grain: one row per version of each journal entry line item.
+      Central ledger table capturing all accounting line items across all ledgers, including custom Guidewire Insurance fields (zz prefix) for integrated insurance accounting.
+    columns:
+      - name: acdoca_sk
+        description: Surrogate key for this journal entry record, generated from [rldnr, rbukrs, gjahr, belnr, docln]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: rldnr
+        description: Ledger (SAP RLDNR). General ledger for the accounting entry.
+
+      - name: rbukrs
+        description: Company Code (SAP RBUKRS). Company code for the entry.
+
+      - name: gjahr
+        description: Fiscal Year (SAP GJAHR). Fiscal year of the entry.
+
+      - name: belnr
+        description: Accounting Document Number (SAP BELNR). Document number within the company code.
+
+      - name: docln
+        description: Line Item Number. Unique line item identifier within the document.
+
+      - name: ryear
+        description: Fiscal Year for Line Item. Fiscal year relevant to this line item.
+
+      - name: rmvct
+        description: Transaction Type (SAP RMVCT). Classifies the line item transaction type.
+
+      - name: vorgn
+        description: CO Business Transaction. Controlling business transaction for the line item.
+
+      - name: vrgng
+        description: CO Business Transaction Code. Detailed CO transaction code.
+
+      - name: bttype
+        description: Business Transaction Type. Categorizes the business transaction.
+
+      - name: awtyp
+        description: Reference Transaction (SAP AWTYP). Originating business transaction for the entry.
+
+      - name: aworg
+        description: Reference Organizational Unit. Organizational unit of the reference transaction.
+
+      - name: awref
+        description: Reference Document Number. Document number of the reference transaction.
+
+      - name: awitem
+        description: Reference Line Item. Line item number of the reference transaction.
+
+      - name: awitgrp
+        description: Reference Line Item Group. Group of reference line items.
+
+      - name: subta
+        description: Sub-Transaction. Further classification within the transaction.
+
+      - name: xreversing
+        description: Reversing Document Indicator. 'X' = this entry will be reversed.
+
+      - name: xreversed
+        description: Reversed Document Indicator. 'X' = this entry has been reversed.
+
+      - name: xtruerev
+        description: True Reversal Indicator. 'X' = entry is a true reversal (not corrective).
+
+      - name: awtyp_rev
+        description: Reversal Reference Transaction. Reference transaction for reversal document.
+
+      - name: aworg_rev
+        description: Reversal Reference Organisation. Originating organisation for reversal.
+
+      - name: awref_rev
+        description: Reversal Reference Document Number. Reference document for reversal.
+
+      - name: rtcur
+        description: Currency Key (Transaction Currency). Transaction currency for the line item.
+
+      - name: rwcur
+        description: Currency Key (Valuation Currency). Valuation currency for the line item.
+
+      - name: rhcur
+        description: Currency Key (Local Currency 1). Local currency of the company code.
+
+      - name: rkcur
+        description: Currency Key (Local Currency 2). Hard currency for parallel reporting.
+
+      - name: rco_ocur
+        description: Currency Key (Controlling Currency). CO area currency.
+
+      - name: runit
+        description: Base Unit of Measure. Unit of measure for quantity fields.
+
+      - name: racct
+        description: G/L Account Number (SAP RACCT). G/L account for this line item.
+
+      - name: rcntr
+        description: Cost Center (SAP RCNTR). Cost center assignment.
+
+      - name: prctr
+        description: Profit Center (SAP PRCTR). Profit center assignment.
+
+      - name: kokrs
+        description: Controlling Area (SAP KOKRS). CO area for the entry.
+
+      - name: scntr
+        description: Sender Cost Center. Sender cost center for internal allocations.
+
+      - name: pprctr
+        description: Partner Profit Center. Partner profit center for intercompany entries.
+
+      - name: rassc
+        description: Partner Company. Partner company code for intercompany transactions.
+
+      - name: tsl
+        description: Amount in Transaction Currency. Line item amount in transaction currency.
+
+      - name: wsl
+        description: Amount in Valuation Currency. Line item amount in valuation currency.
+
+      - name: hsl
+        description: Amount in Local Currency. Line item amount in company code currency.
+
+      - name: ksl
+        description: Amount in Controlling Currency. Line item amount in CO area currency.
+
+      - name: co_osl
+        description: Amount in CO Object Currency. Amount in the CO object currency.
+
+      - name: msl
+        description: Quantity. Quantity in base unit of measure.
+
+      - name: drcrk
+        description: Debit/Credit Indicator (SAP DRCRK). 'S' = Debit, 'H' = Credit.
+
+      - name: poper
+        description: Posting Period (SAP POPER). Accounting period for the posting.
+
+      - name: periv
+        description: Fiscal Year Variant (SAP PERIV). Fiscal year structure variant.
+
+      - name: fiscyearper
+        description: Fiscal Year/Period. Concatenated fiscal year and period.
+
+      - name: budat
+        description: Posting Date (SAP BUDAT). Date the entry was posted.
+
+      - name: bldat
+        description: Document Date (SAP BLDAT). Date of the source document.
+
+      - name: blart
+        description: Document Type (SAP BLART). Document type code.
+
+      - name: buzei
+        description: Line Item Number (SAP BUZEI). Sequential line item number within the document.
+
+      - name: zuonr
+        description: Assignment Number (SAP ZUONR). External assignment number for reconcilation.
+
+      - name: bschl
+        description: Posting Key (SAP BSCHL). Controls posting behaviour and account type.
+
+      - name: bstat
+        description: Document Status (SAP BSTAT). Processing status of the line item.
+
+      - name: linetype
+        description: Line Type. Classification of the line item type.
+
+      - name: ktosl
+        description: Transaction Key (SAP KTOSL). Controls account determination and CO posting.
+
+      - name: slalittype
+        description: Line Item Type for Special Ledger. Special ledger line item classification.
+
+      - name: xsplitmod
+        description: Document Splitting Active. 'X' = document splitting has been applied.
+
+      - name: usnam
+        description: User Name (SAP USNAM). User who created the entry.
+
+      - name: timestamp
+        description: Entry Timestamp. UTC timestamp of the entry creation.
+
+      - name: eprctr
+        description: Partner Profit Center. Partner profit center for the line item.
+
+      - name: rhoart
+        description: Cost Object Type. Type of cost object (e.g., order, project, WBS).
+
+      - name: glaccount_type
+        description: G/L Account Type. Classifies the account (primary cost, revenue, secondary cost, etc.).
+
+      - name: ktopl
+        description: Chart of Accounts (SAP KTOPL). Chart of accounts for the G/L account.
+
+      - name: ebeln
+        description: Purchasing Document Number (SAP EBELN). Purchase order reference.
+
+      - name: ebelp
+        description: Purchasing Document Line Item (SAP EBELP). Purchase order line item reference.
+
+      - name: sgtxt
+        description: Line Item Text (SAP SGTXT). Description text for the line item.
+
+      - name: werks
+        description: Plant (SAP WERKS). Plant associated with the line item.
+
+      - name: lifnr
+        description: Vendor Account Number (SAP LIFNR). Vendor reference.
+
+      - name: kunnr
+        description: Customer Number (SAP KUNNR). Customer reference.
+
+      - name: koart
+        description: Account Type (SAP KOART). Identifies account type (D = Customer, K = Vendor, S = G/L, M = Material, A = Asset).
+
+      - name: mwskz
+        description: Tax Code (SAP MWSKZ). Tax code applied to the line item.
+
+      - name: hbkid
+        description: House Bank ID (SAP HBKID). House bank identifier for payment processing.
+
+      - name: hktid
+        description: House Bank Account ID (SAP HKTID). House bank account identifier.
+
+      - name: xopvw
+        description: Open Item Management. 'X' = line item is managed on an open-item basis.
+
+      - name: augdt
+        description: Clearing Date (SAP AGUDT). Date the line item was cleared.
+
+      - name: augbl
+        description: Clearing Document Number. Document number that cleared this line item.
+
+      - name: auggj
+        description: Clearing Document Fiscal Year. Fiscal year of the clearing document.
+
+      - name: afabe
+        description: Depreciation Calculation Type. Depreciation area for asset accounting.
+
+      - name: anln1
+        description: Asset Number (SAP ANLN1). Main asset number.
+
+      - name: anln2
+        description: Asset Sub-Number (SAP ANLN2). Asset sub-number for complex assets.
+
+      - name: bzdat
+        description: Asset Value Date. Date for asset value determination.
+
+      - name: anbwa
+        description: Asset Transaction Type (SAP ANBWA). Asset transaction type.
+
+      - name: movcat
+        description: Movement Category. Asset movement category.
+
+      - name: depr_period
+        description: Depreciation Period. Period for depreciation calculation.
+
+      - name: anlgr
+        description: Asset Group. Group classification for the asset.
+
+      - name: anlgr2
+        description: Asset Group 2. Secondary asset group classification.
+
+      - name: settlement_rule
+        description: Settlement Rule. Rule for settling the asset to target objects.
+
+      - name: bwkey
+        description: Valuation Area (SAP BWKEY). Valuation area for asset accounting.
+
+      - name: objnr
+        description: Object Number (SAP OBJNR). Internal CO object number.
+
+      - name: hrkft
+        description: Original Cost Indicator. Origin of the cost element.
+
+      - name: hkgrp
+        description: CO Version. Plan version for controlling.
+
+      - name: parob1
+        description: Partner Object. Partner CO object for joint transactions.
+
+      - name: parobsrc
+        description: Partner Object Source. Source of the partner object reference.
+
+      - name: uspob
+        description: Object for Statistical Posting. CO object for statistical purposes.
+
+      - name: co_belkz
+        description: CO Document Indicator. Indicator for CO document posting.
+
+      - name: co_beknz
+        description: CO Line Item Indicator. Indicator for CO line item identification.
+
+      - name: beltp
+        description: CO Line Type. Classification of the CO line item.
+
+      - name: muvflg
+        description: Cumulative Posting Flag. 'X' = cumulative posting for CO.
+
+      - name: gkont
+        description: Offset G/L Account. G/L account used as offset for auto postings.
+
+      - name: gkoar
+        description: Offset Account Type. Account type for the offset entry.
+
+      - name: scope
+        description: Scope Indicator. Controls consolidation scope for group reporting.
+
+      - name: pbukrs
+        description: Partner Company Code. Partner company code for intercompany entries.
+
+      - name: pscope
+        description: Partner Scope. Partner scope indicator for consolidation.
+
+      - name: aufnr_org
+        description: Original Order. Original order number when created.
+
+      - name: ukostl
+        description: Receiver Cost Center. Receiver cost center for allocation.
+
+      - name: accas
+        description: Account Assignment for CO Object. Account assignment to a receiver CO object.
+
+      - name: accasty
+        description: Account Assignment Category. Category of the account assignment.
+
+      - name: aufnr
+        description: Order Number (SAP AUFNR). Internal order reference.
+
+      - name: paccas
+        description: Partner Account Assignment. Partner account assignment for allocations.
+
+      - name: paccasty
+        description: Partner Account Assignment Category. Category of the partner account assignment.
+
+      - name: co_belnr
+        description: CO Document Number. Document number of the CO posting.
+
+      - name: co_buzei
+        description: CO Line Item Number. Line item number in the CO document.
+
+      - name: co_refbz
+        description: CO Reference Line Item. Reference line item for CO integration.
+
+      - name: zzchannel
+        description: Insurance Distribution Channel. Guidewire insurance channel identifier for the policy or claim.
+
+      - name: zzproduct
+        description: Insurance Product Code. Guidewire insurance product or line of business code.
+
+      - name: zzuwyear
+        description: Underwriting Year. Underwriting year for the insurance transaction.
+
+      - name: zzaccyear
+        description: Accident Year. Accident year for claim-related transactions.
+
+      - name: zzclaimno
+        description: Claim Number. Guidewire insurance claim number reference.
+
+      - name: zzpolicyno
+        description: Policy Number. Guidewire insurance policy number reference.
+
+      - name: zzdebtorname
+        description: Debtor Name. Name of the debtor for the insurance transaction.
+
+      - name: zzcounterp
+        description: Counterparty. Counterparty identifier for the transaction.
+
+      - name: zzunitprc
+        description: Unit Price. Unit price for the insurance product or service.
+
+      - name: zzaccount
+        description: Insurance Account Code. Guidewire-specific account code for insurance accounting.
+
+      - name: zzprimeno
+        description: Primary Reference Number. Primary external reference number for the transaction.
+
+      - name: zzinvno
+        description: Invoice Number. Invoice number reference for the transaction.
+
+      - name: zzriskdt
+        description: Risk Date. Risk inception or assessment date for the insurance policy.
+
+      - name: zzpolenddt
+        description: Policy End Date. Policy expiry or end date.
+
+      - name: zzgwid
+        description: Guidewire Internal ID. Internal Guidewire system record identifier.
+
+      - name: zztranno
+        description: Transaction Number. Guidewire transaction sequence number.
+
+      - name: mig_source
+        description: Migration Source. Identifies the source system for migrated data entries.
+
+      - name: mig_docln
+        description: Migration Document Line. Original document line number from the migration source.
+
+      - name: accyear_icare
+        description: ICARE Accounting Year. iCare-specific accounting year for the transaction.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.

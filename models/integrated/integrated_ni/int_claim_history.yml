@@ -1,0 +1,84 @@
+version: 2
+models:
+-  name: int_claim_history
+   description: "Integrated claim history model sourced from Guidewire CC. Tracks policy verification events and claim transfers from SS_DOC_MGMNT with ranking. Original SAS source: 54_CLAIM_HISTORY.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_HISTORY)"
+   columns:
+   -  name: claim_history_sk
+      description: "Surrogate key for claim history (source_system + claimnumber + history_id) - primary key"
+      tests:
+      -  unique:
+            name: int_claim_history_claim_history_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_history_claim_history_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_history_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: managing_entity_id
+      description: "Managing entity ID"
+   -  name: managing_entity_sk
+      description: "Surrogate key for managing entity"
+      tests:
+      -  not_null:
+            name: int_claim_history_managing_entity_sk_not_null
+            config:
+               severity: warn
+   -  name: managing_entity_cd
+      description: "Managing entity code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_history_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_history_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_history_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: src_claim_hist_id
+      description: "Source claim history ID"
+   -  name: claim_hist_type
+      description: "Claim history type"
+   -  name: claim_hist_desc
+      description: "Claim history description"
+   -  name: claim_hist_dttm
+      description: "Claim history event datetime"
+   -  name: policy_verified_event_ind
+      description: "Policy verified event indicator (0 or 1)"
+   -  name: claim_tfr_from_ssdocmgmt_ind
+      description: "Claim transfer from SS_DOC_MGMNT indicator (0 or 1)"
+   -  name: policy_verified_event_rank_asc
+      description: "Policy verified event rank ascending"
+   -  name: first_policy_verified_event_ind
+      description: "First policy verified event indicator (Y/N)"
+   -  name: claim_tfr_from_ssdocmgmt_rank_asc
+      description: "Claim transfer from SS_DOC_MGMNT rank ascending"
+   -  name: first_claim_tfr_from_ssdocmgmt_ind
+      description: "First claim transfer from SS_DOC_MGMNT indicator (Y/N)"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_history_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

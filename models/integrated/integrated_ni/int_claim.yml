@@ -1,0 +1,252 @@
+version: 2
+models:
+-  name: int_claim
+   description: "Integrated claim model sourced from Guidewire CC. Contains comprehensive claim details including dates, status, financials, employer info, and policy references. Original SAS source: 05_CLAIM.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM)"
+   columns:
+   -  name: claim_sk
+      description: "Surrogate key for the claim (source_system + claimnumber)"
+      tests:
+      -  unique:
+            name: int_claim_claim_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: source_system
+      description: "Source system identifier"
+   -  name: managing_entity_id
+      description: "Managing entity ID from CC_CLAIM"
+   -  name: managing_entity_sk
+      description: "Surrogate key for managing entity"
+      tests:
+      -  not_null:
+            name: int_claim_managing_entity_sk_not_null
+            config:
+               severity: warn
+   -  name: managing_entity_cd
+      description: "Managing entity code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID from CC_CLAIM"
+      tests:
+      -  not_null:
+            name: int_claim_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: policy_nbr
+      description: "Policy number associated with the claim"
+   -  name: policy_verified
+      description: "Policy verified indicator"
+   -  name: policy_manual_verify
+      description: "Policy manual verify indicator"
+   -  name: legacy_policy_nbr
+      description: "Legacy policy number"
+   -  name: claim_assignment_dttm
+      description: "Claim assignment datetime"
+   -  name: claim_assignment_dt
+      description: "Claim assignment date"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_claim_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: src_create_dt
+      description: "Source system creation date"
+   -  name: claim_report_dttm
+      description: "Claim reported datetime"
+   -  name: claim_report_dt
+      description: "Claim reported date"
+   -  name: report_to_emp_dttm
+      description: "Date reported to employer datetime"
+   -  name: report_to_emp_dt
+      description: "Date reported to employer date"
+   -  name: claim_made_dttm
+      description: "Claim made datetime"
+   -  name: claim_made_dt
+      description: "Claim made date"
+   -  name: claim_close_dttm
+      description: "Claim close datetime"
+   -  name: claim_close_dt
+      description: "Claim close date"
+   -  name: claim_reopen_dttm
+      description: "Claim reopen datetime"
+   -  name: claim_reopen_dt
+      description: "Claim reopen date"
+   -  name: claim_reopen_close_dttm
+      description: "Claim reopen close datetime"
+   -  name: claim_reopen_close_dt
+      description: "Claim reopen close date"
+   -  name: loss_dttm
+      description: "Loss datetime"
+   -  name: loss_dt
+      description: "Loss date"
+   -  name: src_created_dttm
+      description: "Source created datetime"
+   -  name: src_created_dt
+      description: "Source created date"
+   -  name: claim_scheme_agent_cd
+      description: "Claim scheme agent code"
+   -  name: claim_scheme_agent_desc
+      description: "Claim scheme agent description"
+   -  name: claim_scheme_agent_branch_cd
+      description: "Claim scheme agent branch code"
+   -  name: claim_scheme_agent_branch_desc
+      description: "Claim scheme agent branch description"
+   -  name: claim_state_cd
+      description: "Claim state code"
+   -  name: claim_state_desc
+      description: "Claim state description"
+   -  name: claim_report_by_type_cd
+      description: "Claim report by type code"
+   -  name: claim_report_by_type_desc
+      description: "Claim report by type description"
+   -  name: claim_assignment_status_cd
+      description: "Claim assignment status code"
+   -  name: claim_assignment_status_desc
+      description: "Claim assignment status description"
+   -  name: claim_close_outcome_cd
+      description: "Claim close outcome code"
+   -  name: claim_close_outcome_desc
+      description: "Claim close outcome description"
+   -  name: claim_reopen_reason_cd
+      description: "Claim reopen reason code"
+   -  name: claim_reopen_reason_desc
+      description: "Claim reopen reason description"
+   -  name: shared_claim_cd
+      description: "Shared claim code"
+   -  name: shared_claim_desc
+      description: "Shared claim description"
+   -  name: loss_type_cd
+      description: "Loss type code"
+   -  name: loss_type_desc
+      description: "Loss type description"
+   -  name: loss_cause_cd
+      description: "Loss cause code"
+   -  name: loss_cause_desc
+      description: "Loss cause description"
+   -  name: loss_desc
+      description: "Loss description"
+   -  name: claim_segment_cd
+      description: "Claim segment code"
+   -  name: claim_segment_desc
+      description: "Claim segment description"
+   -  name: liability_status_cd
+      description: "Liability status code"
+   -  name: liability_status_desc
+      description: "Liability status description"
+   -  name: claim_report_method_cd
+      description: "Claim report method code"
+   -  name: claim_report_method_desc
+      description: "Claim report method description"
+   -  name: common_law_ind
+      description: "Common law indicator"
+   -  name: incident_only_ind
+      description: "Incident only indicator"
+   -  name: lost_time_ind
+      description: "Lost time indicator"
+   -  name: medical_attention_ind
+      description: "Medical attention indicator"
+   -  name: verified_policy_ind
+      description: "Verified policy indicator"
+   -  name: case_owner_user_sk
+      description: "Surrogate key for case owner user"
+   -  name: case_owner_team_sk
+      description: "Surrogate key for case owner team"
+   -  name: claim_fatality_ind
+      description: "Claim fatality indicator"
+   -  name: tariff_rate
+      description: "Tariff rate"
+   -  name: claim_migrated_ind
+      description: "Claim migrated indicator"
+   -  name: claim_reimbursement_sched_ind
+      description: "Claim reimbursement schedule indicator"
+   -  name: injured_worker_dob
+      description: "Injured worker date of birth"
+   -  name: cost_centre_nbr
+      description: "Cost centre number"
+   -  name: cost_centre_name
+      description: "Cost centre name"
+   -  name: cost_centre
+      description: "Cost centre"
+   -  name: other_cost_centre
+      description: "Other cost centre"
+   -  name: policy_type
+      description: "Policy type"
+   -  name: employer_size_desc
+      description: "Employer size description"
+   -  name: employer_category_desc
+      description: "Employer category description"
+   -  name: employment_status
+      description: "Employment status"
+   -  name: sensitive_claim_cd
+      description: "Sensitive claim code"
+   -  name: sensitive_claim_desc
+      description: "Sensitive claim description"
+   -  name: accident_location_cd
+      description: "Accident location code"
+   -  name: accident_location_desc
+      description: "Accident location description"
+   -  name: policy_group_nbr
+      description: "Policy group number"
+   -  name: ims_unique_id
+      description: "IMS unique ID"
+   -  name: ims_name
+      description: "IMS name"
+   -  name: litigation_status_cd
+      description: "Litigation status code"
+   -  name: litigation_status_desc
+      description: "Litigation status description"
+   -  name: litigation_identified_dt
+      description: "Litigation identified date"
+   -  name: covid_ind
+      description: "COVID indicator"
+   -  name: wic_code
+      description: "WIC code"
+   -  name: wic_desc
+      description: "WIC description"
+   -  name: last_triage_date
+      description: "Last triage date"
+   -  name: overall_risk_rating
+      description: "Overall risk rating"
+   -  name: claim_policy_labour_hire_flag
+      description: "Claim policy labour hire flag"
+   -  name: total_hours_per_week_latest_cert_of_cap
+      description: "Total hours per week from latest certificate of capacity"
+   -  name: conflict_of_interest_ind
+      description: "Conflict of interest indicator"
+   -  name: contact_prohibited
+      description: "Contact prohibited indicator"
+   -  name: contact_sms_allowed
+      description: "Contact SMS allowed indicator"
+   -  name: contact_mobile
+      description: "Contact mobile number"
+   -  name: contact_mobile_country
+      description: "Contact mobile country"
+   -  name: event_type_desc
+      description: "Event type description"
+   -  name: extract_date
+      description: "Extract date"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

@@ -1,0 +1,47 @@
+version: 2
+models:
+-  name: int_work_capacity_decision
+   description: "Integrated work capacity decision model sourced from Guidewire CC. Contains detailed WCD information including earnings, PIAWE, S38 eligibility, and peer review outcomes. Original SAS source: 30_WORK_CAPACITY_DECISION.sas (TBL_NM: MSC_QLK_ASPIRE_WORK_CAPACITY_DECISION)"
+   columns:
+   -  name: src_claim_id
+      description: "Source claim ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_work_capacity_decision_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: decision_id
+      description: "Decision ID - component of composite primary key"
+      tests:
+      -  not_null:
+            name: int_work_capacity_decision_decision_id_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_work_capacity_decision_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_work_capacity_decision_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_work_capacity_decision_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_work_capacity_decision_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

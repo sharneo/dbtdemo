@@ -1,0 +1,77 @@
+version: 2
+models:
+-  name: int_disp_res_details
+   description: "Integrated dispute resolution details model sourced from Guidewire CC. Tracks dispute details including type, channel, status, reviewer, and significant legal matter flags. Original SAS source: D01_DISP_RES_DETAILS.sas (TBL_NM: MSC_QLK_ASPIRE_DISP_RES_DETAILS)"
+   columns:
+   -  name: disp_res_details_sk
+      description: "Surrogate key for dispute resolution details - primary key"
+      tests:
+      -  unique:
+            name: int_disp_res_details_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_disp_res_details_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_disp_res_details_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: src_system_cd
+      description: "Source system code"
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_disp_res_details_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_disp_res_details_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_disp_res_details_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: reference_no
+      description: "Dispute reference number"
+   -  name: type_cd
+      description: "Dispute type code"
+   -  name: type
+      description: "Dispute type description"
+   -  name: channel_cd
+      description: "Dispute channel code"
+   -  name: channel_desc
+      description: "Dispute channel description"
+   -  name: status_cd
+      description: "Dispute status code"
+   -  name: status_desc
+      description: "Dispute status description"
+   -  name: reviewer_id
+      description: "Reviewer user ID"
+   -  name: reviewer
+      description: "Reviewer name"
+   -  name: reviewer_email
+      description: "Reviewer email address"
+   -  name: significant_legal_ind
+      description: "Significant legal matter indicator (Y/N)"
+   -  name: issue_dt
+      description: "Decision issue date"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_disp_res_details_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

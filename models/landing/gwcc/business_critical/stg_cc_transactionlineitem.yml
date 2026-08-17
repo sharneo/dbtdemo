@@ -1,0 +1,282 @@
+version: 2
+models:
+-  name: stg_cc_transactionlineitem
+   description: "Incremental staging model for Guidewire Claim Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: nonpecuniarybenefitd_icare
+      description: "NonPecuniary Benefit D Currency Amount"
+   -  name: reportingamount
+      description: "The amount of this line item in the apps default currency (reporting currency)."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_reportingamount_not_null
+            config:
+               severity: warn
+   -  name: itcaaamountpel
+      description: "ITC or AA Amount"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_itcaaamountpel_not_null
+            config:
+               severity: warn
+   -  name: paygtax_icare
+      description: ""
+   -  name: grossweeklywagerate_icare
+      description: "Gross Weekly Wage"
+   -  name: dateofservice_icare
+      description: "Date of Service"
+   -  name: paymentvariationreason_icare
+      description: "Reason for a variation of the Actual Amount Paid from the Amount requested on the Invoice"
+   -  name: reservingamount
+      description: "The amount of this line item in the Currency of the ReserveLine (ReservingCurrency)."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_reservingamount_not_null
+            config:
+               severity: warn
+   -  name: claimamount
+      description: "The amount of this line item in the Claims currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_claimamount_not_null
+            config:
+               severity: warn
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_updatetime_not_null
+            config:
+               severity: warn
+   -  name: hourspaid_icare
+      description: "Hours Paid"
+   -  name: amountwithoutgst
+      description: ""
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_id_not_null
+            config:
+               severity: warn
+   -  name: paycodename_icare
+      description: ""
+   -  name: defaultdecision
+      description: ""
+   -  name: benefitsuspended_icare
+      description: ""
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: reportingforexamount
+      description: "The foreign exchange adjustment for this line item in the reporting currency. This stores the amount by which the current value of ReportingAmount exceeds its original value."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_reportingforexamount_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_retired_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: transactionamount
+      description: "The amount of this line item, in the transaction currency."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_transactionamount_not_null
+            config:
+               severity: warn
+   -  name: gstamountpel
+      description: "GST Amount"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_gstamountpel_not_null
+            config:
+               severity: warn
+   -  name: gstoverchargedflag
+      description: "raised if GST has been overcharged on a payment"
+   -  name: financialyear_icare
+      description: "Field to store Financial Year of Line Item"
+   -  name: garnishee_icare
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_garnishee_icare_not_null
+            config:
+               severity: warn
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_publicid_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_createtime_not_null
+            config:
+               severity: warn
+   -  name: weeklybenefitrate_icare
+      description: "Weekly Benefit Rate"
+   -  name: datefrom_icare
+      description: "The Start Date"
+   -  name: gstexemptflag
+      description: "Raised if a paycode is exempt from GST and has been processed in Division 11 processing"
+   -  name: countofweeks_icare
+      description: "Number of weeks"
+   -  name: earningse_icare
+      description: "Earnings E"
+   -  name: claimforexamount
+      description: "The foreign exchange adjustment for this line item in the claim currency. This stores the amount by which the current value of ClaimAmount exceeds its original value."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_claimforexamount_not_null
+            config:
+               severity: warn
+   -  name: lumpsume_icare
+      description: "Field to identify if the period EndDate falls in Previous Financial Year"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_lumpsume_icare_not_null
+            config:
+               severity: warn
+   -  name: gstapplicable_icare
+      description: "GST Applicable flag"
+   -  name: dateto_icare
+      description: "The End Date"
+   -  name: gstdecision
+      description: ""
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: paycodeglaggregation
+      description: "Paycode - Cost Categoru GL Aggregation identifier"
+   -  name: payeeregisteredforgst
+      description: "Boolean flag indicating whether a payee is registered for GST"
+   -  name: paycode_icareid
+      description: ""
+   -  name: hourslost_icare
+      description: "Hours Lost"
+   -  name: paycodereportattribute_icare
+      description: ""
+   -  name: gstmethodpel_ext
+      description: "GST Method typecode"
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_gstmethodpel_ext_not_null
+            config:
+               severity: warn
+   -  name: deductibleid
+      description: "The deductible for which this transaction line item is applied, if any."
+   -  name: paymentcategorycode
+      description: "Payment Category Code returned by the calculator"
+   -  name: linecategory
+      description: "The category of this line item."
+   -  name: itcapplicable_icare
+      description: "ITC Applicable Flag"
+   -  name: comments
+      description: "A note or description of the line item."
+   -  name: itcdecision
+      description: ""
+   -  name: gazettedamount_icare
+      description: ""
+   -  name: gstcalcrate_icare
+      description: ""
+   -  name: transactionid
+      description: "The parent transaction."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_transactionid_not_null
+            config:
+               severity: warn
+   -  name: reservingforexamount
+      description: "The foreign exchange adjustment for this line item in the reserving currency. This stores the amount by which the current value of ReservingAmount exceeds its original value."
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_reservingforexamount_not_null
+            config:
+               severity: warn
+   -  name: deemedearningsperweek_icare
+      description: "Deemed Earnings Per Week returned by the calculator"
+   -  name: serviceproviderid_icare
+      description: "Service Provider ID which the payment is sent to"
+   -  name: postgarnishee_icare
+      description: ""
+      tests:
+      -  not_null:
+            name: gwcc_cc_transactionlineitem_postgarnishee_icare_not_null
+            config:
+               severity: warn
+   -  name: nocappaygtax_icare
+      description: ""
+   -  name: medprovidertreatment_extid
+      description: ""
+   -  name: provider_extid
+      description: ""
+   -  name: dateofsurgery_ext
+      description: ""
+   -  name: recalculatepaygforreissue_ext
+      description: ""
+   -  name: rehabservice_extid
+      description: ""
+   -  name: maxodgcaa_ext
+      description: ""
+   -  name: draftamount_ext
+      description: ""
+   -  name: meddomassist_extid
+      description: ""
+   -  name: medtreatment_extid
+      description: ""
+   -  name: medicationname_ext
+      description: ""
+   -  name: drugprescribed_extid
+      description: ""
+   -  name: weeklyactualrate_ext
+      description: ""
+   -  name: previouswithheldpayg_ext
+      description: ""
+   -  name: previouspaidpregarnishee_ext
+      description: ""
+   -  name: previouslyprocessedpaycode_ext
+      description: ""
+   -  name: cwwr_ext
+      description: ""
+   -  name: previouspaidamount_ext
+      description: ""
+   -  name: percentageofweek_ext
+      description: ""
+   -  name: deductibledm_ext
+      description: ""
+   -  name: adjustmentflag_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

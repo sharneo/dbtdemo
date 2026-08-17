@@ -1,0 +1,89 @@
+version: 2
+models:
+-  name: stg_cc_checkportion
+   description: "Incremental staging model for Guidewire Claim Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: fixedclaimamount
+      description: "The fixed amount (in the claim currency) to allocate towards the check."
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: fixedtransactionamount
+      description: "The fixed amount (in the transaction currency) to allocate towards the check. Setting this clears Percentage and updates FixedClaimAmount and FixedReportingAmount. At least one check must be added to this CheckPortion before setting this."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_checkportion_publicid_not_null
+            config:
+               severity: warn
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_checkportion_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_checkportion_createtime_not_null
+            config:
+               severity: warn
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: fixedreportingamount
+      description: "The fixed amount (in the reporting currency) to allocate towards the check."
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_checkportion_updatetime_not_null
+            config:
+               severity: warn
+   -  name: percentage
+      description: "The percentage to allocate towards the check. Setting this clears the fixed amount properties"
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_checkportion_id_not_null
+            config:
+               severity: warn
+   -  name: fixedreservingamount
+      description: "The fixed amount (in the reserving currency) to allocate towards the check."
+   -  name: reissued
+      description: "Flag indicating whether this portion was created for a reissued check."
+      tests:
+      -  not_null:
+            name: gwcc_cc_checkportion_reissued_not_null
+            config:
+               severity: warn
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

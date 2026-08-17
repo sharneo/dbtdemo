@@ -1,0 +1,48 @@
+version: 2
+models:
+-  name: int_claim_risk_factor
+   description: "Integrated claim risk factor model sourced from Guidewire CC. Tracks triage risk factors with codes and retirement status. Original SAS source: 12_CLAIM_RISK_FACTOR.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_RISK_FACTOR)"
+   columns:
+   -  name: src_claim_id
+      description: "Source claim ID"
+   -  name: risk_factor_id
+      description: "Risk factor public ID"
+   -  name: src_risk_factor_id
+      description: "Source risk factor ID - primary key"
+      tests:
+      -  unique:
+            name: int_claim_risk_factor_src_risk_factor_id_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_risk_factor_src_risk_factor_id_not_null
+            config:
+               severity: warn
+   -  name: new_risk_factor_ind
+      description: "New risk factor indicator (Y/N)"
+   -  name: retired_ind
+      description: "Retired indicator (Y/N)"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_claim_risk_factor_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: src_create_dt
+      description: "Source system creation date"
+   -  name: src_eff_dttm
+      description: "Source effective datetime"
+   -  name: src_eff_dt
+      description: "Source effective date"
+   -  name: risk_factor_cd
+      description: "Risk factor code"
+   -  name: risk_factor_desc
+      description: "Risk factor description"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_risk_factor_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

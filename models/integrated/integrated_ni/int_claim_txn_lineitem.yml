@@ -1,0 +1,51 @@
+version: 2
+models:
+-  name: int_claim_txn_lineitem
+   description: "Integrated claim transaction line item model sourced from Guidewire CC. Contains detailed line-level transaction data including amounts, GST, pay codes, and approval details. Original SAS source: 17_CLAIM_TXN_LINEITEM.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_TXN_LINEITEM)"
+   columns:
+   -  name: claim_txn_lineitem_sk
+      description: "Surrogate key for claim transaction line item - primary key"
+      tests:
+      -  unique:
+            name: int_claim_txn_lineitem_sk_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_txn_lineitem_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_sk
+      description: "Surrogate key for the claim"
+      tests:
+      -  not_null:
+            name: int_claim_txn_lineitem_claim_sk_not_null
+            config:
+               severity: warn
+   -  name: claim_nbr
+      description: "Claim number from Guidewire CC"
+      tests:
+      -  not_null:
+            name: int_claim_txn_lineitem_claim_nbr_not_null
+            config:
+               severity: warn
+      -  relationships:
+            name: int_claim_txn_lineitem_claim_nbr_fk
+            arguments:
+               to: ref('v_cc_claim_current')
+               field: claimnumber
+            config:
+               severity: warn
+   -  name: src_claim_id
+      description: "Source claim ID"
+      tests:
+      -  not_null:
+            name: int_claim_txn_lineitem_src_claim_id_not_null
+            config:
+               severity: warn
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_txn_lineitem_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

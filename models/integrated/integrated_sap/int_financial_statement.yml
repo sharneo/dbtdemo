@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: int_financial_statement
+    description: >
+      Intermediate model for Financial Statement Version (FSV) data.
+      Transforms and standardizes financial statement hierarchy items
+      from the fsv_snapshot source, including node relationships and
+      chart of accounts mappings.
+    columns:
+      - name: fsv_sk
+        description: Surrogate key for the financial statement version record
+      - name: financial_statement_version
+        description: Financial statement version identifier (VERSN)
+      - name: financial_statement_version_name
+        description: Descriptive name of the financial statement version (VSTXT)
+      - name: financial_statement_item_text
+        description: Text description of the financial statement item (TXT45)
+      - name: chart_of_accounts
+        description: Chart of accounts identifier (KTOPL)
+      - name: account_interval_lower_limit
+        description: Lower limit of the account interval range (VONKT)
+      - name: biskt
+        description: Upper limit of the account interval range (BISKT)
+      - name: id
+        description: Node identifier within the financial statement hierarchy
+      - name: node_type
+        description: Type of node in the hierarchy structure
+      - name: parent
+        description: Parent node identifier in the hierarchy
+      - name: child
+        description: Child node identifier in the hierarchy
+
+      - name: nextn
+        description: Next node identifier at the same hierarchy level
+
+      - name: financial_statement_item_hierarchy_leve
+        description: Hierarchy level of the financial statement item (STUFE)
+
+      - name: summe
+        description: Sum indicator flag for the financial statement item

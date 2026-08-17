@@ -1,0 +1,59 @@
+version: 2
+models:
+-  name: int_claim_assignment_rule
+   description: "Integrated claim assignment rule model sourced from Guidewire CC. Contains policy-level assignment rules with commencement, effective, and expiry dates. Original SAS source: 39_CLAIM_ASSIGNMENT_RULE.sas (TBL_NM: MSC_QLK_ASPIRE_CLAIM_ASSIGNMENT_RULE)"
+   columns:
+   -  name: assignment_rule_sk
+      description: "Surrogate key for the assignment rule (source_system + publicid)"
+      tests:
+      -  not_null:
+            name: int_claim_assignment_rule_assignment_rule_sk_not_null
+            config:
+               severity: warn
+   -  name: assignment_rule_id
+      description: "Public ID of the assignment rule"
+   -  name: src_assignment_rule_id
+      description: "Source assignment rule ID - primary key"
+      tests:
+      -  unique:
+            name: int_claim_assignment_rule_src_assignment_rule_id_unique
+            config:
+               severity: warn
+      -  not_null:
+            name: int_claim_assignment_rule_src_assignment_rule_id_not_null
+            config:
+               severity: warn
+   -  name: policy_nbr
+      description: "Policy number"
+   -  name: policy_name
+      description: "Policy name"
+   -  name: policy_group_nbr
+      description: "Policy group number"
+   -  name: policy_group_name
+      description: "Policy group name"
+   -  name: policy_status_cd
+      description: "Policy status typecode"
+   -  name: policy_status_desc
+      description: "Policy status description"
+   -  name: commencement_dttm
+      description: "Commencement datetime"
+   -  name: term_start_dttm
+      description: "Term start datetime"
+   -  name: term_end_dttm
+      description: "Term end datetime"
+   -  name: src_create_dttm
+      description: "Source system creation timestamp"
+      tests:
+      -  not_null:
+            name: int_claim_assignment_rule_src_create_dttm_not_null
+            config:
+               severity: warn
+   -  name: src_update_dttm
+      description: "Source system update timestamp"
+   -  name: file_ingestion_timestamp
+      description: "Timestamp of file ingestion, used as incremental filter"
+      tests:
+      -  not_null:
+            name: int_claim_assignment_rule_file_ingestion_timestamp_not_null
+            config:
+               severity: warn

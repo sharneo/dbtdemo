@@ -1,0 +1,113 @@
+{#-
+Project: Data Uplift Program
+Project Description/Purpose: Data Uplift Program
+
+Date            Version         Author          Description of Change           
+2026.01.11      0.0                             This Creates a WPI S66 View for SIRA Reporting  
+
+-#}
+
+{{ config(
+    materialized='view',
+    tags=['sira', 'business_critical']
+) }}
+
+
+with cc_exposure as (
+    select
+        id,
+        claimid
+    from {{ ref('v_cc_exposure_current') }}
+    where retired = 0
+),
+
+cc_claim as (
+    select
+        id,
+        claimnumber
+    from {{ ref('v_cc_claim_current') }}
+    where retired = 0
+),
+
+ccx_wpiassessment_icare as (
+    select
+        id,
+        exposureid,
+        estpermimpairment_icare
+    from {{ ref('v_ccx_wpiassessment_icare_current') }}
+    where retired = 0
+),
+
+ccx_wpiassessrecord_icare as (
+    select
+        id,
+        wpiassessment_icareid,
+        settlementtype_icare,
+        createtime,
+        assessedwpifors66,
+        wpiresult_icare
+    from {{ ref('v_ccx_wpiassessrecord_icare_current') }}
+    where retired = 0
+        and wpiresult_icare is not null
+),
+
+cctl_wpisettlementtype_icare as (
+    select
+        id,
+        typecode,
+        name
+    from {{ ref('v_cctl_wpisettlementtype_icare_current') }}
+),
+
+cctl_estpermimpairment_icare as (
+    select
+        id,
+        typecode
+    from {{ ref('v_cctl_estpermimpairment_icare_current') }}
+),
+
+submission_period as (
+    select
+        submission_period_end_dt
+    from {{ ref('v_sira_submission_period_current') }}
+    where current_submission_flag = 'Y'
+),
+
+base as (
+    select
+        c.id as claimid,
+        c.claimnumber,
+        wst.typecode as settlementtype_code,
+        wst.name as settlementtype_name,
+        est.typecode as estpermimpairment_icare,
+        assrec.createtime,
+        case
+            when wst.typecode = 'S66Claim_icare'
+                then coalesce(assrec.assessedwpifors66, 0)
+            else assrec.assessedwpifors66
+        end as wpiresult_s66,
+        coalesce(assrec.wpiresult_icare, 0) as wpiresult,
+        rank() over (
+            partition by c.id
+            order by assrec.createtime desc, assrec.id desc
+        ) as ranking
+    from cc_exposure as e
+    inner join cc_claim as c on c.id = e.claimid
+    left join ccx_wpiassessment_icare as ass on ass.exposureid = e.id
+    left join ccx_wpiassessrecord_icare as assrec on assrec.wpiassessment_icareid = ass.id
+    left join cctl_wpisettlementtype_icare as wst on wst.id = assrec.settlementtype_icare
+    left join cctl_estpermimpairment_icare as est on est.id = ass.estpermimpairment_icare
+    inner join submission_period as sp on assrec.createtime <= sp.submission_period_end_dt
+)
+
+select
+    claimid,
+    claimnumber,
+    settlementtype_code,
+    settlementtype_name,
+    estpermimpairment_icare,
+    createtime,
+    wpiresult_s66,
+    wpiresult,
+    ranking
+from base

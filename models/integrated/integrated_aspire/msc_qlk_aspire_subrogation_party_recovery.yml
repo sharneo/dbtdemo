@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: msc_qlk_aspire_subrogation_party_recovery
+    description: >
+      Integrated subrogation party recovery model sourced from GuidewireCC.
+      Contains recovery details for adverse parties in subrogation cases including
+      invoice information, recovery periods, write-offs, waivers, and amounts.
+      Original SAS source: 45_SUBROGATION_PARTY_RECOVERY.sas (TBL_NM: MSC_QLK_ASPIRE_SUBROGATION_PARTY_RECOVERY)
+    columns:
+      - name: src_recovery_id
+        description: Source ID from ccx_subadvpartyrecovery_icare (unique key for merge)
+      - name: src_adverse_party_id
+        description: Foreign key to the adverse party in the subrogation
+      - name: recovery_type_cd
+        description: Recovery type code
+      - name: recovery_type_desc
+        description: Recovery type description
+      - name: invoice_nbr
+        description: Invoice number for the recovery
+      - name: invoice_type_cd
+        description: Invoice type code
+      - name: invoice_type_desc
+        description: Invoice type description (localised AU English)
+      - name: strategy_cd
+        description: Subrogation strategy type code
+      - name: strategy_desc
+        description: Subrogation strategy type description
+      - name: recovery_period_start_dttm
+        description: Start date/time of the recovery period
+      - name: recovery_period_end_dttm
+        description: End date/time of the recovery period
+      - name: invoice_created_ind
+        description: Y/N indicator whether the invoice has been created (NULL if not set)
+      - name: write_off_ind
+        description: Y/N indicator whether the recovery has been written off (NULL if not set)
+      - name: write_off_amt
+        description: Amount that was written off
+      - name: waived_ind
+        description: Y/N indicator whether the recovery was waived (NULL if not set)
+      - name: invoice_amt
+        description: Total invoice amount
+      - name: received_amt
+        description: Amount received against the invoice
+      - name: invoice_dt
+        description: Date of the invoice
+      - name: due_dt
+        description: Due date for payment
+      - name: src_create_dttm
+        description: Source system creation timestamp
+      - name: src_update_dttm
+        description: Source system update timestamp
+      - name: extract_date
+        description: Date of data extraction
+      - name: file_ingestion_timestamp
+        description: Timestamp of file ingestion, used as incremental filter

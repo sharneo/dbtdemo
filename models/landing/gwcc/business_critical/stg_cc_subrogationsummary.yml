@@ -1,0 +1,102 @@
+version: 2
+models:
+-  name: stg_cc_subrogationsummary
+   description: "Incremental staging model for Guidewire Claim Center data. Loads from AVRO and PARQUET files with CDC support via gwcbi_* fields."
+   columns:
+   -  name: loadcommandid
+      description: "LoadCommand for load where row was created. If not null this object was loaded via the loader."
+   -  name: createuserid
+      description: "User who created the object"
+   -  name: proratedeductible
+      description: "Indicates whether deductible should be prorated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subrogationsummary_proratedeductible_not_null
+            config:
+               severity: warn
+   -  name: publicid
+      description: "ID or primary key of the row in the external system to which this row is mapped"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subrogationsummary_publicid_not_null
+            config:
+               severity: warn
+   -  name: extowned
+      description: "To indicate Subro for a claim as owned by an external owner"
+   -  name: subroreferralcomment
+      description: "A Comment from the referer to the referee"
+   -  name: beanversion
+      description: "Auto-incremented object version"
+   -  name: subroreferraldate
+      description: "Date when when referral made to Subrogation"
+   -  name: archivepartition
+      description: "Unique number to partition the data so that the multiple workers can work independently"
+   -  name: retired
+      description: "Whether the entity is still in use. A value of 0 means that the entity is not retired. If the entity is retired from active use, this field has a non-zero value equal to the entitys ID. Once an entity is retired, it should not be unretired."
+      tests:
+      -  not_null:
+            name: gwcc_cc_subrogationsummary_retired_not_null
+            config:
+               severity: warn
+   -  name: createtime
+      description: "Timestamp when the object was created"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subrogationsummary_createtime_not_null
+            config:
+               severity: warn
+   -  name: documentlinkableid
+      description: "This entity fk is designed to make other claim center entities linkable to documents."
+   -  name: escalatesubro
+      description: "Escalate toSubro"
+   -  name: updateuserid
+      description: "User who last updated the object"
+   -  name: calculateosrecreserve
+      description: "Whether to automatically calculate OS Recovery Reserves"
+   -  name: updatetime
+      description: "Timestamp when the object was last updated"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subrogationsummary_updatetime_not_null
+            config:
+               severity: warn
+   -  name: claimid
+      description: "Related Claim"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subrogationsummary_claimid_not_null
+            config:
+               severity: warn
+   -  name: id
+      description: "Internally managed primary key"
+      tests:
+      -  not_null:
+            name: gwcc_cc_subrogationsummary_id_not_null
+            config:
+               severity: warn
+   -  name: legacyupdatetime_ext
+      description: ""
+   -  name: legacycreatetime_ext
+      description: ""
+   -  name: gwcbi_connector_ts_ms
+      description: ""
+   -  name: gwcbi_lsn
+      description: ""
+   -  name: gwcbi_operation
+      description: ""
+   -  name: gwcbi_payload_ts_ms
+      description: ""
+   -  name: gwcbi_seqval
+      description: ""
+   -  name: gwcbi_seqval_hex
+      description: ""
+   -  name: gwcbi_tx_id
+      description: ""
+   -  name: metadata_file_name
+      description: ""
+   -  name: file_ingestion_timestamp
+      description: ""
+   -  name: file_type
+      description: ""
+   -  name: hash_key
+      description: ""

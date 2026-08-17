@@ -5,20 +5,17 @@ Project Description/Purpose: Data Uplift Program
 
 Date            Version         Author          Description of Change           
 2026-01-01      0.0                             Incremental staging model for ccx_paygsummary_icare.
-                                                paygsummary_icare_sk: Entity identity surrogate key on PK ('id')
                                                 hash_key: State change detection surrogate key on all business cols excluding PK
-                                                dbt_updated_at: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
-                                                Uniform across AVRO and PARQUET - no code change when CDC goes live
+                                                record_insertion_date: COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp)
+                                                Uniform across AVRO and PARQUET - no code change when CDA goes live
                                                 UNION ALL for BackFill of Data i.e. Incase of Rebuild of Upstream Model 
 -#}   
 
 {{ config(
     materialized='incremental',
-    transient=True,
-    unique_key='id',
-    incremental_strategy='merge',
+    incremental_strategy='append',
     on_schema_change='append_new_columns',
-    tags=["landing", "gwcc", "claim_centre", "non_business_critical", "ccx_paygsummary_icare"]
+    tags=["landing", "gwcc", "claim_centre", "non_business_critical"]
 ) }}
 
 
@@ -81,14 +78,31 @@ WITH cte_source_data AS
                 CAST(data_payload:ReportableSuperAmt AS NUMBER(18,2)) AS reportablesuperamt,
                 CAST(data_payload:HoldReason::TEXT AS VARCHAR(16777216)) AS holdreason,
                 TO_TIMESTAMP_TZ(data_payload:HoldDate::NUMBER/1000) AS holddate,
+                CAST(data_payload:ThirdLatestYearLumpSumE AS NUMBER(18,2)) AS thirdlatestyearlumpsume,
+                CAST(data_payload:FourthLatestYearLumpSumE AS NUMBER(18,2)) AS fourthlatestyearlumpsume,
+                CAST(data_payload:FifthLatestYearLumpSumE AS NUMBER(18,2)) AS fifthlatestyearlumpsume,
+                CAST(data_payload:SixthLatestYearLumpSumE AS NUMBER(18,2)) AS sixthlatestyearlumpsume,
+                CAST(data_payload:SeventhLatestYearLumpSumE AS NUMBER(18,2)) AS seventhlatestyearlumpsume,
+                CAST(data_payload:EighthLatestYearLumpSumE AS NUMBER(18,2)) AS eighthlatestyearlumpsume,
+                CAST(data_payload:NinthLatestYearLumpSumE AS NUMBER(18,2)) AS ninthlatestyearlumpsume,
+                CAST(data_payload:PriorAccrualYearsLumpSumE AS NUMBER(18,2)) AS prioraccrualyearslumpsume,
+                CAST(data_payload:ThirdLatestLumpSumEYear::TEXT AS VARCHAR(32)) AS thirdlatestlumpsumeyear,
+                CAST(data_payload:FourthLatestLumpSumEYear::TEXT AS VARCHAR(32)) AS fourthlatestlumpsumeyear,
+                CAST(data_payload:FifthLatestLumpSumEYear::TEXT AS VARCHAR(32)) AS fifthlatestlumpsumeyear,
+                CAST(data_payload:SixthLatestLumpSumEYear::TEXT AS VARCHAR(32)) AS sixthlatestlumpsumeyear,
+                CAST(data_payload:SeventhLatestLumpSumEYear::TEXT AS VARCHAR(32)) AS seventhlatestlumpsumeyear,
+                CAST(data_payload:EighthLatestLumpSumEYear::TEXT AS VARCHAR(32)) AS eighthlatestlumpsumeyear,
+                CAST(data_payload:NinthLatestLumpSumEYear::TEXT AS VARCHAR(32)) AS ninthlatestlumpsumeyear,
+                CAST(data_payload:PriorAccrualYearsLumpSumEYear::TEXT AS VARCHAR(32)) AS prioraccrualyearslumpsumeyear,
                 CAST(NULL AS TIMESTAMP_LTZ) as gwcbi_connector_ts_ms,
                 CAST(NULL AS NUMBER) as gwcbi_lsn,
                 CAST(NULL AS NUMBER) as gwcbi_operation,
                 CAST(NULL AS TIMESTAMP_LTZ) as gwcbi_payload_ts_ms,
                 CAST(NULL AS NUMBER) as gwcbi_seqval,
-                CAST(NULL AS STRING) as gwcbi_seqval_hex,
+                CAST(NULL AS VARCHAR(300)) as gwcbi_seqval_hex,
                 CAST(NULL AS NUMBER) as gwcbi_tx_id,
                 metadata_file_name,
+                metadata_row_number,
                 file_ingestion_timestamp,
                 'AVRO' as file_type,
                 'GWCC' as source_system
@@ -151,14 +165,31 @@ WITH cte_source_data AS
                 CAST($1:reportablesuperamt AS NUMBER(18,2)) AS reportablesuperamt,
                 CAST($1:holdreason::TEXT AS VARCHAR(16777216)) AS holdreason,
                 $1:holddate::TIMESTAMP_TZ AS holddate,
+                CAST($1:thirdlatestyearlumpsume AS NUMBER(18,2)) AS thirdlatestyearlumpsume,
+                CAST($1:fourthlatestyearlumpsume AS NUMBER(18,2)) AS fourthlatestyearlumpsume,
+                CAST($1:fifthlatestyearlumpsume AS NUMBER(18,2)) AS fifthlatestyearlumpsume,
+                CAST($1:sixthlatestyearlumpsume AS NUMBER(18,2)) AS sixthlatestyearlumpsume,
+                CAST($1:seventhlatestyearlumpsume AS NUMBER(18,2)) AS seventhlatestyearlumpsume,
+                CAST($1:eighthlatestyearlumpsume AS NUMBER(18,2)) AS eighthlatestyearlumpsume,
+                CAST($1:ninthlatestyearlumpsume AS NUMBER(18,2)) AS ninthlatestyearlumpsume,
+                CAST($1:prioraccrualyearslumpsume AS NUMBER(18,2)) AS prioraccrualyearslumpsume,
+                CAST($1:thirdlatestlumpsumeyear::TEXT AS VARCHAR(32)) AS thirdlatestlumpsumeyear,
+                CAST($1:fourthlatestlumpsumeyear::TEXT AS VARCHAR(32)) AS fourthlatestlumpsumeyear,
+                CAST($1:fifthlatestlumpsumeyear::TEXT AS VARCHAR(32)) AS fifthlatestlumpsumeyear,
+                CAST($1:sixthlatestlumpsumeyear::TEXT AS VARCHAR(32)) AS sixthlatestlumpsumeyear,
+                CAST($1:seventhlatestlumpsumeyear::TEXT AS VARCHAR(32)) AS seventhlatestlumpsumeyear,
+                CAST($1:eighthlatestlumpsumeyear::TEXT AS VARCHAR(32)) AS eighthlatestlumpsumeyear,
+                CAST($1:ninthlatestlumpsumeyear::TEXT AS VARCHAR(32)) AS ninthlatestlumpsumeyear,
+                CAST($1:prioraccrualyearslumpsumeyear::TEXT AS VARCHAR(32)) AS prioraccrualyearslumpsumeyear,
                 TO_TIMESTAMP($1:gwcbi___connector_ts_ms::NUMBER / 1000) as gwcbi_connector_ts_ms,
                 $1:gwcbi___lsn::NUMBER as gwcbi_lsn,
                 $1:gwcbi___operation::NUMBER as gwcbi_operation,
                 TO_TIMESTAMP($1:gwcbi___payload_ts_ms::NUMBER / 1000) as gwcbi_payload_ts_ms,
                 $1:gwcbi___seqval::NUMBER as gwcbi_seqval,
-                $1:gwcbi___seqval_hex::STRING as gwcbi_seqval_hex,
+                $1:gwcbi___seqval_hex::VARCHAR(300) as gwcbi_seqval_hex,
                 $1:gwcbi___tx_id::NUMBER as gwcbi_tx_id,
                 metadata_file_name,
+                metadata_row_number,
                 file_ingestion_timestamp,
                 'PARQUET' as file_type,
                 'GWCC' as source_system
@@ -227,13 +258,30 @@ cte_transformed AS (
                         'errordescription',
                         'reportablesuperamt',
                         'holdreason',
-                        'holddate'
+                        'holddate',
+                        'thirdlatestyearlumpsume',
+                        'fourthlatestyearlumpsume',
+                        'fifthlatestyearlumpsume',
+                        'sixthlatestyearlumpsume',
+                        'seventhlatestyearlumpsume',
+                        'eighthlatestyearlumpsume',
+                        'ninthlatestyearlumpsume',
+                        'prioraccrualyearslumpsume',
+                        'thirdlatestlumpsumeyear',
+                        'fourthlatestlumpsumeyear',
+                        'fifthlatestlumpsumeyear',
+                        'sixthlatestlumpsumeyear',
+                        'seventhlatestlumpsumeyear',
+                        'eighthlatestlumpsumeyear',
+                        'ninthlatestlumpsumeyear',
+                        'prioraccrualyearslumpsumeyear'
         ]) }} AS VARCHAR(150)) AS hash_key,
-        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) as record_insertion_date
+        COALESCE(gwcbi_payload_ts_ms, file_ingestion_timestamp) AS record_insertion_date
     FROM cte_source_data
 )
 
 SELECT * FROM cte_transformed
 {% if is_incremental() %}
-WHERE file_ingestion_timestamp > (SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
+    WHERE file_ingestion_timestamp > (SELECT COALESCE(MAX(file_ingestion_timestamp), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
 {% endif %}
+    ORDER BY record_insertion_date

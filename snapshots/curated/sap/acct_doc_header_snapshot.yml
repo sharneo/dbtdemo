@@ -1,0 +1,425 @@
+version: 2
+
+snapshots:
+  - name: acct_doc_header_snapshot
+    description: |
+      SCD Type 2 history of SAP Accounting Document Header data (BKPF).
+      Grain: one row per version of each accounting document header.
+      Stores document-level control data: document date, posting date, currency, document type, cross-reference fields, and payment/clearing information for all accounting documents.
+    columns:
+      - name: acct_doc_header_sk
+        description: Surrogate key for this accounting document header record, generated from [bukrs, belnr]. Used as the unique_key for SCD Type 2 change tracking.
+
+      - name: dbt_valid_from
+        description: Timestamp when this record version became valid.
+
+      - name: dbt_valid_to
+        description: Timestamp when this record version was superseded. NULL = currently active.
+
+      - name: dbt_updated_at
+        description: Timestamp of the last snapshot run that detected a change.
+
+      - name: dbt_scd_id
+        description: Unique identifier for each SCD Type 2 version.
+
+      - name: bukrs
+        description: Company Code (SAP BUKRS). Company code for the accounting document.
+
+      - name: belnr
+        description: Accounting Document Number (SAP BELNR). Unique document number within a company code and fiscal year.
+
+      - name: gjahr
+        description: Fiscal Year (SAP GJAHR). Fiscal year of the accounting document.
+
+      - name: blart
+        description: Document Type (SAP BLART). Categorizes the document (e.g., SA = G/L, KR = Vendor, DR = Customer).
+
+      - name: bldat
+        description: Document Date (SAP BLDAT). Date the document was created in the source system.
+
+      - name: budat
+        description: Posting Date (SAP BUDAT). Date the document is posted for accounting purposes.
+
+      - name: monat
+        description: Fiscal Period (SAP MONAT). Period within the fiscal year for posting.
+
+      - name: cpudt
+        description: Entered On (SAP CPUDT). Date the document was entered into the system.
+
+      - name: cputm
+        description: Entry Time (SAP CPUTM). Time the document was entered.
+
+      - name: aedat
+        description: Changed On (SAP AEDAT). Date the document was last changed.
+
+      - name: upddt
+        description: Updated On. Date the document was updated.
+
+      - name: wwert
+        description: Translation Date (SAP WWERT). Date for currency translation.
+
+      - name: usnam
+        description: User Name (SAP USNAM). User who entered the document.
+
+      - name: tcode
+        description: Transaction Code (SAP TCODE). SAP transaction code used to create the document.
+
+      - name: bvorg
+        description: Cross-Company Code Transaction Number. Links documents across company codes.
+
+      - name: xblnr
+        description: Reference Document Number (SAP XBLNR). External reference number for the document.
+
+      - name: dbblg
+        description: Follow-On Document Number. Document number of the follow-on document.
+
+      - name: dbblg_gjahr
+        description: Follow-On Document Fiscal Year. Fiscal year of the follow-on document.
+
+      - name: dbblg_bukrs
+        description: Follow-On Document Company Code. Company code of the follow-on document.
+
+      - name: stblg
+        description: Reversed Document Number. Document number that was reversed.
+
+      - name: stjah
+        description: Reversed Document Fiscal Year. Fiscal year of the reversed document.
+
+      - name: bktxt
+        description: Document Header Text (SAP BKTXT). Brief text describing the document.
+
+      - name: waers
+        description: Currency Key (SAP WAERS). Document currency.
+
+      - name: kursf
+        description: Exchange Rate (SAP KURSF). Exchange rate for currency translation.
+
+      - name: kzwrs
+        description: Source Currency. Original currency before translation.
+
+      - name: kzkrs
+        description: Target Currency. Target currency after translation.
+
+      - name: bstat
+        description: Document Status (SAP BSTAT). Processing status of the document.
+
+      - name: xnetb
+        description: Net Document Indicator. 'X' = document is net-priced.
+
+      - name: frath
+        description: Cash Discount Amount. Total cash discount amount.
+
+      - name: xrueb
+        description: Indicator for Clearing. 'X' = document is cleared or relevant for clearing.
+
+      - name: glvor
+        description: Business Transaction (SAP GLVOR). Type of business transaction for G/L posting.
+
+      - name: grpid
+        description: Batch Input Session ID. Identifier for batch input processing.
+
+      - name: dokid
+        description: Document ID for Document Management System. Links to archived documents.
+
+      - name: arcid
+        description: Archive ID. Identifier for the archived document.
+
+      - name: iblar
+        description: Investment Measure Document Type. Document type for investment measures.
+
+      - name: awtyp
+        description: Reference Transaction (SAP AWTYP). Identifies the originating business transaction.
+
+      - name: awkey
+        description: Reference Key (SAP AWKEY). Key for the reference transaction.
+
+      - name: fikrs
+        description: Financial Management Area (SAP FIKRS). FM area for budget management.
+
+      - name: hwaer
+        description: Local Currency 1 (SAP HWAER). Company code currency.
+
+      - name: hwae2
+        description: Local Currency 2. Hard currency for parallel reporting.
+
+      - name: hwae3
+        description: Local Currency 3. Index-based currency for parallel reporting.
+
+      - name: kurs2
+        description: Exchange Rate for Currency 2. Exchange rate for parallel currency 2.
+
+      - name: kurs3
+        description: Exchange Rate for Currency 3. Exchange rate for parallel currency 3.
+
+      - name: basw2
+        description: Translation Ratio for Currency 2. Ratio for currency 2 translation.
+
+      - name: basw3
+        description: Translation Ratio for Currency 3. Ratio for currency 3 translation.
+
+      - name: umrd2
+        description: Translation Date for Currency 2. Translation date for parallel currency 2.
+
+      - name: umrd3
+        description: Translation Date for Currency 3. Translation date for parallel currency 3.
+
+      - name: xstov
+        description: Statistical Document Indicator. 'X' = document is statistical only.
+
+      - name: stodt
+        description: Value Date. Date for value-based accounting.
+
+      - name: xmwst
+        description: Tax Calculation Active. 'X' = automatic tax calculation is active.
+
+      - name: curt2
+        description: Currency 2 Status. Controls parallel currency 2 processing.
+
+      - name: curt3
+        description: Currency 3 Status. Controls parallel currency 3 processing.
+
+      - name: kuty2
+        description: Translation Type for Currency 2. Type of translation for parallel currency 2.
+
+      - name: kuty3
+        description: Translation Type for Currency 3. Type of translation for parallel currency 3.
+
+      - name: xsnet
+        description: Net Document Indicator for Tax. 'X' = net document for tax calculation.
+
+      - name: ausbk
+        description: Source Company Code. Company code from which the document originated.
+
+      - name: xusvr
+        description: User-Responsible for Exchange Rate. 'X' = user-defined exchange rate.
+
+      - name: duefl
+        description: Due Date for Tax Return. Due date for tax reporting.
+
+      - name: awsys
+        description: Logical System (SAP AWSYS). Logical system from which the document originated.
+
+      - name: txkrs
+        description: Tax Jurisdiction Code. Tax jurisdiction for the transaction.
+
+      - name: ctxkrs
+        description: Tax Jurisdiction Code for Customer/Vendor. Tax jurisdiction of the business partner.
+
+      - name: lotkz
+        description: Lot Number for Document Splitting. Lot identifier for document splitting.
+
+      - name: xwvof
+        description: Value Only Adjustment. 'X' = value-only adjustment to a document.
+
+      - name: stgrd
+        description: Reason for Reversal (SAP STGRD). Reason code for document reversal.
+
+      - name: ppnam
+        description: Payment Plan Name. Name of the payment plan.
+
+      - name: ppdat
+        description: Payment Plan Date. Date of the payment plan.
+
+      - name: pptme
+        description: Payment Plan Time. Time of the payment plan.
+
+      - name: brnch
+        description: Branch Number. Branch identifier for the document.
+
+      - name: numpg
+        description: Number of Pages. Number of pages in the document.
+
+      - name: adisc
+        description: Amount Difference. Rounding difference amount.
+
+      - name: xref1_hd
+        description: Reference Key 1 (Header). User-defined reference field at header level.
+
+      - name: xref2_hd
+        description: Reference Key 2 (Header). User-defined reference field at header level.
+
+      - name: xreversal
+        description: Reversal Indicator. 'X' = document is a reversal.
+
+      - name: reindat
+        description: Invoice Receipt Date. Date the invoice was received.
+
+      - name: rldnr
+        description: Ledger (SAP RLDNR). General ledger for the document posting.
+
+      - name: ldgrp
+        description: Ledger Group. Grouping of ledgers for parallel accounting.
+
+      - name: propmano
+        description: Property Manager Number. Property management reference.
+
+      - name: xblnr_alt
+        description: Alternative Reference Document Number. Secondary external reference.
+
+      - name: vatdate
+        description: VAT Date. Date for VAT reporting.
+
+      - name: doccat
+        description: Document Category. Classifies the document category for Universal Journal.
+
+      - name: xsplit
+        description: Document Splitting Active. 'X' = document splitting is applied.
+
+      - name: cash_alloc
+        description: Cash Allocation Indicator. Cash allocation processing status.
+
+      - name: follow_on
+        description: Follow-On Document Indicator. Indicates existence of follow-on documents.
+
+      - name: xreorg
+        description: Reorganization Indicator. 'X' = document is part of data reorganization.
+
+      - name: subset
+        description: Subset for Document Splitting. Subset classification for splitting.
+
+      - name: kurst
+        description: Exchange Rate Type (SAP KURST). Type of exchange rate used.
+
+      - name: kursx
+        description: Direct Quoted Exchange Rate. Direct quotation exchange rate.
+
+      - name: kur2x
+        description: Direct Quoted Exchange Rate 2. Direct quotation rate for currency 2.
+
+      - name: kur3x
+        description: Direct Quoted Exchange Rate 3. Direct quotation rate for currency 3.
+
+      - name: xmca
+        description: Multi-Currency Accounting Active. 'X' = multi-currency accounting is active.
+
+      - name: resubmission
+        description: Resubmission Date. Date for resubmission processing.
+
+      - name: logsystem_sender
+        description: Logical System (Sender). Logical system that sent the document.
+
+      - name: bukrs_sender
+        description: Company Code (Sender). Company code that sent the document.
+
+      - name: belnr_sender
+        description: Document Number (Sender). Document number from the sender system.
+
+      - name: gjahr_sender
+        description: Fiscal Year (Sender). Fiscal year from the sender system.
+
+      - name: intsubid
+        description: Internal Substitute ID. Internal identifier for document substitution.
+
+      - name: aworg_rev
+        description: Reversal Reference Organisation. Originating organisation for reversal.
+
+      - name: awref_rev
+        description: Reversal Reference Transaction. Originating transaction for reversal.
+
+      - name: xreversing
+        description: Reversing Document Indicator. 'X' = this document will be reversed.
+
+      - name: xreversed
+        description: Reversed Document Indicator. 'X' = this document has been reversed.
+
+      - name: glbtgrp
+        description: Global Trade Group. Group code for global trade processing.
+
+      - name: co_vrgng
+        description: CO Business Transaction. Controlling business transaction type.
+
+      - name: co_refbt
+        description: CO Reference Transaction. Reference transaction for CO.
+
+      - name: co_alebn
+        description: CO Document Number. Reference document number for CO.
+
+      - name: co_valdt
+        description: CO Valuation Date. Valuation date for CO integration.
+
+      - name: co_belnr_sender
+        description: CO Document Number (Sender). CO document number from sender.
+
+      - name: kokrs_sender
+        description: Controlling Area (Sender). CO area from the sender.
+
+      - name: field__dataaging
+        description: Data Aging Field. Field used for data aging classification.
+
+      - name: reprocessing_status_code
+        description: Reprocessing Status. Status code for document reprocessing.
+
+      - name: psoty
+        description: Payment Specification Object Type. Object type for payment specifications.
+
+      - name: psoak
+        description: Payment Specification Object Key. Object key for payment specifications.
+
+      - name: psoks
+        description: Payment Specification Object Subkey. Subkey for payment specifications.
+
+      - name: psosg
+        description: Payment Specification Object Segment. Segment for payment specifications.
+
+      - name: psofn
+        description: Payment Specification Function. Function code for payment specifications.
+
+      - name: intform
+        description: Internal Format Indicator. Internal processing format code.
+
+      - name: intdate
+        description: Internal Date. Internal processing date.
+
+      - name: psobt
+        description: Payment Specification Batch. Batch identifier for payment runs.
+
+      - name: psozl
+        description: Payment Specification Line. Line item within payment batch.
+
+      - name: psodt
+        description: Payment Specification Date. Date of payment specification.
+
+      - name: psotm
+        description: Payment Specification Time. Time of payment specification.
+
+      - name: fm_umart
+        description: FM Transaction Type. Funds Management transaction type.
+
+      - name: ccins
+        description: Credit Card Institution. Credit card provider identifier.
+
+      - name: ccnum
+        description: Credit Card Number. Masked credit card number.
+
+      - name: ssblk
+        description: Payment Block for Credit Card. Block reason for credit card payments.
+
+      - name: batch
+        description: Batch Input Session Name. Batch input session identifier.
+
+      - name: sname
+        description: Sender Name. Name of the sending system or entity.
+
+      - name: sampled
+        description: Sample Document Indicator. 'X' = document is used for sampling.
+
+      - name: exclude_flag
+        description: Exclusion Flag. 'X' = document is excluded from processing.
+
+      - name: blind
+        description: Blind Posting Indicator. 'X' = blind posting is applied.
+
+      - name: offset_status
+        description: Offset Status. Status of offsetting entry processing.
+
+      - name: offset_refer_dat
+        description: Offset Reference Date. Reference date for offset entries.
+
+      - name: penrc
+        description: Pension Reserve Indicator. Indicator for pension reserve posting.
+
+      - name: knumv
+        description: Condition Record Number. Condition record for pricing/discounts.
+
+      - name: RECORDTYPE
+        description: Record type indicator from the source system.
